@@ -1,0 +1,20 @@
+package np.com.prahladpanthi.seminaronebackend.service.impl;
+
+import jakarta.transaction.Transactional;
+import np.com.prahladpanthi.seminaronebackend.entity.StaffEntity;
+import np.com.prahladpanthi.seminaronebackend.repository.StaffRepository;
+import np.com.prahladpanthi.seminaronebackend.service.IStaffService;
+import np.com.prahladpanthi.seminaronebackend.service.impl.base.BaseServiceImpl;
+import org.springframework.stereotype.Service;
+
+@Service
+@Transactional
+public class StaffServiceImpl extends BaseServiceImpl<StaffEntity, Long> implements IStaffService {
+
+    private StaffRepository staffRepository;
+
+    public StaffServiceImpl(StaffRepository staffRepository) {
+        super(staffRepository);
+        this.staffRepository = staffRepository;
+    }
+}
