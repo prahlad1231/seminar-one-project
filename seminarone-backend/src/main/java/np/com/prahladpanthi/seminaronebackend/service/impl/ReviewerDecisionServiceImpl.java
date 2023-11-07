@@ -1,6 +1,5 @@
 package np.com.prahladpanthi.seminaronebackend.service.impl;
 
-import jakarta.transaction.Transactional;
 import np.com.prahladpanthi.seminaronebackend.entity.ReviewerDecisionEntity;
 import np.com.prahladpanthi.seminaronebackend.repository.ReviewerDecisionRepository;
 import np.com.prahladpanthi.seminaronebackend.service.IReviewerDecisionService;
@@ -8,7 +7,6 @@ import np.com.prahladpanthi.seminaronebackend.service.impl.base.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 @Service
-@Transactional
 public class ReviewerDecisionServiceImpl extends BaseServiceImpl<ReviewerDecisionEntity, Long> implements IReviewerDecisionService {
 
 
