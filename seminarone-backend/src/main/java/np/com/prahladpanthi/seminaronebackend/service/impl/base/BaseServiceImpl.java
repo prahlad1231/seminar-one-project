@@ -1,6 +1,7 @@
 package np.com.prahladpanthi.seminaronebackend.service.impl.base;
 
 import np.com.prahladpanthi.seminaronebackend.entity.BaseEntity;
+import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.service.base.IBaseService;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,7 +19,7 @@ public class BaseServiceImpl <T extends BaseEntity, ID> implements IBaseService<
     @Override
     public T findById(ID id) {
         Optional<T> optionalT = repository.findById(id);
-        return optionalT.orElseThrow(InternalError::new); // todo: throw custom exception here
+        return optionalT.orElseThrow(NotFoundException::new);
     }
 
     @Override
