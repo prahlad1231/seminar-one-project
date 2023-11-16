@@ -8,6 +8,7 @@ import {
 import { NavLink } from "react-router-dom";
 
 import "../styles/sidebar.css";
+import { useState } from "react";
 
 function Sidebar({ children }) {
   const menuItems = [
@@ -33,13 +34,19 @@ function Sidebar({ children }) {
     },
   ];
 
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div className="container">
-      <div className="sidebar">
+      <div style={{ width: isOpen ? "300px" : "60px" }} className="sidebar">
         <div className="top_section">
-          <h1 className="logo">Seminar One</h1>
+          <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
+            Seminar One
+          </h1>
           <div className="hamburger_menu">
-            <Menu style={{ fontSize: "2.5rem" }} />
+            <Menu style={{ fontSize: "2.5rem" }} onClick={toggle} />
           </div>
         </div>
         {menuItems.map((item, index) => (
@@ -50,7 +57,12 @@ function Sidebar({ children }) {
             activeClassName="active"
           >
             <div className="icon">{item.icon}</div>
-            <div className="link_text">{item.name}</div>
+            <div
+              style={{ display: isOpen ? "block" : "none" }}
+              className="link_text"
+            >
+              {item.name}
+            </div>
           </NavLink>
         ))}
       </div>
