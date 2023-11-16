@@ -46,7 +46,7 @@ function Sidebar({ children }) {
             Seminar One
           </h1>
           <div className="hamburger_menu">
-            <Menu style={{ fontSize: "2.5rem" }} onClick={toggle} />
+            <Menu style={{ fontSize: "2rem" }} onClick={toggle} />
           </div>
         </div>
         {menuItems.map((item, index) => (
