@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+}
+
+main {
+  width: 100%;
+  padding: 3rem;
+}
+
+.sidebar {
+  color: black;
+  background-color: bisque;
+  height: 100vh;
+}
+
+.top_section {
+  display: flex;
+  align-items: center;
+  padding: 2rem 2rem;
+}
+
+.logo {
+  font-size: 25px;
+  margin-right: 1.5rem;
+}
+
+.link {
+  display: flex;
+  color: rgb(106, 88, 88);
+  padding: 1rem 1.5rem;
+  gap: 0.8rem;
+  transition: all 0.2s;
+}
+
+.link:hover {
+  background: rgb(208, 188, 188);
+  color: rgb(140, 40, 40);
+  transition: all 0.2s;
+}
+
+.active {
+  background: rgb(208, 188, 188);
+  color: rgb(140, 40, 40);
+}
+
+.icon,
+.link_text {
+  font-size: 20px;
+}
