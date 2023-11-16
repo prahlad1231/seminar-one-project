@@ -1,5 +1,6 @@
 import {
   Dashboard,
+  LibraryAdd,
   ListAlt,
   Menu,
   RecentActors,
@@ -18,13 +19,18 @@ function Sidebar({ children }) {
       icon: <Dashboard />,
     },
     {
+      path: "/addSeminar",
+      name: "Add Seminar",
+      icon: <LibraryAdd />,
+    },
+    {
       path: "/seminarlist",
-      name: "SeminarList",
+      name: "Seminar List",
       icon: <ListAlt />,
     },
     {
       path: "/userlist",
-      name: "UserList",
+      name: "User List",
       icon: <RecentActors />,
     },
     {

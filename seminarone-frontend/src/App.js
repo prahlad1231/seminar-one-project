@@ -5,6 +5,7 @@ import Settings from "./components/Settings";
 import SeminarList from "./components/SeminarList";
 import UserList from "./components/UserList";
 import Sidebar from "./components/Sidebar";
+import AddSeminar from "./components/AddSeminar";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/settings" element=<Settings /> />
           <Route path="/seminarlist" element=<SeminarList /> />
           <Route path="/userlist" element=<UserList /> />
+          <Route path="/addSeminar" element=<AddSeminar /> />
         </Routes>
       </Sidebar>
     </div>
