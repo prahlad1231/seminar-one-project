@@ -15,4 +15,9 @@ public class LocationServiceImpl extends BaseServiceImpl<LocationEntity, Long> i
         super(locationRepository);
         this.locationRepository = locationRepository;
     }
+
+    @Override
+    public boolean existsByVenueName(String venueName) {
+        return locationRepository.existsByVenueNameIgnoreCase(venueName);
+    }
 }

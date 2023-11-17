@@ -3,6 +3,7 @@ package np.com.prahladpanthi.seminaronebackend.controller;
 import np.com.prahladpanthi.seminaronebackend.dto.LocationDto;
 import np.com.prahladpanthi.seminaronebackend.dto.ResponseDto;
 import np.com.prahladpanthi.seminaronebackend.entity.LocationEntity;
+import np.com.prahladpanthi.seminaronebackend.exception.AlreadyExistsException;
 import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataException;
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.mapper.LocationMapper;
@@ -47,6 +48,7 @@ public class LocationController extends BaseController {
         if (locationDto.getVenueName().isEmpty() || locationDto.getStreetName().isEmpty() || locationDto.getStreetNumber() == null || locationDto.getState() == null) {
             throw new InsufficientDataException("Please provide all the details!");
         }
+        if (locationService.existsByVenueName(locationDto.getVenueName())) throw new AlreadyExistsException("Venue name " + locationDto.getVenueName() + " already exists!");
         LocationEntity locationEntity = locationService.save(locationMapper.mapToEntity(locationDto));
         return new ResponseEntity<>(new ResponseDto("Successfully saved!", locationMapper.mapToDto(locationEntity)), HttpStatus.CREATED);
     }

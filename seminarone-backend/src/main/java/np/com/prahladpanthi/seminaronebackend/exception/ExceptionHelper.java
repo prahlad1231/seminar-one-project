@@ -18,4 +18,9 @@ public class ExceptionHelper {
     public ResponseEntity<ResponseDto> handleInsufficientDataException(InsufficientDataException ide) {
         return new ResponseEntity<>(new ResponseDto(ide.getMessage()), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = AlreadyExistsException.class)
+    public ResponseEntity<ResponseDto> handleAlreadyExistsException(AlreadyExistsException ex) {
+        return new ResponseEntity<>(new ResponseDto(ex.getMessage()), HttpStatus.ALREADY_REPORTED);
+    }
 }
