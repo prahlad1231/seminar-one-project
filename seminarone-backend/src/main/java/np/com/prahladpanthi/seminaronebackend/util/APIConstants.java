@@ -22,4 +22,8 @@ public interface APIConstants {
 
     String BRANCH = BASE_API + "/branch";
     String FIND_BY_BRANCH_NUMBER =  "/{branchNumber}";
+
+    /****************** LOCATION ****************/
+    String LOCATION = BASE_API + "/location";
+
 }

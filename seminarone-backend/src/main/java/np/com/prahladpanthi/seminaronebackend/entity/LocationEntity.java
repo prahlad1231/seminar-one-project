@@ -14,7 +14,7 @@ import lombok.Setter;
 public class LocationEntity extends BaseEntity {
 
     @NotNull
-    @Column(name = "venue_name")
+    @Column(name = "venue_name", unique = true)
     private String venueName;
 
     @Column(name = "street_number")
