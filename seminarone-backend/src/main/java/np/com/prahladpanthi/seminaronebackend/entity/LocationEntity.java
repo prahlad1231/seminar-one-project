@@ -3,6 +3,7 @@ package np.com.prahladpanthi.seminaronebackend.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import lombok.Setter;
 @Table(name = "location")
 public class LocationEntity extends BaseEntity {
 
+    @NotNull
     @Column(name = "venue_name")
     private String venueName;
 

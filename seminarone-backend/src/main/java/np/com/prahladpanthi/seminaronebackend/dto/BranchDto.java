@@ -1,5 +1,6 @@
 package np.com.prahladpanthi.seminaronebackend.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class BranchDto extends BaseDto {
 
+    @NotNull
     private Integer branchNumber;
 
     private String address;

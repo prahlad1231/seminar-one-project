@@ -17,4 +17,9 @@ public interface APIConstants {
     /****************** APIs FOR SEMINAR CONTROLLER ****************/
 
     String SEMINAR = BASE_API + "/seminar";
+
+    /****************** BRANCH ******************/
+
+    String BRANCH = BASE_API + "/branch";
+    String FIND_BY_BRANCH_NUMBER =  "/{branchNumber}";
 }

@@ -3,6 +3,7 @@ package np.com.prahladpanthi.seminaronebackend.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,9 +13,11 @@ import lombok.Setter;
 @Table(name = "branch")
 public class BranchEntity extends BaseEntity {
 
-    @Column(name = "branch_number")
+    @NotNull
+    @Column(name = "branch_number", unique = true)
     private Integer branchNumber;
 
+    @NotNull
     private String address;
 
     private String telephone;
