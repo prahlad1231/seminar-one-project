@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import np.com.prahladpanthi.seminaronebackend.dto.BranchDto;
 import np.com.prahladpanthi.seminaronebackend.dto.ResponseDto;
 import np.com.prahladpanthi.seminaronebackend.entity.BranchEntity;
+import np.com.prahladpanthi.seminaronebackend.exception.AlreadyExistsException;
 import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataException;
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.mapper.BranchMapper;
@@ -52,6 +53,7 @@ public class BranchController extends BaseController {
         if (branchDto.getAddress().isEmpty() || branchDto.getTelephone().isEmpty()) {
             throw new InsufficientDataException("Please provide all the required data!");
         }
+        if (branchService.existsByBranchNumber(branchDto.getBranchNumber())) throw new AlreadyExistsException("Branch already exists! Please check the branch number!");
         BranchEntity branchEntity = branchService.save(branchMapper.mapToEntity(branchDto));
         return new ResponseEntity<>(new ResponseDto("Successfully saved!", branchMapper.mapToDto(branchEntity)), HttpStatus.CREATED);
     }
