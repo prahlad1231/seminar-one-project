@@ -26,4 +26,28 @@ public interface APIConstants {
     /****************** LOCATION ****************/
     String LOCATION = BASE_API + "/location";
 
+
+    /**************** PRODUCT *****************/
+    String PRODUCT = BASE_API + "/product";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

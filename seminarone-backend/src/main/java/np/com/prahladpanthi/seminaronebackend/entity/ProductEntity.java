@@ -14,7 +14,7 @@ import lombok.Setter;
 public class ProductEntity extends BaseEntity {
 
     @NotNull
-    @Column(name = "product_number")
+    @Column(name = "product_number", unique = true)
     private String productNumber;
 
     private String description;

@@ -15,4 +15,9 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductEntity, Long> imp
         super(productRepository);
         this.productRepository = productRepository;
     }
+
+    @Override
+    public boolean existsByProductNumber(String productNumber) {
+        return productRepository.existsByProductNumber(productNumber);
+    }
 }
