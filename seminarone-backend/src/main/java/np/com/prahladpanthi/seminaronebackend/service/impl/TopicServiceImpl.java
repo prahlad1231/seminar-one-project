@@ -15,4 +15,9 @@ public class TopicServiceImpl extends BaseServiceImpl<TopicEntity, Long> impleme
         super(topicRepository);
         this.topicRepository = topicRepository;
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return topicRepository.existsByName(name);
+    }
 }

@@ -30,6 +30,9 @@ public interface APIConstants {
     /**************** PRODUCT *****************/
     String PRODUCT = BASE_API + "/product";
 
+    /**************** TOPIC *******************/
+    String TOPIC = BASE_API + "/topic";
+
 
 
 
