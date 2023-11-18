@@ -33,6 +33,9 @@ public interface APIConstants {
     /**************** TOPIC *******************/
     String TOPIC = BASE_API + "/topic";
 
+    /***************** STAFF *****************/
+    String STAFF = BASE_API + "/staff";
+
 
 
 
