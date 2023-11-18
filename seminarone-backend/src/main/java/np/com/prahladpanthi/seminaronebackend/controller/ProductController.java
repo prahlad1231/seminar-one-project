@@ -3,6 +3,7 @@ package np.com.prahladpanthi.seminaronebackend.controller;
 import np.com.prahladpanthi.seminaronebackend.dto.ProductDto;
 import np.com.prahladpanthi.seminaronebackend.dto.ResponseDto;
 import np.com.prahladpanthi.seminaronebackend.entity.ProductEntity;
+import np.com.prahladpanthi.seminaronebackend.exception.AlreadyExistsException;
 import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataException;
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.mapper.ProductMapper;
@@ -44,6 +45,7 @@ public class ProductController extends BaseController {
     @PostMapping(APIConstants.SAVE)
     public ResponseEntity<ResponseDto> save(@RequestBody ProductDto productDto) {
         if (productDto.getProductNumber().isEmpty() || productDto.getPrice() == null) throw new InsufficientDataException("Please provide all the details!");
+        if (productService.existsByProductNumber(productDto.getProductNumber())) throw new AlreadyExistsException("Product already exists! Please check product number!");
         ProductEntity productEntity = productService.save(productMapper.mapToEntity(productDto));
         return new ResponseEntity<>(new ResponseDto("Successfully saved!", productMapper.mapToDto(productEntity)), HttpStatus.CREATED);
     }
