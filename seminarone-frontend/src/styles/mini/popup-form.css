@@ -1,4 +1,4 @@
-.location-form {
+.mini-form {
   display: flex;
 }
 
@@ -9,6 +9,7 @@
 
 .form-paper {
   padding: 0.8rem;
+  height: fit-content;
 }
 
 .form-label {

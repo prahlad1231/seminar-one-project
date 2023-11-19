@@ -4,3 +4,9 @@
 
 .seminar-form {
 }
+
+.seminar-paper {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}

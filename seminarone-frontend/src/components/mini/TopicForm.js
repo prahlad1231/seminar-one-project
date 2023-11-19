@@ -7,37 +7,29 @@ import {
 } from "@mui/material";
 import "../../styles/mini/popup-form.css";
 
-const LocationForm = () => {
+const TopicForm = () => {
   return (
     <div className="mini-form">
       <Paper elevation={3} className="form-paper">
         <h3
           style={{ width: "100%", textAlign: "center", marginBottom: "1rem" }}
         >
-          Add new Venue
+          Add new Topic
         </h3>
         <FormControl className="form">
           <div className="form-label">
-            <FormLabel>Venue Name</FormLabel>
-            <FormLabel>Street Number</FormLabel>
-            <FormLabel>Street Name</FormLabel>
-            <FormLabel>State</FormLabel>
-            <FormLabel>Website</FormLabel>
+            <FormLabel>Topic Name</FormLabel>
           </div>
           <div className="form-input">
-            <TextField id="venueName" required />
-            <TextField id="streetNumber" required type="number" />
-            <TextField id="streetName" required />
-            <TextField id="state" required />
-            <TextField id="website" />
+            <TextField id="topicName" required />
           </div>
         </FormControl>
         <Button variant="contained" sx={{ width: "100%", marginTop: "2rem" }}>
-          Add Venue
+          Add Topic
         </Button>
       </Paper>
     </div>
   );
 };
 
-export default LocationForm;
+export default TopicForm;
