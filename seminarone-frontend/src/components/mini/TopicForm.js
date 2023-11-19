@@ -16,12 +16,14 @@ const TopicForm = () => {
         >
           Add new Topic
         </h3>
-        <FormControl className="form">
-          <div className="form-label">
-            <FormLabel>Topic Name</FormLabel>
-          </div>
-          <div className="form-input">
-            <TextField id="topicName" required />
+        <FormControl>
+          <div className="miniform">
+            <div className="form-label">
+              <FormLabel>Topic Name</FormLabel>
+            </div>
+            <div className="form-input">
+              <TextField id="topicName" required />
+            </div>
           </div>
         </FormControl>
         <Button variant="contained" sx={{ width: "100%", marginTop: "2rem" }}>

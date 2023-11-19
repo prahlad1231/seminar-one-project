@@ -1,15 +1,15 @@
-.mini-form {
+.form-container {
   display: flex;
-}
-
-.form {
-  display: flex;
-  flex-direction: row;
 }
 
 .form-paper {
   padding: 0.8rem;
   height: fit-content;
+}
+
+.miniform {
+  display: flex;
+  flex-direction: row;
 }
 
 .form-label {
