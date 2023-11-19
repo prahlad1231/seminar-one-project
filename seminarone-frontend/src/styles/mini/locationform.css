@@ -1,0 +1,26 @@
+.location-form {
+  display: flex;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+}
+
+.form-paper {
+  padding: 0.8rem;
+}
+
+.form-label {
+  display: flex;
+  gap: 3rem;
+  flex-direction: column;
+  margin-right: 2rem;
+  align-self: center;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

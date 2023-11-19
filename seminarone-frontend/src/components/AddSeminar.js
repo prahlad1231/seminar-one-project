@@ -2,6 +2,7 @@ import FormHeading from "./shared/FormHeading";
 
 import "../styles/addseminar.css";
 import { Paper } from "@mui/material";
+import LocationForm from "./mini/LocationForm";
 
 const AddSeminar = () => {
   return (
@@ -9,7 +10,7 @@ const AddSeminar = () => {
       <FormHeading title="Add New Seminar" />
       <div className="seminar-form">
         <Paper elevation={2} square={false} sx={{ padding: "1rem" }}>
-          Paper
+          <LocationForm />
         </Paper>
       </div>
     </div>
