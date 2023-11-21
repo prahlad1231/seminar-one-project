@@ -37,16 +37,9 @@ public class SeminarController extends BaseController {
         return new ResponseEntity<>(new ResponseDto("Successfully fetched!", seminarMapper.mapToDto(seminarEntity)), HttpStatus.OK);
     }
 
-    @PostMapping(APIConstants.SAVE)
+    @PostMapping(APIConstants.ADD_SEMINAR)
     public ResponseEntity<ResponseDto> save(@RequestBody SeminarDto seminarDto) {
-        if (!(seminarDto.getTitle().isBlank() && seminarDto.getStartDate() == null &&
-                seminarDto.getEndDate() == null && seminarDto.getLocationEntityId() == null &&
-                seminarDto.getTopicEntityId() == null)) {
-            throw new InsufficientDataException("Please enter all the details for adding seminar!");
-        }
-
-        SeminarEntity seminarEntity = seminarService.save(seminarMapper.mapToEntity(seminarDto));
-        return new ResponseEntity<>(new ResponseDto("Successfully saved!", seminarMapper.mapToDto(seminarEntity)), HttpStatus.CREATED);
+        return new ResponseEntity<>(new ResponseDto("Successfully saved!", seminarService.addNewSeminar(seminarDto)), HttpStatus.CREATED);
     }
 
     @PutMapping(APIConstants.UPDATE)

@@ -18,6 +18,8 @@ public interface APIConstants {
 
     String SEMINAR = BASE_API + "/seminar";
 
+    String ADD_SEMINAR = "/add";
+
     /****************** BRANCH ******************/
 
     String BRANCH = BASE_API + "/branch";

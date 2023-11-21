@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface TopicRepository extends JpaRepository<TopicEntity, Long> {
 
     boolean existsByName(String name);
+
+    boolean existsById(Long id);
 }
