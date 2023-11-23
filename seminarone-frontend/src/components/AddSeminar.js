@@ -44,6 +44,7 @@ const AddSeminar = () => {
                       <FormLabel>Start Date</FormLabel>
                       <FormLabel>End Date</FormLabel>
                       <FormLabel>Price</FormLabel>
+                      {/* todo: add autocomplete feature */}
                       <FormLabel>Topic</FormLabel>
                       <FormLabel>Location</FormLabel>
                     </div>
