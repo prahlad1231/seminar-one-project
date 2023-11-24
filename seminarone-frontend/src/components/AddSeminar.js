@@ -4,6 +4,10 @@ import "../styles/addseminar.css";
 import {
   Autocomplete,
   Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   FormLabel,
   Paper,
@@ -16,6 +20,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect, useState } from "react";
 
 import LocationForm from "../components/mini/LocationForm";
+import TopicForm from "../components/mini/TopicForm";
 import AutoCompleteTest from "./mini/AutocompleteTest";
 
 const filter = createFilterOptions();
@@ -26,6 +31,7 @@ const AddSeminar = () => {
   const [topicList, setTopicList] = useState([{ name: "" }]);
   const [venueList, setVenueList] = useState([]);
   const [open, toggleOpen] = useState(false);
+  const [dialogType, setDialogType] = useState("");
 
   const [topicDialogValue, setTopicDialogValue] = useState({
     name: "",
@@ -58,6 +64,23 @@ const AddSeminar = () => {
       },
     ]);
   }, []);
+
+  const handleClose = () => {
+    if (dialogType === "topic") {
+      setTopicDialogValue({
+        name: "",
+      });
+      toggleOpen(false);
+    } else if (dialogType === "venue") {
+      setVenueDialogValue({
+        venueName: "",
+        streetNumber: 0,
+        streetName: "",
+        state: "",
+        website: "",
+      });
+    }
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -107,6 +130,7 @@ const AddSeminar = () => {
                       <Autocomplete
                         value={topicValue}
                         onChange={(event, newValue) => {
+                          setDialogType("topic");
                           // if the user has input a new value, then give some time for the user to type instead
                           // of directly showing the dialog
                           if (typeof newValue === "string") {
@@ -161,6 +185,7 @@ const AddSeminar = () => {
                       <Autocomplete
                         value={venueValue}
                         onChange={(event, newValue) => {
+                          setDialogType("venue");
                           if (typeof newValue === "string") {
                             setTimeout(() => {
                               toggleOpen(true);
@@ -211,6 +236,24 @@ const AddSeminar = () => {
                           <TextField {...params} label="Enter Venue" />
                         )}
                       />
+
+                      <Dialog open={open} onClose={handleClose}>
+                        <DialogTitle>
+                          {dialogType === "topic"
+                            ? "Add new Topic"
+                            : "Add new Venue"}
+                        </DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            Oops! Missed something?
+                          </DialogContentText>
+                          {dialogType === "topic" ? (
+                            <TopicForm />
+                          ) : (
+                            <LocationForm />
+                          )}
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   </div>
                 </FormControl>
