@@ -89,7 +89,7 @@ const AddSeminar = () => {
                       <FormLabel>End Date</FormLabel>
                       <FormLabel>Price</FormLabel>
                       <FormLabel>Topic</FormLabel>
-                      <FormLabel>Location</FormLabel>
+                      <FormLabel>Venue</FormLabel>
                     </div>
                     <div className="form-input">
                       <TextField id="title" required />
@@ -177,6 +177,39 @@ const AddSeminar = () => {
                             setVenueValue(newValue);
                           }
                         }}
+                        filterOptions={(options, params) => {
+                          const filtered = filter(options, params);
+                          if (params.inputValue !== "") {
+                            filtered.push({
+                              inputValue: params.inputValue,
+                              venueName: `Add "${params.inputValue}"`,
+                            });
+                          }
+
+                          return filtered;
+                        }}
+                        id="venue"
+                        options={venueList}
+                        getOptionLabel={(option) => {
+                          if (typeof option === "string") {
+                            return option;
+                          }
+                          if (option.inputValue) {
+                            return option.inputValue;
+                          }
+                          return option.venueName;
+                        }}
+                        selectOnFocus
+                        clearOnBlur
+                        handleHomeEndKeys
+                        renderOption={(props, option) => (
+                          <li {...props}>{option.venueName}</li>
+                        )}
+                        sx={{ width: 300 }}
+                        freeSolo
+                        renderInput={(params) => (
+                          <TextField {...params} label="Enter Venue" />
+                        )}
                       />
                     </div>
                   </div>
