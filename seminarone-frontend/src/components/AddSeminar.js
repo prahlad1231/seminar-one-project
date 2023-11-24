@@ -2,11 +2,13 @@ import FormHeading from "./shared/FormHeading";
 
 import "../styles/addseminar.css";
 import {
+  Autocomplete,
   Button,
   FormControl,
   FormLabel,
   Paper,
   TextField,
+  createFilterOptions,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -16,14 +18,45 @@ import { useEffect, useState } from "react";
 import LocationForm from "../components/mini/LocationForm";
 import AutoCompleteTest from "./mini/AutocompleteTest";
 
+const filter = createFilterOptions();
+
 const AddSeminar = () => {
+  const [topicValue, setTopicValue] = useState("");
+  const [venueValue, setVenueValue] = useState("");
   const [topicList, setTopicList] = useState([{ name: "" }]);
-  const [venueNameList, setVenueNameList] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [venueList, setVenueList] = useState([]);
+  const [open, toggleOpen] = useState(false);
+
+  const [topicDialogValue, setTopicDialogValue] = useState({
+    name: "",
+  });
+
+  const [venueDialogValue, setVenueDialogValue] = useState({
+    venueName: "",
+    streetNumber: 0,
+    streetName: "",
+    state: "",
+    website: "",
+  });
 
   useEffect(() => {
     setTopicList([{ name: "Topic 1" }, { name: "Topic 2" }]);
-    setVenueNameList([{ venueName: "Venue 1" }, { venueName: "Venue 2" }]);
+    setVenueList([
+      {
+        venueName: "Venue 1",
+        streetNumber: 7,
+        streetName: "Sydney Ave",
+        state: "ACT",
+        website: "",
+      },
+      {
+        venueName: "Venue 2",
+        streetNumber: 8,
+        streetName: "Melbourne Ave",
+        state: "ACT",
+        website: "",
+      },
+    ]);
   }, []);
 
   return (
@@ -55,7 +88,6 @@ const AddSeminar = () => {
                       <FormLabel>Start Date</FormLabel>
                       <FormLabel>End Date</FormLabel>
                       <FormLabel>Price</FormLabel>
-                      {/* todo: add autocomplete feature */}
                       <FormLabel>Topic</FormLabel>
                       <FormLabel>Location</FormLabel>
                     </div>
@@ -72,8 +104,80 @@ const AddSeminar = () => {
                         }}
                         required
                       />
-                      <TextField id="topic" />
-                      <TextField id="location" />
+                      <Autocomplete
+                        value={topicValue}
+                        onChange={(event, newValue) => {
+                          // if the user has input a new value, then give some time for the user to type instead
+                          // of directly showing the dialog
+                          if (typeof newValue === "string") {
+                            setTimeout(() => {
+                              toggleOpen(true);
+                              setTopicDialogValue({
+                                name: newValue,
+                              });
+                            });
+                          } else if (newValue && newValue.inputValue) {
+                            toggleOpen(true);
+                            setTopicDialogValue({ name: newValue });
+                          } else {
+                            setTopicValue(newValue);
+                          }
+                        }}
+                        filterOptions={(options, params) => {
+                          const filtered = filter(options, params);
+                          if (params.inputValue !== "") {
+                            filtered.push({
+                              inputValue: params.inputValue,
+                              name: `Add "${params.inputValue}"`,
+                            });
+                          }
+                          return filtered;
+                        }}
+                        id="topic"
+                        options={topicList}
+                        getOptionLabel={(option) => {
+                          // value selected from given options
+                          if (typeof option === "string") {
+                            return option;
+                          }
+                          if (option.inputValue) {
+                            return option.inputValue;
+                          }
+                          return option.name;
+                        }}
+                        selectOnFocus
+                        clearOnBlur
+                        handleHomeEndKeys
+                        renderOption={(props, option) => (
+                          <li {...props}>{option.name}</li>
+                        )}
+                        sx={{ width: 300 }}
+                        freeSolo
+                        renderInput={(params) => (
+                          <TextField {...params} label="Enter Topic Name" />
+                        )}
+                      />
+
+                      <Autocomplete
+                        value={venueValue}
+                        onChange={(event, newValue) => {
+                          if (typeof newValue === "string") {
+                            setTimeout(() => {
+                              toggleOpen(true);
+                              setVenueDialogValue({
+                                venueName: newValue,
+                              });
+                            });
+                          } else if (newValue && newValue.inputValue) {
+                            toggleOpen(true);
+                            setVenueDialogValue({
+                              venueName: newValue.inputValue,
+                            });
+                          } else {
+                            setVenueValue(newValue);
+                          }
+                        }}
+                      />
                     </div>
                   </div>
                 </FormControl>
@@ -85,7 +189,6 @@ const AddSeminar = () => {
                 </Button>
               </Paper>
             </div>
-            <AutoCompleteTest />
           </Paper>
         </div>
       </div>
