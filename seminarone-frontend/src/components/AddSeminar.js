@@ -13,10 +13,13 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect, useState } from "react";
 
+import LocationForm from "../components/mini/LocationForm";
+import AutoCompleteTest from "./mini/AutocompleteTest";
+
 const AddSeminar = () => {
   const [topicList, setTopicList] = useState([{ name: "" }]);
-
   const [venueNameList, setVenueNameList] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setTopicList([{ name: "Topic 1" }, { name: "Topic 2" }]);
@@ -82,6 +85,7 @@ const AddSeminar = () => {
                 </Button>
               </Paper>
             </div>
+            <AutoCompleteTest />
           </Paper>
         </div>
       </div>
