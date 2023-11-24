@@ -8,13 +8,21 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
-import LocationForm from "./mini/LocationForm";
-import TopicForm from "./mini/TopicForm";
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useEffect, useState } from "react";
 
 const AddSeminar = () => {
+  const [topicList, setTopicList] = useState([{ name: "" }]);
+
+  const [venueNameList, setVenueNameList] = useState([]);
+
+  useEffect(() => {
+    setTopicList([{ name: "Topic 1" }, { name: "Topic 2" }]);
+    setVenueNameList([{ venueName: "Venue 1" }, { venueName: "Venue 2" }]);
+  }, []);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="seminar-container">
