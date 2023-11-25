@@ -10,12 +10,7 @@ import "../../styles/mini/popup-form.css";
 const LocationForm = () => {
   return (
     <div className="form-container">
-      <Paper elevation={3} className="form-paper">
-        <h3
-          style={{ width: "100%", textAlign: "center", marginBottom: "1rem" }}
-        >
-          Add new Venue
-        </h3>
+      <Paper elevation={0} className="form-paper">
         <FormControl>
           <div className="miniform">
             <div className="form-label">
@@ -34,9 +29,6 @@ const LocationForm = () => {
             </div>
           </div>
         </FormControl>
-        <Button variant="contained" sx={{ width: "100%", marginTop: "2rem" }}>
-          Add Venue
-        </Button>
       </Paper>
     </div>
   );

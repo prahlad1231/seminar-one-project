@@ -5,6 +5,7 @@ import {
   Autocomplete,
   Button,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
@@ -70,7 +71,6 @@ const AddSeminar = () => {
       setTopicDialogValue({
         name: "",
       });
-      toggleOpen(false);
     } else if (dialogType === "venue") {
       setVenueDialogValue({
         venueName: "",
@@ -80,6 +80,7 @@ const AddSeminar = () => {
         website: "",
       });
     }
+    toggleOpen(false);
   };
 
   return (
@@ -253,6 +254,10 @@ const AddSeminar = () => {
                             <LocationForm />
                           )}
                         </DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleClose}>Cancel</Button>
+                          <Button type="submit">Add</Button>
+                        </DialogActions>
                       </Dialog>
                     </div>
                   </div>
