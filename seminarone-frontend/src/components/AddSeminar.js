@@ -137,13 +137,15 @@ const AddSeminar = () => {
                           if (typeof newValue === "string") {
                             setTimeout(() => {
                               toggleOpen(true);
+                              // setTopicValue(newValue);
                               setTopicDialogValue({
                                 name: newValue,
                               });
                             });
                           } else if (newValue && newValue.inputValue) {
                             toggleOpen(true);
-                            setTopicDialogValue({ name: newValue });
+                            setTopicDialogValue({ name: newValue.inputValue });
+                            // setTopicValue(newValue);
                           } else {
                             setTopicValue(newValue);
                           }
@@ -249,9 +251,11 @@ const AddSeminar = () => {
                             Oops! Missed something?
                           </DialogContentText>
                           {dialogType === "topic" ? (
-                            <TopicForm />
+                            <TopicForm name={topicDialogValue.name} />
                           ) : (
-                            <LocationForm />
+                            <LocationForm
+                              venueName={venueDialogValue.venueName}
+                            />
                           )}
                         </DialogContent>
                         <DialogActions>

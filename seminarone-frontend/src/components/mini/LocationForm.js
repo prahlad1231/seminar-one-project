@@ -1,13 +1,7 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Paper,
-  TextField,
-} from "@mui/material";
+import { FormControl, FormLabel, Paper, TextField } from "@mui/material";
 import "../../styles/mini/popup-form.css";
 
-const LocationForm = () => {
+const LocationForm = ({ venueName }) => {
   return (
     <div className="form-container">
       <Paper elevation={0} className="form-paper">
@@ -21,7 +15,7 @@ const LocationForm = () => {
               <FormLabel>Website</FormLabel>
             </div>
             <div className="form-input">
-              <TextField id="venueName" required />
+              <TextField id="venueName" value={venueName} required />
               <TextField id="streetNumber" required type="number" />
               <TextField id="streetName" required />
               <TextField id="state" required />

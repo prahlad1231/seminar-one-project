@@ -1,13 +1,7 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Paper,
-  TextField,
-} from "@mui/material";
+import { FormControl, FormLabel, Paper, TextField } from "@mui/material";
 import "../../styles/mini/popup-form.css";
 
-const TopicForm = () => {
+const TopicForm = ({ name }) => {
   return (
     <div className="mini-form">
       <Paper elevation={0} className="form-paper">
@@ -17,7 +11,7 @@ const TopicForm = () => {
               <FormLabel>Topic Name</FormLabel>
             </div>
             <div className="form-input">
-              <TextField id="topicName" required />
+              <TextField id="topicName" value={name} required />
             </div>
           </div>
         </FormControl>
