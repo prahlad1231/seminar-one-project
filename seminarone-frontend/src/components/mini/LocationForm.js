@@ -1,7 +1,17 @@
-import { FormControl, FormLabel, Paper, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Paper,
+  TextField,
+} from "@mui/material";
 import "../../styles/mini/popup-form.css";
 
-const LocationForm = ({ venueName }) => {
+const LocationForm = ({ venueName, cancel }) => {
+  const addVenue = () => {
+    alert("Coming soon...");
+  };
+
   return (
     <div className="form-container">
       <Paper elevation={0} className="form-paper">
@@ -21,6 +31,19 @@ const LocationForm = ({ venueName }) => {
               <TextField id="state" required />
               <TextField id="website" />
             </div>
+          </div>
+          <div className="buttons">
+            <Button
+              sx={{ marginTop: "1rem" }}
+              id="addBtn"
+              type="submit"
+              onClick={addVenue}
+            >
+              Add
+            </Button>
+            <Button sx={{ marginTop: "1rem" }} id="cancelBtn" onClick={cancel}>
+              Cancel
+            </Button>
           </div>
         </FormControl>
       </Paper>

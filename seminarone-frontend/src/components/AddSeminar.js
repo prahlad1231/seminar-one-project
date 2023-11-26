@@ -22,11 +22,14 @@ import { useEffect, useState } from "react";
 
 import LocationForm from "../components/mini/LocationForm";
 import TopicForm from "../components/mini/TopicForm";
-import AutoCompleteTest from "./mini/AutocompleteTest";
+import { LocationService, TopicService } from "../services/SeminarService";
 
 const filter = createFilterOptions();
 
 const AddSeminar = () => {
+  const topicService = new TopicService();
+  const locationService = new LocationService();
+
   const [topicValue, setTopicValue] = useState("");
   const [venueValue, setVenueValue] = useState("");
   const [topicList, setTopicList] = useState([{ name: "" }]);
@@ -39,6 +42,7 @@ const AddSeminar = () => {
   });
 
   const [venueDialogValue, setVenueDialogValue] = useState({
+    id: 0,
     venueName: "",
     streetNumber: 0,
     streetName: "",
@@ -47,9 +51,22 @@ const AddSeminar = () => {
   });
 
   useEffect(() => {
+    topicService
+      .getAllTopics()
+      .then((result) => {
+        if (result.data) {
+          console.log(result.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Error!");
+      });
+
     setTopicList([{ name: "Topic 1" }, { name: "Topic 2" }]);
     setVenueList([
       {
+        id: 1,
         venueName: "Venue 1",
         streetNumber: 7,
         streetName: "Sydney Ave",
@@ -57,6 +74,7 @@ const AddSeminar = () => {
         website: "",
       },
       {
+        id: 2,
         venueName: "Venue 2",
         streetNumber: 8,
         streetName: "Melbourne Ave",
@@ -81,6 +99,14 @@ const AddSeminar = () => {
       });
     }
     toggleOpen(false);
+  };
+
+  const handleAdd = (data) => {
+    if (dialogType === "topic") {
+      console.log("Received: " + data);
+    } else if (dialogType === "venue") {
+      alert("Venue adding....");
+    }
   };
 
   return (
@@ -251,17 +277,23 @@ const AddSeminar = () => {
                             Oops! Missed something?
                           </DialogContentText>
                           {dialogType === "topic" ? (
-                            <TopicForm name={topicDialogValue.name} />
+                            <TopicForm
+                              name={topicDialogValue.name}
+                              cancel={handleClose}
+                            />
                           ) : (
                             <LocationForm
                               venueName={venueDialogValue.venueName}
+                              cancel={handleClose}
                             />
                           )}
                         </DialogContent>
-                        <DialogActions>
+                        {/* <DialogActions>
                           <Button onClick={handleClose}>Cancel</Button>
-                          <Button type="submit">Add</Button>
-                        </DialogActions>
+                          <Button type="submit" onClick={handleAdd}>
+                            Add
+                          </Button>
+                        </DialogActions> */}
                       </Dialog>
                     </div>
                   </div>
@@ -270,7 +302,7 @@ const AddSeminar = () => {
                   variant="contained"
                   sx={{ width: "100%", marginTop: "2rem" }}
                 >
-                  Add Venue
+                  Add Seminar
                 </Button>
               </Paper>
             </div>
