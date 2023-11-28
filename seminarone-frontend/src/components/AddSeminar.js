@@ -101,12 +101,16 @@ const AddSeminar = () => {
     toggleOpen(false);
   };
 
-  const handleAdd = (data) => {
-    if (dialogType === "topic") {
-      console.log("Received: " + data);
-    } else if (dialogType === "venue") {
-      alert("Venue adding....");
-    }
+  // const handleAdd = (data) => {
+  //   if (dialogType === "topic") {
+  //     console.log("Received: " + data);
+  //   } else if (dialogType === "venue") {
+  //     alert("Venue adding....");
+  //   }
+  // };
+
+  const addSeminar = () => {
+    console.log("Selected Topic: ");
   };
 
   return (
@@ -301,6 +305,7 @@ const AddSeminar = () => {
                 <Button
                   variant="contained"
                   sx={{ width: "100%", marginTop: "2rem" }}
+                  onClick={addSeminar}
                 >
                   Add Seminar
                 </Button>
