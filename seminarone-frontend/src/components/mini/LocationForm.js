@@ -6,10 +6,31 @@ import {
   TextField,
 } from "@mui/material";
 import "../../styles/mini/popup-form.css";
+import { useRef } from "react";
 
 const LocationForm = ({ venueName, cancel }) => {
+  const venueNameRef = useRef("");
+  const streetNumberRef = useRef("");
+  const streetNameRef = useRef("");
+  const stateRef = useRef("");
+  const websiteRef = useRef("");
+
   const addVenue = () => {
-    alert("Coming soon...");
+    const venueName = venueNameRef.current.value;
+    const streetNumber = streetNumberRef.current.value;
+    const streetName = streetNameRef.current.value;
+    const state = stateRef.current.value;
+    const website = websiteRef.current.value;
+
+    const location = {
+      venueName: venueName,
+      streetNumber: streetNumber,
+      streetName: streetName,
+      state: state,
+      website: website,
+    };
+
+    console.log(location);
   };
 
   return (
@@ -25,11 +46,21 @@ const LocationForm = ({ venueName, cancel }) => {
               <FormLabel>Website</FormLabel>
             </div>
             <div className="form-input">
-              <TextField id="venueName" value={venueName} required />
-              <TextField id="streetNumber" required type="number" />
-              <TextField id="streetName" required />
-              <TextField id="state" required />
-              <TextField id="website" />
+              <TextField
+                id="venueName"
+                value={venueName}
+                inputRef={venueNameRef}
+                required
+              />
+              <TextField
+                id="streetNumber"
+                inputRef={streetNumberRef}
+                required
+                type="number"
+              />
+              <TextField id="streetName" inputRef={streetNameRef} required />
+              <TextField id="state" inputRef={stateRef} required />
+              <TextField id="website" inputRef={websiteRef} />
             </div>
           </div>
           <div className="buttons">
