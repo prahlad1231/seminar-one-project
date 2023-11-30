@@ -7,8 +7,11 @@ import {
 } from "@mui/material";
 import "../../styles/mini/popup-form.css";
 import { useRef } from "react";
+import { LocationService } from "../../services/SeminarService";
 
 const LocationForm = ({ venueName, cancel }) => {
+  const locationService = new LocationService();
+
   const venueNameRef = useRef("");
   const streetNumberRef = useRef("");
   const streetNameRef = useRef("");
@@ -31,6 +34,15 @@ const LocationForm = ({ venueName, cancel }) => {
     };
 
     console.log(location);
+
+    locationService
+      .save(location)
+      .then((result) => {
+        alert(result.data.object.message);
+      })
+      .catch((err) => {
+        alert("Error");
+      });
   };
 
   return (
