@@ -60,28 +60,41 @@ const AddSeminar = () => {
       })
       .catch((err) => {
         console.log(err);
-        alert("Error!");
+        alert("Error loading topics!");
       });
 
-    setTopicList([{ name: "Topic 1" }, { name: "Topic 2" }]);
-    setVenueList([
-      {
-        id: 1,
-        venueName: "Venue 1",
-        streetNumber: 7,
-        streetName: "Sydney Ave",
-        state: "ACT",
-        website: "",
-      },
-      {
-        id: 2,
-        venueName: "Venue 2",
-        streetNumber: 8,
-        streetName: "Melbourne Ave",
-        state: "ACT",
-        website: "",
-      },
-    ]);
+    // setTopicList([{ name: "Topic 1" }, { name: "Topic 2" }]);
+
+    locationService
+      .getAllVenues()
+      .then((result) => {
+        if (result.data) {
+          console.log(result.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Error loading venues!");
+      });
+
+    // setVenueList([
+    //   {
+    //     id: 1,
+    //     venueName: "Venue 1",
+    //     streetNumber: 7,
+    //     streetName: "Sydney Ave",
+    //     state: "ACT",
+    //     website: "",
+    //   },
+    //   {
+    //     id: 2,
+    //     venueName: "Venue 2",
+    //     streetNumber: 8,
+    //     streetName: "Melbourne Ave",
+    //     state: "ACT",
+    //     website: "",
+    //   },
+    // ]);
   }, []);
 
   const handleClose = () => {
