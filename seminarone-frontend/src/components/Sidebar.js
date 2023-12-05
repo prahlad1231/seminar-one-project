@@ -5,6 +5,7 @@ import {
   Menu,
   RecentActors,
   Settings,
+  Topic,
 } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 
@@ -22,6 +23,11 @@ function Sidebar({ children }) {
       path: "/addSeminar",
       name: "Add Seminar",
       icon: <LibraryAdd />,
+    },
+    {
+      path: "/topicList",
+      name: "Topic List",
+      icon: <Topic />,
     },
     {
       path: "/seminarlist",

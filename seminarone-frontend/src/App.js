@@ -6,6 +6,7 @@ import SeminarList from "./components/SeminarList";
 import UserList from "./components/UserList";
 import Sidebar from "./components/Sidebar";
 import AddSeminar from "./components/AddSeminar";
+import TopicList from "./components/TopicList";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/seminarlist" element=<SeminarList /> />
           <Route path="/userlist" element=<UserList /> />
           <Route path="/addSeminar" element=<AddSeminar /> />
+          <Route path="/topicList" element=<TopicList /> />
         </Routes>
       </Sidebar>
     </div>
