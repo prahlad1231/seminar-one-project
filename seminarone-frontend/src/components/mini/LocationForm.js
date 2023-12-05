@@ -9,7 +9,7 @@ import "../../styles/mini/popup-form.css";
 import { useRef } from "react";
 import { LocationService } from "../../services/SeminarService";
 
-const LocationForm = ({ venueName, cancel }) => {
+const LocationForm = ({ venueName, cancel, onAdd }) => {
   const locationService = new LocationService();
 
   const venueNameRef = useRef("");
@@ -38,7 +38,8 @@ const LocationForm = ({ venueName, cancel }) => {
     locationService
       .save(location)
       .then((result) => {
-        alert(result.data.object.message);
+        alert(result.data.message);
+        onAdd(result.data.object);
       })
       .catch((err) => {
         alert("Error");

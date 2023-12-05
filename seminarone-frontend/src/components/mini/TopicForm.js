@@ -9,7 +9,7 @@ import "../../styles/mini/popup-form.css";
 import { useState } from "react";
 import { TopicService } from "../../services/SeminarService";
 
-const TopicForm = ({ name, cancel }) => {
+const TopicForm = ({ name, cancel, onAdd }) => {
   const topicService = new TopicService();
 
   const [topicDetails, setTopicDetails] = useState({
@@ -30,11 +30,13 @@ const TopicForm = ({ name, cancel }) => {
       .then((result) => {
         if (result.data) {
           console.log(result.data);
+          alert(result.data.message);
+          onAdd(result.data.object);
         }
       })
       .catch((err) => {
         console.log(err);
-        alert("Error");
+        alert("Error saving!");
       });
   };
 

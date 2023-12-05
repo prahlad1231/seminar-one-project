@@ -31,7 +31,7 @@ const AddSeminar = () => {
 
   const [topicValue, setTopicValue] = useState("");
   const [venueValue, setVenueValue] = useState("");
-  const [topicList, setTopicList] = useState([{ name: "" }]);
+  const [topicList, setTopicList] = useState([{ id: "", name: "" }]);
   const [venueList, setVenueList] = useState([]);
   const [open, toggleOpen] = useState(false);
   const [dialogType, setDialogType] = useState("");
@@ -120,6 +120,14 @@ const AddSeminar = () => {
   //     alert("Venue adding....");
   //   }
   // };
+
+  const addTopic = (topic) => {
+    setTopicList(...topicList, topic);
+  };
+
+  const addVenue = (venue) => {
+    setVenueList(...venueList, venue);
+  };
 
   const addSeminar = () => {
     console.log("Selected Topic: ");
@@ -295,11 +303,13 @@ const AddSeminar = () => {
                           {dialogType === "topic" ? (
                             <TopicForm
                               name={topicDialogValue.name}
+                              onAdd={addTopic}
                               cancel={handleClose}
                             />
                           ) : (
                             <LocationForm
                               venueName={venueDialogValue.venueName}
+                              onAdd={addVenue}
                               cancel={handleClose}
                             />
                           )}
