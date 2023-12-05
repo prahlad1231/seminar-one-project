@@ -32,6 +32,7 @@ const TopicForm = ({ name, cancel, onAdd }) => {
           console.log(result.data);
           alert(result.data.message);
           onAdd(result.data.object);
+          cancel();
         }
       })
       .catch((err) => {

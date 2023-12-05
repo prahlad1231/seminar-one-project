@@ -40,6 +40,7 @@ const LocationForm = ({ venueName, cancel, onAdd }) => {
       .then((result) => {
         alert(result.data.message);
         onAdd(result.data.object);
+        cancel();
       })
       .catch((err) => {
         alert("Error");

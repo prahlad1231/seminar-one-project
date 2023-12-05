@@ -32,7 +32,16 @@ const AddSeminar = () => {
   const [topicValue, setTopicValue] = useState("");
   const [venueValue, setVenueValue] = useState("");
   const [topicList, setTopicList] = useState([{ id: "", name: "" }]);
-  const [venueList, setVenueList] = useState([]);
+  const [venueList, setVenueList] = useState([
+    {
+      id: "",
+      venueName: "",
+      streetName: "",
+      streetNumber: "",
+      state: "",
+      website: "",
+    },
+  ]);
   const [open, toggleOpen] = useState(false);
   const [dialogType, setDialogType] = useState("");
 
@@ -55,10 +64,14 @@ const AddSeminar = () => {
       .then((result) => {
         if (result.data) {
           console.log(result.data);
+          setTopicList(result.data.object);
         }
       })
       .catch((err) => {
         console.log(err);
+        if (err.response.data) {
+          alert(err.response.data.message);
+        }
         alert("Error loading topics!");
       });
 
@@ -69,10 +82,14 @@ const AddSeminar = () => {
       .then((result) => {
         if (result.data) {
           console.log(result.data);
+          setVenueList(result.data.object);
         }
       })
       .catch((err) => {
         console.log(err);
+        if (err.response.data) {
+          alert(err.response.data.message);
+        }
         alert("Error loading venues!");
       });
 
