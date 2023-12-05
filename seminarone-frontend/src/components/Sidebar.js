@@ -2,6 +2,7 @@ import {
   Dashboard,
   LibraryAdd,
   ListAlt,
+  LocationOn,
   Menu,
   RecentActors,
   Settings,
@@ -28,6 +29,11 @@ function Sidebar({ children }) {
       path: "/topicList",
       name: "Topic List",
       icon: <Topic />,
+    },
+    {
+      path: "/locationList",
+      name: "Location List",
+      icon: <LocationOn />,
     },
     {
       path: "/seminarlist",

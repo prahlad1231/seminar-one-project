@@ -7,6 +7,7 @@ import UserList from "./components/UserList";
 import Sidebar from "./components/Sidebar";
 import AddSeminar from "./components/AddSeminar";
 import TopicList from "./components/TopicList";
+import LocationList from "./components/LocationList";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/userlist" element=<UserList /> />
           <Route path="/addSeminar" element=<AddSeminar /> />
           <Route path="/topicList" element=<TopicList /> />
+          <Route path="/locationList" element=<LocationList /> />
         </Routes>
       </Sidebar>
     </div>
