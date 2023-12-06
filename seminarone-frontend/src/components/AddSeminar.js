@@ -31,6 +31,8 @@ const AddSeminar = () => {
 
   const [topicValue, setTopicValue] = useState("");
   const [venueValue, setVenueValue] = useState("");
+  const [topicId, setTopicId] = useState();
+  const [venueId, setVenueId] = useState();
   const [topicList, setTopicList] = useState([{ id: "", name: "" }]);
   const [venueList, setVenueList] = useState([
     {
@@ -146,9 +148,7 @@ const AddSeminar = () => {
     setVenueList(...venueList, venue);
   };
 
-  const addSeminar = () => {
-    console.log("Selected Topic: ");
-  };
+  const addSeminar = () => {};
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
