@@ -16,13 +16,13 @@ public interface APIConstants {
 
     /****************** APIs FOR SEMINAR CONTROLLER ****************/
 
-    String SEMINAR = "/seminar";
+    String SEMINAR = BASE_API + "/seminar";
 
     String ADD_SEMINAR = "/add";
 
     /****************** BRANCH ******************/
 
-    String BRANCH = "/branch";
+    String BRANCH = BASE_API + "/branch";
     String FIND_BY_BRANCH_NUMBER =  "/{branchNumber}";
 
     /****************** LOCATION ****************/

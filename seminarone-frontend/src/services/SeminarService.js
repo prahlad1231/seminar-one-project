@@ -16,6 +16,14 @@ class SeminarService {
       url: API_URL + `seminar/find/${seminarId}`,
     });
   }
+
+  save(seminarDetails) {
+    return axios({
+      method: "post",
+      data: seminarDetails,
+      url: API_URL + `seminar/add`,
+    });
+  }
 }
 
 class LocationService {

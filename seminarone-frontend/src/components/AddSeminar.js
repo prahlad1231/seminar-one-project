@@ -17,22 +17,25 @@ import {
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import LocationForm from "../components/mini/LocationForm";
 import TopicForm from "../components/mini/TopicForm";
-import { LocationService, TopicService } from "../services/SeminarService";
+import {
+  LocationService,
+  SeminarService,
+  TopicService,
+} from "../services/SeminarService";
 
 const filter = createFilterOptions();
 
 const AddSeminar = () => {
   const topicService = new TopicService();
   const locationService = new LocationService();
+  const seminarService = new SeminarService();
 
   const [topicValue, setTopicValue] = useState("");
   const [venueValue, setVenueValue] = useState("");
-  const [topicId, setTopicId] = useState();
-  const [venueId, setVenueId] = useState();
   const [topicList, setTopicList] = useState([{ id: "", name: "" }]);
   const [venueList, setVenueList] = useState([
     {
@@ -59,6 +62,13 @@ const AddSeminar = () => {
     state: "",
     website: "",
   });
+
+  const titleRef = useRef();
+  const startDateRef = useRef();
+  const endDateRef = useRef();
+  const priceRef = useRef();
+  const topicRef = useRef();
+  const venueRef = useRef();
 
   useEffect(() => {
     topicService
@@ -140,6 +150,17 @@ const AddSeminar = () => {
   //   }
   // };
 
+  const clearForm = () => {
+    titleRef.current.value = "";
+    startDateRef.current.value = "";
+    endDateRef.current.value = "";
+    priceRef.current.value = "";
+    setTopicValue("");
+    setVenueValue("");
+    topicRef.current.value = "";
+    venueRef.current.value = "";
+  };
+
   const addTopic = (topic) => {
     setTopicList(...topicList, topic);
   };
@@ -148,7 +169,59 @@ const AddSeminar = () => {
     setVenueList(...venueList, venue);
   };
 
-  const addSeminar = () => {};
+  const addSeminar = () => {
+    const title = titleRef.current.value;
+    var startDate = startDateRef.current.value;
+    startDate = new Date(startDate).toLocaleDateString("fr-CA");
+    var endDate = endDateRef.current.value;
+    endDate = new Date(endDate).toLocaleDateString("fr-CA");
+    const price = priceRef.current.value;
+
+    if (
+      title === "" ||
+      startDate === "" ||
+      endDate === "" ||
+      price === "" ||
+      topicValue === "" ||
+      venueValue === ""
+    ) {
+      alert("Please fill all the details!");
+      return;
+    }
+
+    console.log(
+      `title: ${title}, start date: ${startDate}, end date: ${endDate}, price: ${price}, topic: ${JSON.stringify(
+        topicValue
+      )}, venue: ${JSON.stringify(venueValue)}, topicId: ${
+        topicValue.id
+      }, venueId: ${venueValue.id}`
+    );
+
+    const seminarDetails = {
+      title: title,
+      startDate: startDate,
+      endDate: endDate,
+      price: price,
+      topicEntityId: topicValue.id,
+      locationEntityId: venueValue.id,
+    };
+    console.log(`Seminar Details: ${JSON.stringify(seminarDetails)}`);
+
+    seminarService
+      .save(seminarDetails)
+      .then((result) => {
+        if (result && result.data) {
+          alert(result.data.message);
+        }
+        clearForm();
+      })
+      .catch((err) => {
+        if (err.response) {
+          alert(err.response.data.message);
+        }
+        alert("ERROR!");
+      });
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -183,11 +256,16 @@ const AddSeminar = () => {
                       <FormLabel>Venue</FormLabel>
                     </div>
                     <div className="form-input">
-                      <TextField id="title" required />
-                      <DatePicker id="startDate" required />
-                      <DatePicker id="endDate" required />
+                      <TextField id="title" inputRef={titleRef} required />
+                      <DatePicker
+                        id="startDate"
+                        inputRef={startDateRef}
+                        required
+                      />
+                      <DatePicker id="endDate" inputRef={endDateRef} required />
                       <TextField
                         id="price"
+                        inputRef={priceRef}
                         type="number"
                         inputProps={{
                           maxLength: 13,
@@ -215,6 +293,7 @@ const AddSeminar = () => {
                             // setTopicValue(newValue);
                           } else {
                             setTopicValue(newValue);
+                            console.log(newValue);
                           }
                         }}
                         filterOptions={(options, params) => {
@@ -248,7 +327,12 @@ const AddSeminar = () => {
                         sx={{ width: 300 }}
                         freeSolo
                         renderInput={(params) => (
-                          <TextField {...params} label="Enter Topic Name" />
+                          <TextField
+                            {...params}
+                            label="Enter Topic Name"
+                            inputRef={topicRef}
+                            required
+                          />
                         )}
                       />
 
@@ -270,6 +354,7 @@ const AddSeminar = () => {
                             });
                           } else {
                             setVenueValue(newValue);
+                            console.log(newValue);
                           }
                         }}
                         filterOptions={(options, params) => {
@@ -303,7 +388,12 @@ const AddSeminar = () => {
                         sx={{ width: 300 }}
                         freeSolo
                         renderInput={(params) => (
-                          <TextField {...params} label="Enter Venue" />
+                          <TextField
+                            {...params}
+                            label="Enter Venue"
+                            inputRef={venueRef}
+                            required
+                          />
                         )}
                       />
 
@@ -342,11 +432,19 @@ const AddSeminar = () => {
                   </div>
                 </FormControl>
                 <Button
+                  type="submit"
                   variant="contained"
                   sx={{ width: "100%", marginTop: "2rem" }}
                   onClick={addSeminar}
                 >
                   Add Seminar
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{ width: "100%", marginTop: "2rem" }}
+                  onClick={clearForm}
+                >
+                  Cancel
                 </Button>
               </Paper>
             </div>
