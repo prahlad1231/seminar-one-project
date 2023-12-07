@@ -20,6 +20,6 @@ public class BaseEntity implements Serializable {
     @Column(name = "created_date", updatable = false)
     private final Date createdDate = new Date();
 
-    private String status = "A";
+    private String status = "A"; // todo: fix this, it is not working
 
 }

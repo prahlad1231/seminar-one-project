@@ -12,6 +12,7 @@ const TopicList = () => {
       .getAllTopics()
       .then((result) => {
         setTopicList(result.data.object);
+        console.log(result.data.object);
       })
       .catch((err) => {
         console.log(err);

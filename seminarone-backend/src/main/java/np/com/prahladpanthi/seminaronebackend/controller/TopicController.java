@@ -48,7 +48,8 @@ public class TopicController extends BaseController {
             throw new InsufficientDataException("Please provide all the details!");
         }
         if (topicService.existsByName(topicDto.getName())) throw new AlreadyExistsException("Topic already exists!");
-        TopicEntity topicEntity = topicService.save(topicMapper.mapToEntity(topicDto));
+        TopicEntity te = topicMapper.mapToEntity(topicDto);
+        TopicEntity topicEntity = topicService.save(te);
         return new ResponseEntity<>(new ResponseDto("Successfully saved!", topicMapper.mapToDto(topicEntity)), HttpStatus.CREATED);
     }
 
