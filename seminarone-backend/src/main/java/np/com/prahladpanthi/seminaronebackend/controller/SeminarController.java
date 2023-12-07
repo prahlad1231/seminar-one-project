@@ -28,7 +28,7 @@ public class SeminarController extends BaseController {
 
     @GetMapping(APIConstants.FIND_ALL)
     public ResponseEntity<ResponseDto> findAll() {
-        return new ResponseEntity<>(new ResponseDto("Successfully fetched!", seminarService.findAll()), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto("Successfully fetched!", seminarService.getAllSeminars()), HttpStatus.OK);
     }
 
     @GetMapping(APIConstants.FIND_BY_ID)

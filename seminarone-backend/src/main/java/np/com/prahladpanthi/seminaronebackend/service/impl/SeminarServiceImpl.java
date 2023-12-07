@@ -13,6 +13,8 @@ import np.com.prahladpanthi.seminaronebackend.service.impl.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SeminarServiceImpl extends BaseServiceImpl<SeminarEntity, Long> implements ISeminarService {
 
@@ -33,6 +35,14 @@ public class SeminarServiceImpl extends BaseServiceImpl<SeminarEntity, Long> imp
         this.seminarMapper = seminarMapper;
     }
 
+
+    @Override
+    public List<SeminarDto> getAllSeminars() {
+        List<SeminarEntity> seminarEntityList = findAll();
+
+        return seminarMapper.mapToDto(seminarEntityList);
+
+    }
 
     @Override
     public SeminarDto addNewSeminar(SeminarDto seminarDto) {
