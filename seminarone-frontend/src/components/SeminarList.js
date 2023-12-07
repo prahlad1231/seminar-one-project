@@ -12,8 +12,8 @@ const SeminarList = () => {
       startDate: "",
       endDate: "",
       price: "",
-      topicEntityId: "",
-      locationEntityId: "",
+      topicName: "",
+      venueName: "",
     },
   ]);
 
@@ -21,8 +21,13 @@ const SeminarList = () => {
     seminarService
       .getAllSeminars()
       .then((result) => {
-        setSeminarList(result.data.object);
-        console.log(JSON.stringify(seminarList));
+        const formattedSeminarList = result.data.object.map((seminar) => ({
+          ...seminar,
+          startDate: formatDate(seminar.startDate),
+          endDate: formatDate(seminar.endDate),
+        }));
+        setSeminarList(formattedSeminarList);
+        console.log(JSON.stringify(formattedSeminarList));
       })
       .catch((err) => {
         if (err.response.data) {
@@ -38,9 +43,17 @@ const SeminarList = () => {
     { field: "startDate", headerName: "Start Date", width: 150 },
     { field: "endDate", headerName: "End Date", width: 150 },
     { field: "price", headerName: "Price", width: 150 },
-    { field: "topicEntityId", headerName: "Topic", width: 150 },
-    { field: "locationEntityId", headerName: "Venue", width: 150 },
+    { field: "topicName", headerName: "Topic", width: 150 },
+    { field: "venueName", headerName: "Venue", width: 150 },
   ];
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
   return (
     <div style={{ height: 400, width: "100%" }}>
