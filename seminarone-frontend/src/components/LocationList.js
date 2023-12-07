@@ -32,15 +32,15 @@ const LocationList = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "venueName", headerName: "Venue Name", width: 130 },
-    { field: "streetName", headerName: "Street Name", width: 130 },
+    { field: "venueName", headerName: "Venue Name", width: 150 },
+    { field: "streetName", headerName: "Street Name", width: 150 },
     { field: "streetNumber", headerName: "Street Number", width: 130 },
     { field: "state", headerName: "State", width: 130 },
-    { field: "website", headerName: "Website", width: 130 },
+    { field: "website", headerName: "Website", width: 180 },
   ];
   return (
     <div style={{ height: 400, width: "100%" }}>
-      <h2 style={{ marginBottom: "1.5rem" }}>List of Topics</h2>
+      <h2 style={{ marginBottom: "1.5rem" }}>List of Venues</h2>
       <DataGrid
         rows={locationList}
         columns={columns}

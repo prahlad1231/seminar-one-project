@@ -57,7 +57,7 @@ const SeminarList = () => {
 
   return (
     <div style={{ height: 400, width: "100%" }}>
-      <h2 style={{ marginBottom: "1.5rem" }}>List of Topics</h2>
+      <h2 style={{ marginBottom: "1.5rem" }}>List of Seminars</h2>
       <DataGrid
         rows={seminarList}
         columns={columns}
