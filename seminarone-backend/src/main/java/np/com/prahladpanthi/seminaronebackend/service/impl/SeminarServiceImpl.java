@@ -1,6 +1,7 @@
 package np.com.prahladpanthi.seminaronebackend.service.impl;
 
 import np.com.prahladpanthi.seminaronebackend.dto.SeminarDto;
+import np.com.prahladpanthi.seminaronebackend.dto.custom.SeminarListCustomDto;
 import np.com.prahladpanthi.seminaronebackend.entity.SeminarEntity;
 import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataException;
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
@@ -42,6 +43,11 @@ public class SeminarServiceImpl extends BaseServiceImpl<SeminarEntity, Long> imp
 
         return seminarMapper.mapToDto(seminarEntityList);
 
+    }
+
+    @Override
+    public List<SeminarListCustomDto> getAllCustomSeminars() {
+        return seminarRepository.findAllCustomSeminar();
     }
 
     @Override
