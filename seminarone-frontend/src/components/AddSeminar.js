@@ -74,17 +74,22 @@ const AddSeminar = () => {
     topicService
       .getAllTopics()
       .then((result) => {
-        if (result.data) {
+        if (result && result.data) {
           console.log(result.data);
           setTopicList(result.data.object);
         }
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.data) {
+        if (err.response && err.response.data) {
           alert(err.response.data.message);
+        } else if (err.message === "Network Error") {
+          alert(
+            "Network error. Please check your internet connection or try again later."
+          );
+        } else {
+          alert("Error loading topics!");
         }
-        alert("Error loading topics!");
       });
 
     // setTopicList([{ name: "Topic 1" }, { name: "Topic 2" }]);
@@ -92,17 +97,23 @@ const AddSeminar = () => {
     locationService
       .getAllVenues()
       .then((result) => {
-        if (result.data) {
+        if (result && result.data) {
           console.log(result.data);
           setVenueList(result.data.object);
         }
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.data) {
+        if (err.response && err.response.data) {
           alert(err.response.data.message);
+        } else if (err.message === "Network Error") {
+          // alert(
+          //   "Network error. Please check your internet connection or try again later."
+          // );
+          console.log("Network error");
+        } else {
+          alert("Error loading venues!");
         }
-        alert("Error loading venues!");
       });
 
     // setVenueList([

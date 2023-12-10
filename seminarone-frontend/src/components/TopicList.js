@@ -11,15 +11,24 @@ const TopicList = () => {
     topicService
       .getAllTopics()
       .then((result) => {
-        setTopicList(result.data.object);
-        console.log(result.data.object);
+        if (result && result.data) {
+          setTopicList(result.data.object);
+          console.log(result.data.object);
+        } else {
+          alert("Server Error!");
+        }
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.data) {
+        if (err.response && err.response.data) {
           alert(err.response.data.message);
+        } else if (err.message === "Network Error") {
+          alert(
+            "Network error. Please check your internet connection or try again later."
+          );
+        } else {
+          alert("Error loading topics!");
         }
-        alert("Error loading topics!");
       });
   }, []);
 

@@ -20,13 +20,20 @@ const LocationList = () => {
     locationService
       .getAllVenues()
       .then((result) => {
-        setLocationList(result.data.object);
+        if (result && result.data) {
+          setLocationList(result.data.object);
+        }
       })
       .catch((err) => {
-        if (err.response.data) {
+        if (err.response && err.response.data) {
           alert(err.response.data.message);
+        } else if (err.message === "Network Error") {
+          alert(
+            "Network error. Please check your internet connection or try again later."
+          );
+        } else {
+          alert("Error loading venues!");
         }
-        alert("Error loading venues!");
       });
   }, []);
 
