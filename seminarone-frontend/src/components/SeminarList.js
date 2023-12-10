@@ -21,19 +21,26 @@ const SeminarList = () => {
     seminarService
       .getAllSeminars()
       .then((result) => {
-        const formattedSeminarList = result.data.object.map((seminar) => ({
-          ...seminar,
-          startDate: formatDate(seminar.startDate),
-          endDate: formatDate(seminar.endDate),
-        }));
-        setSeminarList(formattedSeminarList);
-        console.log(JSON.stringify(formattedSeminarList));
+        if (result && result.data) {
+          const formattedSeminarList = result.data.object.map((seminar) => ({
+            ...seminar,
+            startDate: formatDate(seminar.startDate),
+            endDate: formatDate(seminar.endDate),
+          }));
+          setSeminarList(formattedSeminarList);
+          console.log(JSON.stringify(formattedSeminarList));
+        }
       })
       .catch((err) => {
-        if (err.response.data) {
+        if (err.response && err.response.data) {
           alert(err.response.data.message);
+        } else if (err.message === "Network Error") {
+          alert(
+            "Network error. Please check your internet connection or try again later."
+          );
+        } else {
+          alert("Error loading seminars!");
         }
-        alert("Error loading seminars!");
       });
   }, []);
 
