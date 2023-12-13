@@ -1,6 +1,7 @@
 package np.com.prahladpanthi.seminaronebackend.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 @MappedSuperclass
 @Getter
 @Setter
+@Builder
 public class BaseEntity implements Serializable {
 
     @Id
