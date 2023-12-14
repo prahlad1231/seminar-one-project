@@ -4,13 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "branch")
+@Builder
+@AllArgsConstructor
 public class BranchEntity extends BaseEntity {
 
     @NotNull
@@ -21,4 +22,8 @@ public class BranchEntity extends BaseEntity {
     private String address;
 
     private String telephone;
+
+    public BranchEntity() {
+
+    }
 }

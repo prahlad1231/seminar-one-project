@@ -1,5 +1,5 @@
 package np.com.prahladpanthi.seminaronebackend.service.impl;
 
 
-public class BranchServiceImplTest {
+public class BranchServiceImplTests {
 }
