@@ -15,5 +15,5 @@ public class RoleEntity extends BaseEntity {
 
     @NotNull
     @Column(name = "role", unique = true)
-    private String role;
+    private String name;
 }
