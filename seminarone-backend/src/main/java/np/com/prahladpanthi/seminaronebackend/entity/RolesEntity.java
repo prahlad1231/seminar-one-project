@@ -11,7 +11,7 @@ import lombok.Setter;
 @Table(name = "roles")
 @Getter
 @Setter
-public class RoleEntity extends BaseEntity {
+public class RolesEntity extends BaseEntity {
 
     @NotNull
     @Column(name = "role", unique = true)
