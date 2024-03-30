@@ -30,6 +30,9 @@ public class UserEntity extends BaseEntity{
     @NotNull
     private String password;
 
+    @NotNull
+    private Boolean active = false;
+
     @Column(name = "postal_code")
     private String postalCode;
 
@@ -42,9 +45,7 @@ public class UserEntity extends BaseEntity{
     @Column(name = "expiry_date")
     private Date expiryDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-                inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<RolesEntity> rolesEntityList = new ArrayList<>();
+    @ManyToOne
+    private RolesEntity rolesEntity;
 
 }

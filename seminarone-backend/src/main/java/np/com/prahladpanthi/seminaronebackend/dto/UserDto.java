@@ -15,6 +15,8 @@ public class UserDto extends BaseDto {
 
     private String username;
 
+    private Boolean active;
+
     private String postalCode;
 
     private String email;
@@ -22,4 +24,6 @@ public class UserDto extends BaseDto {
     private String creditCardNumber;
 
     private Date expiryDate;
+
+    private Long roleEntityId;
 }

@@ -14,8 +14,4 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("http://localhost:3000")
 public class BaseController {
 
-    @GetMapping("/test")
-    public ResponseEntity<ResponseDto> test() {
-        return new ResponseEntity<>(new ResponseDto("Successful!"), HttpStatus.OK);
-    }
 }
