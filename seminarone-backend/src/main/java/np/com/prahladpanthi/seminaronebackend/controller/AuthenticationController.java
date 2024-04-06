@@ -39,12 +39,12 @@ public class AuthenticationController extends BaseController {
         this.userDetailsService = userDetailsService;
     }
 
-    @GetMapping("/test")
+    @GetMapping("/api/v1/test")
     public ResponseEntity<ResponseDto> test() {
         return new ResponseEntity<>(new ResponseDto("Test successful!"), HttpStatus.OK);
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/api/v1/authenticate")
     public ResponseEntity<ResponseDto> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest,
                                                                  @RequestParam(defaultValue = "web", value = "source") String source) throws AuthenticationException {
         Optional<UserEntity> optionalUser;
