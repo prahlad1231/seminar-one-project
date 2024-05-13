@@ -1,5 +1,6 @@
 package np.com.prahladpanthi.seminaronebackend.security.config;
 
+import jakarta.servlet.DispatcherType;
 import lombok.extern.slf4j.Slf4j;
 import np.com.prahladpanthi.seminaronebackend.security.jwt.JwtAuthenticationEntryPoint;
 import np.com.prahladpanthi.seminaronebackend.security.jwt.JwtRequestFilter;
@@ -49,16 +50,18 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable())
+        return http.csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers(AUTH_WHITELIST).permitAll()
+                    request
+                            .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                            .requestMatchers(AUTH_WHITELIST).permitAll()
 //                            .requestMatchers(HttpMethod.GET,"/api/v1/test").permitAll()
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -31,7 +31,7 @@ public class AuthenticationController extends BaseController {
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    public AuthenticationController(IUserService userService,
+    public AuthenticationController (IUserService userService,
                                     JwtToken jwtToken,
                                     UserDetailsServiceImpl userDetailsService) {
         this.userService = userService;
