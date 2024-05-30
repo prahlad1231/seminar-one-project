@@ -2,7 +2,7 @@ package np.com.prahladpanthi.seminaronebackend.util;
 
 public interface APIConstants {
 
-    String BASE_API = "/api/seminarone";
+    String BASE_API = "/api/seminarone/v1";
 
     /****************** COMMON ****************/
 

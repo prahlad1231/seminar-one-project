@@ -1,5 +1,6 @@
 package np.com.prahladpanthi.seminaronebackend.security.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,6 +11,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private Boolean active;

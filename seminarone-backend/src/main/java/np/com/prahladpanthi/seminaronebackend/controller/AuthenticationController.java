@@ -7,12 +7,15 @@ import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.security.jwt.JwtRequest;
 import np.com.prahladpanthi.seminaronebackend.security.jwt.JwtResponse;
 import np.com.prahladpanthi.seminaronebackend.security.jwt.JwtTokenIssuer;
+import np.com.prahladpanthi.seminaronebackend.security.service.UserDetailsImpl;
 import np.com.prahladpanthi.seminaronebackend.security.service.UserDetailsServiceImpl;
 import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.BCryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +42,12 @@ public class AuthenticationController extends BaseController {
         this.userDetailsService = userDetailsService;
     }
 
-    @GetMapping("/v1/test")
+    @GetMapping("/test")
     public ResponseEntity<ResponseDto> test() {
         return new ResponseEntity<>(new ResponseDto("Test successful!"), HttpStatus.OK);
     }
 
-    @PostMapping("/v1/authenticate")
+    @PostMapping("/authenticate")
     public ResponseEntity<ResponseDto> authenticate(@RequestBody JwtRequest authenticationRequest,
                                                                  @RequestParam(defaultValue = "web", value = "source") String source) throws AuthenticationException {
         Optional<UserEntity> optionalUser;
@@ -76,5 +79,25 @@ public class AuthenticationController extends BaseController {
     private boolean authenticate(UserEntity user, String password) {
 
         return BCryptUtils.match(password, user.getPassword());
+    }
+
+    @GetMapping("/usertest")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<ResponseDto> userTest() {
+        return new ResponseEntity<>(new ResponseDto("Successfully accessed by user!"), HttpStatus.OK);
+    }
+
+    @GetMapping("/admintest")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ResponseDto> adminTest() {
+        return new ResponseEntity<>(new ResponseDto("Successfully accessed by admin!"), HttpStatus.OK);
+    }
+
+    @GetMapping("/secured")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    public ResponseEntity<ResponseDto> anyUserTest(Authentication authentication) {
+        var principal = (UserDetailsImpl) authentication.getPrincipal();
+        UserEntity user = userService.findByUsername(principal.getUsername()).orElseThrow();
+        return new ResponseEntity<>(new ResponseDto("Successfully accessed by user: " + user.getUsername()), HttpStatus.OK);
     }
 }
