@@ -6,7 +6,7 @@ import np.com.prahladpanthi.seminaronebackend.entity.UserEntity;
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.security.jwt.JwtRequest;
 import np.com.prahladpanthi.seminaronebackend.security.jwt.JwtResponse;
-import np.com.prahladpanthi.seminaronebackend.security.jwt.JwtToken;
+import np.com.prahladpanthi.seminaronebackend.security.jwt.JwtTokenIssuer;
 import np.com.prahladpanthi.seminaronebackend.security.service.UserDetailsServiceImpl;
 import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.BCryptUtils;
@@ -26,26 +26,26 @@ public class AuthenticationController extends BaseController {
 
     private IUserService userService;
 
-    private JwtToken jwtToken;
+    private JwtTokenIssuer jwtTokenIssuer;
 
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     public AuthenticationController (IUserService userService,
-                                    JwtToken jwtToken,
+                                    JwtTokenIssuer jwtTokenIssuer,
                                     UserDetailsServiceImpl userDetailsService) {
         this.userService = userService;
-        this.jwtToken = jwtToken;
+        this.jwtTokenIssuer = jwtTokenIssuer;
         this.userDetailsService = userDetailsService;
     }
 
-    @GetMapping("/api/v1/test")
+    @GetMapping("/v1/test")
     public ResponseEntity<ResponseDto> test() {
         return new ResponseEntity<>(new ResponseDto("Test successful!"), HttpStatus.OK);
     }
 
-    @PostMapping("/api/v1/authenticate")
-    public ResponseEntity<ResponseDto> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest,
+    @PostMapping("/v1/authenticate")
+    public ResponseEntity<ResponseDto> authenticate(@RequestBody JwtRequest authenticationRequest,
                                                                  @RequestParam(defaultValue = "web", value = "source") String source) throws AuthenticationException {
         Optional<UserEntity> optionalUser;
         UserEntity user = null;
@@ -67,7 +67,7 @@ public class AuthenticationController extends BaseController {
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        final String token = jwtToken.generateToken(userDetails);
+        final String token = jwtTokenIssuer.generateToken(userDetails);
 
         return new ResponseEntity<>(new ResponseDto("Successfully authenticated!",
                 new JwtResponse(token, user.getRolesEntity().getName(), user.getId(), user.getUsername())), HttpStatus.OK);

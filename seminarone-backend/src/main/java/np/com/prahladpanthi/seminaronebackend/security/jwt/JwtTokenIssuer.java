@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -15,14 +16,15 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-public class JwtToken implements Serializable {
+@RequiredArgsConstructor
+public class JwtTokenIssuer implements Serializable {
+
+
+    private final JwtProperties jwtProperties;
 
     private static final long serialVersionUID = -827123L;
 
     private static final long JWT_TOKEN_VALIDITY = 12 * 60 * 60; // 12 hours
-
-    @Value("${seminarone-backend.jwt.secretkey}")
-    private String secret;
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -33,7 +35,7 @@ public class JwtToken implements Serializable {
         return Jwts.builder().setClaims(claims).setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * JWT_TOKEN_VALIDITY))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+                .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecretKey()).compact();
     }
 
     public <T> T getClaimsFromToken(String token, Function<Claims, T> claimsResolver) {
@@ -42,7 +44,7 @@ public class JwtToken implements Serializable {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(jwtProperties.getSecretKey()).parseClaimsJws(token).getBody();
     }
 
     public String getUsernameFromToken(String token) {
