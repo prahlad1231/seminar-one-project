@@ -8,6 +8,7 @@ import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataExceptio
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.mapper.TopicMapper;
 import np.com.prahladpanthi.seminaronebackend.service.ITopicService;
+import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.APIConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,20 @@ import java.util.List;
 @RequestMapping(APIConstants.TOPIC)
 public class TopicController extends BaseController {
 
-    private ITopicService topicService;
+    private final ITopicService topicService;
 
-    private TopicMapper topicMapper;
+    private final TopicMapper topicMapper;
+
+    private final IUserService userService;
 
     @Autowired
-    public TopicController(ITopicService topicService, TopicMapper topicMapper) {
+    public TopicController(ITopicService topicService,
+                           TopicMapper topicMapper,
+                           IUserService userService) {
+        super(userService);
         this.topicService = topicService;
         this.topicMapper = topicMapper;
+        this.userService = userService;
     }
 
     @GetMapping(APIConstants.FIND_ALL)

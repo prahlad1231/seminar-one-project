@@ -1,5 +1,6 @@
 package np.com.prahladpanthi.seminaronebackend.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import np.com.prahladpanthi.seminaronebackend.dto.ResponseDto;
 import np.com.prahladpanthi.seminaronebackend.entity.UserEntity;
@@ -27,16 +28,17 @@ import java.util.Optional;
 @Slf4j
 public class AuthenticationController extends BaseController {
 
-    private IUserService userService;
+    private final IUserService userService;
 
-    private JwtTokenIssuer jwtTokenIssuer;
+    private final JwtTokenIssuer jwtTokenIssuer;
 
-    private UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     public AuthenticationController (IUserService userService,
                                     JwtTokenIssuer jwtTokenIssuer,
                                     UserDetailsServiceImpl userDetailsService) {
+        super(userService);
         this.userService = userService;
         this.jwtTokenIssuer = jwtTokenIssuer;
         this.userDetailsService = userDetailsService;
@@ -96,8 +98,7 @@ public class AuthenticationController extends BaseController {
     @GetMapping("/secured")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<ResponseDto> anyUserTest(Authentication authentication) {
-        var principal = (UserDetailsImpl) authentication.getPrincipal();
-        UserEntity user = userService.findByUsername(principal.getUsername()).orElseThrow();
+        UserEntity user = getLoggedInUser(authentication);
         return new ResponseEntity<>(new ResponseDto("Successfully accessed by user: " + user.getUsername()), HttpStatus.OK);
     }
 }

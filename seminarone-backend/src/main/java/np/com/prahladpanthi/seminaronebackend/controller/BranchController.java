@@ -9,6 +9,7 @@ import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataExceptio
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.mapper.BranchMapper;
 import np.com.prahladpanthi.seminaronebackend.service.IBranchService;
+import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.APIConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,14 +22,20 @@ import java.util.List;
 @RequestMapping(APIConstants.BRANCH)
 public class BranchController extends BaseController {
 
-    private IBranchService branchService;
+    private final IBranchService branchService;
 
-    private BranchMapper branchMapper;
+    private final BranchMapper branchMapper;
+
+    private final IUserService userService;
 
     @Autowired
-    public BranchController(IBranchService branchService, BranchMapper branchMapper) {
+    public BranchController(IBranchService branchService,
+                            BranchMapper branchMapper,
+                            IUserService userService) {
+        super(userService);
         this.branchService = branchService;
         this.branchMapper = branchMapper;
+        this.userService = userService;
     }
 
     @GetMapping(APIConstants.FIND_BY_ID)

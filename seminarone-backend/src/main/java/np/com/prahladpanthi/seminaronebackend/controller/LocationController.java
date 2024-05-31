@@ -8,6 +8,7 @@ import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataExceptio
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.mapper.LocationMapper;
 import np.com.prahladpanthi.seminaronebackend.service.ILocationService;
+import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.APIConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,20 @@ import java.util.List;
 @RequestMapping(APIConstants.LOCATION)
 public class LocationController extends BaseController {
 
-    private ILocationService locationService;
+    private final ILocationService locationService;
 
-    private LocationMapper locationMapper;
+    private final LocationMapper locationMapper;
+
+    private final IUserService userService;
 
     @Autowired
-    public LocationController(ILocationService locationService, LocationMapper locationMapper) {
+    public LocationController(ILocationService locationService,
+                              LocationMapper locationMapper,
+                              IUserService userService) {
+        super(userService);
         this.locationService = locationService;
         this.locationMapper = locationMapper;
+        this.userService = userService;
     }
 
     @GetMapping(APIConstants.FIND_ALL)

@@ -8,6 +8,7 @@ import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataExceptio
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.mapper.ProductMapper;
 import np.com.prahladpanthi.seminaronebackend.service.IProductService;
+import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.APIConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,20 @@ import java.util.List;
 @RequestMapping(APIConstants.PRODUCT)
 public class ProductController extends BaseController {
 
-    private IProductService productService;
+    private final IProductService productService;
 
-    private ProductMapper productMapper;
+    private final ProductMapper productMapper;
+
+    private final IUserService userService;
 
     @Autowired
-    public ProductController(IProductService productService, ProductMapper productMapper) {
+    public ProductController(IProductService productService,
+                             ProductMapper productMapper,
+                             IUserService userService) {
+        super(userService);
         this.productService = productService;
         this.productMapper = productMapper;
+        this.userService = userService;
     }
 
     @GetMapping(APIConstants.FIND_ALL)

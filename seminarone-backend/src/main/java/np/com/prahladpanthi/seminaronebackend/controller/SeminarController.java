@@ -7,6 +7,7 @@ import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataExceptio
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.mapper.SeminarMapper;
 import np.com.prahladpanthi.seminaronebackend.service.ISeminarService;
+import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.APIConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +18,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(APIConstants.SEMINAR)
 public class SeminarController extends BaseController {
 
-    private ISeminarService seminarService;
-    private SeminarMapper seminarMapper;
+    private final ISeminarService seminarService;
+    private final SeminarMapper seminarMapper;
+
+    private final IUserService userService;
 
     @Autowired
-    public SeminarController(ISeminarService seminarService, SeminarMapper seminarMapper) {
+    public SeminarController(ISeminarService seminarService,
+                             SeminarMapper seminarMapper,
+                             IUserService userService) {
+        super(userService);
         this.seminarService = seminarService;
         this.seminarMapper = seminarMapper;
+        this.userService = userService;
     }
 
     @GetMapping(APIConstants.FIND_ALL)
