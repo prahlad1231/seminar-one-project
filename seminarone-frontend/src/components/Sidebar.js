@@ -1,8 +1,11 @@
 import {
   Dashboard,
+  ExitToApp,
   LibraryAdd,
   ListAlt,
   LocationOn,
+  Login,
+  Logout,
   Menu,
   RecentActors,
   Settings,
@@ -12,8 +15,11 @@ import { NavLink } from "react-router-dom";
 
 import "../styles/sidebar.css";
 import { useState } from "react";
+import { useAuth } from "./context/AuthContext";
 
 function Sidebar({ children }) {
+  const { isAuthenticated, logout } = useAuth();
+
   const menuItems = [
     {
       path: "/",
@@ -67,6 +73,7 @@ function Sidebar({ children }) {
             <Menu style={{ fontSize: "2rem" }} onClick={toggle} />
           </div>
         </div>
+
         {menuItems.map((item, index) => (
           <NavLink to={item.path} key={index} className="link">
             <div className="icon">{item.icon}</div>

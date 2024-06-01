@@ -62,7 +62,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <PieChart chartData={chartData} />
+      {/* <PieChart chartData={chartData} /> */}
     </div>
   );
 };

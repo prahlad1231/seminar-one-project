@@ -6,14 +6,14 @@ class SeminarService {
   getAllSeminars() {
     return axios({
       method: "get",
-      url: API_URL + "seminar/findAll",
+      url: API_URL + "/seminar/findAll",
     });
   }
 
   getSeminarById(seminarId) {
     return axios({
       method: "get",
-      url: API_URL + `seminar/find/${seminarId}`,
+      url: API_URL + `/seminar/find/${seminarId}`,
     });
   }
 
@@ -21,7 +21,7 @@ class SeminarService {
     return axios({
       method: "post",
       data: seminarDetails,
-      url: API_URL + `seminar/add`,
+      url: API_URL + `/seminar/add`,
     });
   }
 }
@@ -30,21 +30,21 @@ class LocationService {
   getAllVenues() {
     return axios({
       method: "get",
-      url: API_URL + "location/findAll",
+      url: API_URL + "/location/findAll",
     });
   }
 
   getVenueById(venueId) {
     return axios({
       method: "get",
-      url: API_URL + `location/find/${venueId}`,
+      url: API_URL + `/location/find/${venueId}`,
     });
   }
 
   save(locationDetails) {
     return axios({
       method: "POST",
-      url: API_URL + "location/save",
+      url: API_URL + "/location/save",
       data: locationDetails,
     });
   }
@@ -54,21 +54,21 @@ class TopicService {
   getAllTopics() {
     return axios({
       method: "get",
-      url: API_URL + "topic/findAll",
+      url: API_URL + "/topic/findAll",
     });
   }
 
   getTopicById(topicId) {
     return axios({
       method: "get",
-      url: API_URL + `topic/find/${topicId}`,
+      url: API_URL + `/topic/find/${topicId}`,
     });
   }
 
   save(topicDetails) {
     return axios({
       method: "POST",
-      url: API_URL + "topic/save",
+      url: API_URL + "/topic/save",
       data: topicDetails,
     });
   }
