@@ -23,6 +23,26 @@ class AuthService {
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
   }
+
+  getAuthHeader() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.jwtToken) {
+      return {
+        Authorization: `Bearer ${user.jwtToken}`,
+      };
+    } else {
+      return {};
+    }
+  }
+
+  getJwtToken() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.jwtToken) {
+      return user.jwtToken;
+    } else {
+      return "";
+    }
+  }
 }
 
 export { AuthService };
