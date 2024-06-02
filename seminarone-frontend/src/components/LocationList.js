@@ -24,6 +24,7 @@ const LocationList = () => {
       .getAllVenues()
       .then((result) => {
         if (result && result.data) {
+          setHasPermission(true);
           setLocationList(result.data.object);
         }
       })

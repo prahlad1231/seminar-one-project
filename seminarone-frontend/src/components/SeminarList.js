@@ -25,6 +25,7 @@ const SeminarList = () => {
       .getAllSeminars()
       .then((result) => {
         if (result && result.data) {
+          setHasPermission(true);
           const formattedSeminarList = result.data.object.map((seminar) => ({
             ...seminar,
             startDate: formatDate(seminar.startDate),

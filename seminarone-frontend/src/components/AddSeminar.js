@@ -26,6 +26,8 @@ import {
   SeminarService,
   TopicService,
 } from "../services/SeminarService";
+import NoPermissionPage from "./NoPermissionPage";
+import { AuthService } from "../services/AuthService";
 
 const filter = createFilterOptions();
 
@@ -33,6 +35,7 @@ const AddSeminar = () => {
   const topicService = new TopicService();
   const locationService = new LocationService();
   const seminarService = new SeminarService();
+  const authService = new AuthService();
 
   const [topicValue, setTopicValue] = useState("");
   const [venueValue, setVenueValue] = useState("");
@@ -69,6 +72,8 @@ const AddSeminar = () => {
   const priceRef = useRef();
   const topicRef = useRef();
   const venueRef = useRef();
+
+  const isAdmin = authService.getCurrentUser().role === "ADMIN" ? true : false;
 
   useEffect(() => {
     topicService
@@ -234,7 +239,7 @@ const AddSeminar = () => {
       });
   };
 
-  return (
+  return isAdmin ? (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="seminar-container">
         <FormHeading title="Add New Seminar" />
@@ -463,6 +468,8 @@ const AddSeminar = () => {
         </div>
       </div>
     </LocalizationProvider>
+  ) : (
+    <NoPermissionPage />
   );
 };
 

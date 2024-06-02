@@ -15,6 +15,7 @@ const TopicList = () => {
       .then((result) => {
         if (result && result.data) {
           setTopicList(result.data.object);
+          setHasPermission(true);
           console.log(result.data.object);
         } else {
           alert("Server Error!");

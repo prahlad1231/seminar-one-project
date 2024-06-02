@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(APIConstants.TOPIC)
-@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class TopicController extends BaseController {
 
     private final ITopicService topicService;
@@ -39,6 +39,7 @@ public class TopicController extends BaseController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping(APIConstants.FIND_ALL)
     public ResponseEntity<ResponseDto> findAll() {
         List<TopicEntity> topicEntityList = topicService.findAll();
