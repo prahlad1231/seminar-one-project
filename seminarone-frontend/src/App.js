@@ -33,6 +33,7 @@ function App() {
                 <Sidebar>
                   <Routes>
                     <Route path="/login" element=<LoginPage /> />
+                    <Route path="/" element=<Dashboard /> />
                     <Route path="/dashboard" element=<Dashboard /> />
                     <Route path="/settings" element=<Settings /> />
                     <Route path="/seminarlist" element=<SeminarList /> />

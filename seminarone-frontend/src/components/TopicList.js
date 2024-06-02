@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 
 import { TopicService } from "../services/SeminarService";
 import { DataGrid } from "@mui/x-data-grid";
+import NoPermissionPage from "./NoPermissionPage";
 
 const TopicList = () => {
   const topicService = new TopicService();
   const [topicList, setTopicList] = useState([{ id: "", name: "" }]);
+  const [hasPermission, setHasPermission] = useState(false);
 
   useEffect(() => {
     topicService
@@ -37,7 +39,7 @@ const TopicList = () => {
     { field: "name", headerName: "Topic Name", width: 130 },
   ];
 
-  return (
+  return hasPermission ? (
     <div style={{ height: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Topics</h2>
       <DataGrid
@@ -52,6 +54,8 @@ const TopicList = () => {
         checkboxSelection
       />
     </div>
+  ) : (
+    <NoPermissionPage />
   );
 };
 

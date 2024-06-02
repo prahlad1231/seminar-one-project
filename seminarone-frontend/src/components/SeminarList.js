@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { SeminarService } from "../services/SeminarService";
 import { DataGrid } from "@mui/x-data-grid";
+import NoPermissionPage from "./NoPermissionPage";
 
 const SeminarList = () => {
   const seminarService = new SeminarService();
+
+  const [hasPermission, setHasPermission] = useState(false);
 
   const [seminarList, setSeminarList] = useState([
     {
@@ -62,7 +65,7 @@ const SeminarList = () => {
     return `${year}-${month}-${day}`;
   };
 
-  return (
+  return hasPermission ? (
     <div style={{ height: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Seminars</h2>
       <DataGrid
@@ -77,6 +80,8 @@ const SeminarList = () => {
         checkboxSelection
       />
     </div>
+  ) : (
+    <NoPermissionPage />
   );
 };
 

@@ -8,7 +8,20 @@ class AuthService {
       method: "post",
       data: loginDetails,
       url: API_URL + `/authenticate`,
+    }).then((response) => {
+      if (response.data.object.jwtToken) {
+        localStorage.setItem("user", JSON.stringify(response.data.object));
+      }
+      return response.data.object;
     });
+  }
+
+  logout() {
+    localStorage.removeItem("user");
+  }
+
+  getCurrentUser() {
+    return JSON.parse(localStorage.getItem("user"));
   }
 }
 

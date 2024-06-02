@@ -24,26 +24,23 @@ const LoginPage = () => {
 
   const handleLogin = () => {
     const userDetails = { username: username, password: password };
-    authService
-      .login(userDetails)
-      .then((result) => {
-        if (result && result.data) {
-          alert("Logged In");
-          login();
-          navigate("/");
-        }
+    const response = authService.login(userDetails);
+    response
+      .then((response) => {
+        console.log(response);
+        alert("Welcome " + response.username + "!");
+        login(); // from auth context
+        navigate("/dashboard");
       })
       .catch((err) => {
-        if (err.response && err.response.data) {
-          alert(err.response.data.message);
-        } else if (err.message === "Network Error") {
-          alert(
-            "Network error. Please check your internet connection or try again later."
-          );
+        if (err.response && err.response.status == "401") {
+          alert("Incorrect Username / Password!");
         } else {
-          alert("Error loading venues!");
+          console.log(err);
+          alert("Error");
         }
       });
+    console.log(response);
   };
 
   return (

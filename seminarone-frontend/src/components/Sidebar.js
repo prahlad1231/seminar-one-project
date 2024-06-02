@@ -1,11 +1,8 @@
 import {
   Dashboard,
-  ExitToApp,
   LibraryAdd,
   ListAlt,
   LocationOn,
-  Login,
-  Logout,
   Menu,
   RecentActors,
   Settings,
