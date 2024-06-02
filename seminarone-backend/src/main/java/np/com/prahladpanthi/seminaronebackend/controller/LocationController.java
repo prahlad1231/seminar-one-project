@@ -13,6 +13,7 @@ import np.com.prahladpanthi.seminaronebackend.util.APIConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class LocationController extends BaseController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping(APIConstants.FIND_ALL)
     public ResponseEntity<ResponseDto> findAll() {
         List<LocationEntity> locationEntityList = locationService.findAll();
@@ -44,12 +46,14 @@ public class LocationController extends BaseController {
         return new ResponseEntity<>(new ResponseDto("Successfully fetched!", locationMapper.mapToDto(locationEntityList)), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping(APIConstants.FIND_BY_ID)
     public ResponseEntity<ResponseDto> findById(@PathVariable("id") Long id) {
         LocationEntity locationEntity = locationService.findById(id);
         return new ResponseEntity<>(new ResponseDto("Successfully fetched!", locationMapper.mapToDto(locationEntity)), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping(APIConstants.SAVE)
     public ResponseEntity<ResponseDto> save(@RequestBody LocationDto locationDto) {
         if (locationDto.getVenueName().isEmpty() || locationDto.getStreetName().isEmpty() || locationDto.getStreetNumber() == null || locationDto.getState() == null) {
@@ -60,6 +64,7 @@ public class LocationController extends BaseController {
         return new ResponseEntity<>(new ResponseDto("Successfully saved!", locationMapper.mapToDto(locationEntity)), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping(APIConstants.DELETE_BY_ID)
     public ResponseEntity<ResponseDto> deleteById(@PathVariable("id") Long id) {
         locationService.deleteById(id);
