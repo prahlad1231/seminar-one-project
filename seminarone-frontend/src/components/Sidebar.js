@@ -8,7 +8,7 @@ import {
   Settings,
   Topic,
 } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import "../styles/sidebar.css";
 import { useState } from "react";
@@ -16,6 +16,7 @@ import { useAuth } from "./context/AuthContext";
 
 function Sidebar({ children }) {
   const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
   const menuItems = [
     {
@@ -59,7 +60,7 @@ function Sidebar({ children }) {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-  return (
+  return isAuthenticated ? (
     <div className="container">
       <div style={{ width: isOpen ? "300px" : "60px" }} className="sidebar">
         <div className="top_section">
@@ -85,6 +86,8 @@ function Sidebar({ children }) {
       </div>
       <main>{children}</main>
     </div>
+  ) : (
+    navigate("/login")
   );
 }
 

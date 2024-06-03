@@ -1,4 +1,5 @@
 import { Paper } from "@mui/material";
+import ChangePassword from "./ChangePassword";
 
 const Settings = () => {
   return (
@@ -6,7 +7,7 @@ const Settings = () => {
       <h2>Settings</h2>
       <div className="settings">
         <Paper elevation={3} className="settings-paper">
-          <h3>Content</h3>
+          <ChangePassword />
         </Paper>
       </div>
     </div>

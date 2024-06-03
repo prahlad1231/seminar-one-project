@@ -17,7 +17,7 @@ import {
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import LocationForm from "../components/mini/LocationForm";
 import TopicForm from "../components/mini/TopicForm";
@@ -32,10 +32,10 @@ import { AuthService } from "../services/AuthService";
 const filter = createFilterOptions();
 
 const AddSeminar = () => {
-  const topicService = new TopicService();
-  const locationService = new LocationService();
-  const seminarService = new SeminarService();
-  const authService = new AuthService();
+  const topicService = useMemo(() => new TopicService(), []);
+  const locationService = useMemo(() => new LocationService(), []);
+  const seminarService = useMemo(() => new SeminarService(), []);
+  const authService = useMemo(() => new AuthService(), []);
 
   const [topicValue, setTopicValue] = useState("");
   const [venueValue, setVenueValue] = useState("");
@@ -73,73 +73,60 @@ const AddSeminar = () => {
   const topicRef = useRef();
   const venueRef = useRef();
 
-  const isAdmin = authService.getCurrentUser().role === "ADMIN" ? true : false;
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    topicService
-      .getAllTopics()
-      .then((result) => {
-        if (result && result.data) {
-          console.log(result.data);
-          setTopicList(result.data.object);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response && err.response.data) {
-          alert(err.response.data.message);
-        } else if (err.message === "Network Error") {
-          alert(
-            "Network error. Please check your internet connection or try again later."
-          );
-        } else {
-          alert("Error loading topics!");
-        }
-      });
+    const user = authService.getCurrentUser();
+    if (user && user.role === "ADMIN") {
+      setIsAdmin(true);
+      topicService
+        .getAllTopics()
+        .then((result) => {
+          if (result && result.data) {
+            console.log(result.data);
+            setTopicList(result.data.object);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response && err.response.data) {
+            alert(err.response.data.message);
+          } else if (err.message === "Network Error") {
+            alert(
+              "Network error. Please check your internet connection or try again later."
+            );
+          } else {
+            alert("Error loading topics!");
+          }
+        });
 
-    // setTopicList([{ name: "Topic 1" }, { name: "Topic 2" }]);
+      // setTopicList([{ name: "Topic 1" }, { name: "Topic 2" }]);
 
-    locationService
-      .getAllVenues()
-      .then((result) => {
-        if (result && result.data) {
-          console.log(result.data);
-          setVenueList(result.data.object);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response && err.response.data) {
-          alert(err.response.data.message);
-        } else if (err.message === "Network Error") {
-          // alert(
-          //   "Network error. Please check your internet connection or try again later."
-          // );
-          console.log("Network error");
-        } else {
-          alert("Error loading venues!");
-        }
-      });
-
-    // setVenueList([
-    //   {
-    //     id: 1,
-    //     venueName: "Venue 1",
-    //     streetNumber: 7,
-    //     streetName: "Sydney Ave",
-    //     state: "ACT",
-    //     website: "",
-    //   },
-    //   {
-    //     id: 2,
-    //     venueName: "Venue 2",
-    //     streetNumber: 8,
-    //     streetName: "Melbourne Ave",
-    //     state: "ACT",
-    //     website: "",
-    //   },
-    // ]);
-  }, []);
+      locationService
+        .getAllVenues()
+        .then((result) => {
+          if (result && result.data) {
+            console.log(result.data);
+            setVenueList(result.data.object);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response && err.response.data) {
+            alert(err.response.data.message);
+          } else if (err.message === "Network Error") {
+            // alert(
+            //   "Network error. Please check your internet connection or try again later."
+            // );
+            console.log("Network error");
+          } else {
+            alert("Error loading venues!");
+          }
+        });
+    } else {
+      setIsAdmin(false);
+    }
+  }, [authService, locationService, topicService]);
 
   const handleClose = () => {
     if (dialogType === "topic") {
