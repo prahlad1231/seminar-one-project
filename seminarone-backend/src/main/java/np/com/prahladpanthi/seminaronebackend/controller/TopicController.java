@@ -20,7 +20,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(APIConstants.TOPIC)
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class TopicController extends BaseController {
 
     private final ITopicService topicService;
@@ -47,11 +46,13 @@ public class TopicController extends BaseController {
         return new ResponseEntity<>(new ResponseDto("Successfully fetched!", topicMapper.mapToDto(topicEntityList)), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping(APIConstants.FIND_BY_ID)
     public ResponseEntity<ResponseDto> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(new ResponseDto("Successfully fetched!", topicMapper.mapToDto(topicService.findById(id))), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(APIConstants.SAVE)
     public ResponseEntity<ResponseDto> save(@RequestBody TopicDto topicDto) {
         if (topicDto.getName().isEmpty()) {
@@ -63,6 +64,8 @@ public class TopicController extends BaseController {
         return new ResponseEntity<>(new ResponseDto("Successfully saved!", topicMapper.mapToDto(topicEntity)), HttpStatus.CREATED);
     }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(APIConstants.DELETE_BY_ID)
     public ResponseEntity<ResponseDto> deleteById(@PathVariable("id") Long id) {
         topicService.deleteById(id);
