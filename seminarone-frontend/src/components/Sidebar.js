@@ -3,6 +3,7 @@ import {
   LibraryAdd,
   ListAlt,
   LocationOn,
+  Logout,
   Menu,
   RecentActors,
   Settings,
@@ -53,6 +54,11 @@ function Sidebar({ children }) {
       path: "/settings",
       name: "Settings",
       icon: <Settings />,
+    },
+    {
+      path: "/login",
+      name: "Logout",
+      icon: <Logout />,
     },
   ];
 

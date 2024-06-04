@@ -28,14 +28,14 @@ const RequireAuth = ({ children }) => {
 function App() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      navigate("/dashboard");
-    } else {
-      navigate("/login");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const user = localStorage.getItem("user");
+  //   if (user) {
+  //     navigate("/dashboard");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, [navigate]);
 
   return (
     <AuthProvider>
