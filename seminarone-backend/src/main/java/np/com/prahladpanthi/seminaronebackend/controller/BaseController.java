@@ -1,14 +1,10 @@
 package np.com.prahladpanthi.seminaronebackend.controller;
 
 import lombok.RequiredArgsConstructor;
-import np.com.prahladpanthi.seminaronebackend.dto.ResponseDto;
 import np.com.prahladpanthi.seminaronebackend.entity.UserEntity;
 import np.com.prahladpanthi.seminaronebackend.security.service.UserDetailsImpl;
 import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.APIConstants;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class BaseController {
 
     private final IUserService userService;
-
 
     public UserEntity getLoggedInUser(Authentication authentication) {
         var principal = (UserDetailsImpl) authentication.getPrincipal();

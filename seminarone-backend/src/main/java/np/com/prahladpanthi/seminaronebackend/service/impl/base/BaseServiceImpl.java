@@ -12,6 +12,8 @@ public class BaseServiceImpl <T extends BaseEntity, ID> implements IBaseService<
 
     protected JpaRepository<T, ID> repository;
 
+    public BaseServiceImpl() {}
+
     public BaseServiceImpl(JpaRepository<T, ID> repository) {
         this.repository = repository;
     }
