@@ -23,4 +23,9 @@ public class ExceptionHelper {
     public ResponseEntity<ResponseDto> handleAlreadyExistsException(AlreadyExistsException ex) {
         return new ResponseEntity<>(new ResponseDto(ex.getMessage()), HttpStatus.ALREADY_REPORTED);
     }
+
+    @ExceptionHandler(value = IncorrectPasswordException.class)
+    public ResponseEntity<ResponseDto> handleIncorrectPasswordException(IncorrectPasswordException ipe) {
+        return new ResponseEntity<>(new ResponseDto(ipe.getMessage()), HttpStatus.BAD_REQUEST);
+    }
 }
