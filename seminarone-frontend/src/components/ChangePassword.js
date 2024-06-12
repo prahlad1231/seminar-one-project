@@ -1,5 +1,6 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { UserService } from "../services/UserService";
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
@@ -8,10 +9,45 @@ const ChangePassword = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleChangePassword = async () => {
-    if (newPassword !== confirmPassword) {
-      setError("New passwords don't match.");
-      return;
+  const userService = new UserService();
+
+  const clear = () => {
+    setOldPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+  };
+
+  const handleChangePassword = () => {
+    if (
+      oldPassword.length === 0 ||
+      newPassword.length === 0 ||
+      confirmPassword.length === 0
+    )
+      alert("Please enter all required fields!");
+    else if (newPassword === confirmPassword) {
+      if (oldPassword === newPassword) {
+        alert("New password should be different from old password!");
+      } else {
+        const changePasswordDto = {
+          oldPassword: oldPassword,
+          newPassword: confirmPassword,
+        };
+        userService
+          .changePassword(changePasswordDto)
+          .then((response) => {
+            if (response && response.data) {
+              alert(response.data.message);
+            }
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("Error changing password: " + err);
+          });
+        clear();
+      }
+    } else {
+      alert("New Passwords do not match!");
     }
   };
 
@@ -36,6 +72,7 @@ const ChangePassword = () => {
         variant="outlined"
         margin="normal"
         fullWidth
+        required
       />
       <TextField
         label="New Password"
@@ -45,6 +82,7 @@ const ChangePassword = () => {
         variant="outlined"
         margin="normal"
         fullWidth
+        required
       />
       <TextField
         label="Confirm New Password"
@@ -54,6 +92,7 @@ const ChangePassword = () => {
         variant="outlined"
         margin="normal"
         fullWidth
+        required
       />
       {error && (
         <Typography color="error" variant="body2">
