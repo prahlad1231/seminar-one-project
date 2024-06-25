@@ -41,7 +41,7 @@ const TopicList = () => {
   ];
 
   return hasPermission ? (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ minHeight: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Topics</h2>
       <DataGrid
         rows={topicList}
@@ -51,7 +51,7 @@ const TopicList = () => {
             paginationModel: { page: 0, pageSize: 5 },
           },
         }}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[5, 10, 15, 20]}
         checkboxSelection
       />
     </div>
