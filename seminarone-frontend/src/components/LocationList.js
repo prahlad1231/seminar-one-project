@@ -50,7 +50,7 @@ const LocationList = () => {
     { field: "website", headerName: "Website", width: 180 },
   ];
   return hasPermission ? (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ minHeight: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Venues</h2>
       <DataGrid
         rows={locationList}
