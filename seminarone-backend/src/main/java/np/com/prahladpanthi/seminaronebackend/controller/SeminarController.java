@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(APIConstants.SEMINAR)
-@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class SeminarController extends BaseController {
 
     private final ISeminarService seminarService;
@@ -35,10 +34,13 @@ public class SeminarController extends BaseController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(APIConstants.FIND_ALL)
     public ResponseEntity<ResponseDto> findAll() {
         return new ResponseEntity<>(new ResponseDto("Successfully fetched!", seminarService.getAllCustomSeminars()), HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 
     @GetMapping(APIConstants.FIND_BY_ID)
     public ResponseEntity<ResponseDto> findById(@PathVariable("id") Long id) {
@@ -46,11 +48,13 @@ public class SeminarController extends BaseController {
         return new ResponseEntity<>(new ResponseDto("Successfully fetched!", seminarMapper.mapToDto(seminarEntity)), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(APIConstants.ADD_SEMINAR)
     public ResponseEntity<ResponseDto> save(@RequestBody SeminarDto seminarDto) {
         return new ResponseEntity<>(new ResponseDto("Successfully saved!", seminarService.addNewSeminar(seminarDto)), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(APIConstants.UPDATE)
     public ResponseEntity<ResponseDto> update(@RequestBody SeminarDto seminarDto) {
         if (!(seminarDto.getTitle().isBlank() && seminarDto.getStartDate() == null &&
@@ -62,6 +66,7 @@ public class SeminarController extends BaseController {
         return new ResponseEntity<>(new ResponseDto("Successfully updated!", seminarMapper.mapToDto(seminarEntity)), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(APIConstants.DELETE)
     public ResponseEntity<ResponseDto> delete(@RequestBody SeminarDto seminarDto) {
         if (!(seminarDto.getTitle().isBlank() && seminarDto.getStartDate() == null &&
@@ -73,6 +78,7 @@ public class SeminarController extends BaseController {
         return new ResponseEntity<>(new ResponseDto("Successfully deleted!"), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(APIConstants.DELETE_BY_ID)
     public ResponseEntity<ResponseDto> deleteById(@PathVariable("id") Long id) {
         if (!seminarService.existsById(id)) {
