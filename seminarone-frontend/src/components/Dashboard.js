@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../styles/dashboard.css";
 import { CategoryScale, Chart, ArcElement } from "chart.js";
 import PieChart from "./charts/PieChart";
+import DemoDataGrid from "./demo/DemoDataGrid";
 
 Chart.register(CategoryScale);
 Chart.register(ArcElement);
@@ -62,6 +63,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
+      <DemoDataGrid />
       {/* <PieChart chartData={chartData} /> */}
     </div>
   );
