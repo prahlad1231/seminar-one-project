@@ -165,11 +165,11 @@ const AddSeminar = () => {
   };
 
   const addTopic = (topic) => {
-    setTopicList(...topicList, topic);
+    setTopicList((topicList) => [...topicList, topic]);
   };
 
   const addVenue = (venue) => {
-    setVenueList(...venueList, venue);
+    setVenueList((venueList) => [...venueList, venue]);
   };
 
   const addSeminar = () => {

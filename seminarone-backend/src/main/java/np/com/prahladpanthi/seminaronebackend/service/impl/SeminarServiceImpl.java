@@ -28,7 +28,10 @@ public class SeminarServiceImpl extends BaseServiceImpl<SeminarEntity, Long> imp
     private SeminarMapper seminarMapper;
 
     @Autowired
-    public SeminarServiceImpl(SeminarRepository seminarRepository, TopicRepository topicRepository, LocationRepository locationRepository, SeminarMapper seminarMapper) {
+    public SeminarServiceImpl(SeminarRepository seminarRepository,
+                              TopicRepository topicRepository,
+                              LocationRepository locationRepository,
+                              SeminarMapper seminarMapper) {
         super(seminarRepository);
         this.seminarRepository = seminarRepository;
         this.topicRepository = topicRepository;
