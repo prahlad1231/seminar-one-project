@@ -28,7 +28,7 @@ const LoginPage = () => {
     response
       .then((response) => {
         console.log(response);
-        alert("Welcome " + response.username + "!");
+        // alert("Welcome " + response.username + "!");
         login(); // from auth context
         navigate("/dashboard");
       })

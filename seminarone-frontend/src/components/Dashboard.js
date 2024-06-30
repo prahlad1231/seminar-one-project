@@ -3,6 +3,7 @@ import "../styles/dashboard.css";
 import { CategoryScale, Chart, ArcElement } from "chart.js";
 import PieChart from "./charts/PieChart";
 import DemoDataGrid from "./demo/DemoDataGrid";
+import CustomDataGrid from "./shared/CustomDataGrid";
 
 Chart.register(CategoryScale);
 Chart.register(ArcElement);
@@ -63,7 +64,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <DemoDataGrid />
+      <CustomDataGrid />
       {/* <PieChart chartData={chartData} /> */}
     </div>
   );
