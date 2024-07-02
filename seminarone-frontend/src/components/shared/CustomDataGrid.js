@@ -52,7 +52,7 @@ const CustomDataGrid = (parentColumns, tableData, tableName) => {
   };
 
   const handleDeleteClick = (id) => {
-    setRows(rows.filter((row) => row.id != id));
+    setRows(rows.filter((row) => row.id !== id));
   };
 
   const handleCancelClick = (id) => {
@@ -63,7 +63,7 @@ const CustomDataGrid = (parentColumns, tableData, tableName) => {
 
     const editedRow = rows.find((row) => row.id === id);
     if (editedRow.isNew) {
-      setRows(rows.filter((row) => row.id != id));
+      setRows(rows.filter((row) => row.id !== id));
     }
   };
 
@@ -138,7 +138,7 @@ const CustomDataGrid = (parentColumns, tableData, tableName) => {
     },
   ];
 
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState(initialRows);
   const [rowModesModel, setRowModesModel] = useState({});
 
   const handleRowModesModelChange = () => {};
@@ -161,7 +161,7 @@ const CustomDataGrid = (parentColumns, tableData, tableName) => {
       }}
     >
       <DataGrid
-        rows={tableData}
+        rows={rows}
         columns={columns}
         editMode="row"
         rowModesModel={rowModesModel}
