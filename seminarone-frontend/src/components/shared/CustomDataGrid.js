@@ -6,6 +6,7 @@ import { Box, Button } from "@mui/material";
 import {
   DataGrid,
   GridActionsCellItem,
+  GridRowEditStopReasons,
   GridRowModes,
   GridToolbarContainer,
 } from "@mui/x-data-grid";
@@ -19,6 +20,13 @@ const initialRows = [
     age: 25,
     joinDate: new Date(),
     role: "Demo",
+  },
+  {
+    id: 2,
+    name: "Demo Name 2",
+    age: 30,
+    joinDate: new Date(),
+    role: "Demo2",
   },
 ];
 
@@ -43,19 +51,23 @@ const EditToolBar = (props) => {
 };
 
 const CustomDataGrid = (parentColumns, tableData, tableName) => {
-  const handleEditClick = (id) => {
+  const [rows, setRows] = useState(initialRows);
+  const [rowModesModel, setRowModesModel] = useState({});
+
+  const handleEditClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { model: GridRowModes.Edit } });
   };
 
-  const handleSaveClick = (id) => {
+  const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { model: GridRowModes.View } });
   };
 
-  const handleDeleteClick = (id) => {
+  const handleDeleteClick = (id) => () => {
+    // with extra => (), the event handler gets called only after the event has occured
     setRows(rows.filter((row) => row.id !== id));
   };
 
-  const handleCancelClick = (id) => {
+  const handleCancelClick = (id) => () => {
     setRowModesModel({
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
@@ -65,6 +77,22 @@ const CustomDataGrid = (parentColumns, tableData, tableName) => {
     if (editedRow.isNew) {
       setRows(rows.filter((row) => row.id !== id));
     }
+  };
+
+  const handleRowModesModelChange = (newRowModesModel) => {
+    setRowModesModel(newRowModesModel);
+  };
+
+  const handleRowEditStop = (params, event) => {
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+      event.defaultMuiPrevented = true;
+    }
+  };
+
+  const processRowUpdate = (newRow) => {
+    const updatedRow = { ...newRow, isNew: false };
+    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    return updatedRow;
   };
 
   const columns = [
@@ -137,15 +165,6 @@ const CustomDataGrid = (parentColumns, tableData, tableName) => {
       },
     },
   ];
-
-  const [rows, setRows] = useState(initialRows);
-  const [rowModesModel, setRowModesModel] = useState({});
-
-  const handleRowModesModelChange = () => {};
-
-  const handleRowEditStop = () => {};
-
-  const processRowUpdate = () => {};
 
   return (
     <Box

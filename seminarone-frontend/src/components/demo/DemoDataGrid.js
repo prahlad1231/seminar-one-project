@@ -20,46 +20,63 @@ import {
   randomArrayItem,
 } from "@mui/x-data-grid-generator";
 
-const roles = ["Market", "Finance", "Development"];
-const randomRole = () => {
-  return randomArrayItem(roles);
-};
+// const roles = ["Market", "Finance", "Development"];
+// const randomRole = () => {
+//   return randomArrayItem(roles);
+// };
+
+// const initialRows = [
+//   {
+//     id: randomId(),
+//     name: randomTraderName(),
+//     age: 25,
+//     joinDate: randomCreatedDate(),
+//     role: randomRole(),
+//   },
+//   {
+//     id: randomId(),
+//     name: randomTraderName(),
+//     age: 36,
+//     joinDate: randomCreatedDate(),
+//     role: randomRole(),
+//   },
+//   {
+//     id: randomId(),
+//     name: randomTraderName(),
+//     age: 19,
+//     joinDate: randomCreatedDate(),
+//     role: randomRole(),
+//   },
+//   {
+//     id: randomId(),
+//     name: randomTraderName(),
+//     age: 28,
+//     joinDate: randomCreatedDate(),
+//     role: randomRole(),
+//   },
+//   {
+//     id: randomId(),
+//     name: randomTraderName(),
+//     age: 23,
+//     joinDate: randomCreatedDate(),
+//     role: randomRole(),
+//   },
+// ];
 
 const initialRows = [
   {
-    id: randomId(),
-    name: randomTraderName(),
+    id: 1,
+    name: "Demo Name",
     age: 25,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
+    joinDate: new Date(),
+    role: "Demo",
   },
   {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 36,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 19,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 28,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 23,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
+    id: 2,
+    name: "Demo Name 2",
+    age: 30,
+    joinDate: new Date(),
+    role: "Demo2",
   },
 ];
 
@@ -151,8 +168,8 @@ export default function DemoDataGrid() {
       headerName: "Department",
       width: 220,
       editable: true,
-      type: "singleSelect",
-      valueOptions: ["Market", "Finance", "Development"],
+      // type: "singleSelect",
+      // valueOptions: ["Market", "Finance", "Development"],
     },
     {
       field: "actions",
