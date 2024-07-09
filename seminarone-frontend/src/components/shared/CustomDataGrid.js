@@ -30,7 +30,7 @@ const initialRows = [
   },
 ];
 
-const EditToolBar = (props) => {
+const EditToolbar = (props) => {
   const { setRows, setRowModesModel } = props;
   const id = randomId();
   const handleClick = () => {
@@ -44,13 +44,13 @@ const EditToolBar = (props) => {
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<Add />} onClick={handleClick}>
-        Add Data
+        Add Data (Custom Data Grid)
       </Button>
     </GridToolbarContainer>
   );
 };
 
-const CustomDataGrid = (parentColumns, tableData, tableName) => {
+const CustomDataGrid = () => {
   const [rows, setRows] = useState(initialRows);
   const [rowModesModel, setRowModesModel] = useState({});
 
@@ -60,6 +60,12 @@ const CustomDataGrid = (parentColumns, tableData, tableName) => {
 
   const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { model: GridRowModes.View } });
+  };
+
+  const handleRowEditStop = (params, event) => {
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+      event.defaultMuiPrevented = true;
+    }
   };
 
   const handleDeleteClick = (id) => () => {
@@ -79,20 +85,14 @@ const CustomDataGrid = (parentColumns, tableData, tableName) => {
     }
   };
 
-  const handleRowModesModelChange = (newRowModesModel) => {
-    setRowModesModel(newRowModesModel);
-  };
-
-  const handleRowEditStop = (params, event) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
-    }
-  };
-
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
+  };
+
+  const handleRowModesModelChange = (newRowModesModel) => {
+    setRowModesModel(newRowModesModel);
   };
 
   const columns = [
@@ -188,7 +188,7 @@ const CustomDataGrid = (parentColumns, tableData, tableName) => {
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
         slots={{
-          toolbar: EditToolBar,
+          toolbar: EditToolbar,
         }}
         slotProps={{
           toolbar: { setRows, setRowModesModel },
