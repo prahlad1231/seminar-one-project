@@ -32,8 +32,9 @@ const initialRows = [
 
 const EditToolbar = (props) => {
   const { setRows, setRowModesModel } = props;
-  const id = randomId();
+
   const handleClick = () => {
+    const id = randomId();
     setRows((oldRows) => [...oldRows, { id, name: "", age: "", isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
