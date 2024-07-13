@@ -1,17 +1,19 @@
-import { Cancel, DeleteForever } from "@mui/icons-material";
-import Add from "@mui/icons-material/Add";
-import Edit from "@mui/icons-material/Edit";
-import Save from "@mui/icons-material/Save";
-import { Box, Button } from "@mui/material";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Close";
 import {
+  GridRowModes,
   DataGrid,
+  GridToolbarContainer,
   GridActionsCellItem,
   GridRowEditStopReasons,
-  GridRowModes,
-  GridToolbarContainer,
 } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
-import { useState } from "react";
 
 const initialRows = [
   {
@@ -30,7 +32,7 @@ const initialRows = [
   },
 ];
 
-const EditToolbar = (props) => {
+function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
@@ -44,24 +46,16 @@ const EditToolbar = (props) => {
 
   return (
     <GridToolbarContainer>
-      <Button color="primary" startIcon={<Add />} onClick={handleClick}>
-        Add Data (Custom Data Grid)
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+        Add record (Custom Data Grid)
       </Button>
     </GridToolbarContainer>
   );
-};
+}
 
-const CustomDataGrid = () => {
-  const [rows, setRows] = useState(initialRows);
-  const [rowModesModel, setRowModesModel] = useState({});
-
-  const handleEditClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { model: GridRowModes.Edit } });
-  };
-
-  const handleSaveClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { model: GridRowModes.View } });
-  };
+export default function CustomDataGrid() {
+  const [rows, setRows] = React.useState(initialRows);
+  const [rowModesModel, setRowModesModel] = React.useState({});
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -69,8 +63,15 @@ const CustomDataGrid = () => {
     }
   };
 
+  const handleEditClick = (id) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
+  const handleSaveClick = (id) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+  };
+
   const handleDeleteClick = (id) => () => {
-    // with extra => (), the event handler gets called only after the event has occured
     setRows(rows.filter((row) => row.id !== id));
   };
 
@@ -119,6 +120,8 @@ const CustomDataGrid = () => {
       headerName: "Department",
       width: 220,
       editable: true,
+      // type: "singleSelect",
+      // valueOptions: ["Market", "Finance", "Development"],
     },
     {
       field: "actions",
@@ -132,7 +135,7 @@ const CustomDataGrid = () => {
         if (isInEditMode) {
           return [
             <GridActionsCellItem
-              icon={<Save />}
+              icon={<SaveIcon />}
               label="Save"
               sx={{
                 color: "primary.main",
@@ -140,7 +143,7 @@ const CustomDataGrid = () => {
               onClick={handleSaveClick(id)}
             />,
             <GridActionsCellItem
-              icon={<Cancel />}
+              icon={<CancelIcon />}
               label="Cancel"
               className="textPrimary"
               onClick={handleCancelClick(id)}
@@ -148,16 +151,17 @@ const CustomDataGrid = () => {
             />,
           ];
         }
+
         return [
           <GridActionsCellItem
-            icon={<Edit />}
+            icon={<EditIcon />}
             label="Edit"
             className="textPrimary"
             onClick={handleEditClick(id)}
             color="inherit"
           />,
           <GridActionsCellItem
-            icon={<DeleteForever />}
+            icon={<DeleteIcon />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
@@ -197,6 +201,4 @@ const CustomDataGrid = () => {
       />
     </Box>
   );
-};
-
-export default CustomDataGrid;
+}

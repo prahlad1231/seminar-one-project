@@ -1,5 +1,4 @@
 import "../styles/dashboard.css";
-import DemoDataGrid from "./demo/DemoDataGrid";
 import CustomDataGrid from "./shared/CustomDataGrid";
 
 const Dashboard = () => {
@@ -7,7 +6,7 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard</h1>
       <CustomDataGrid />
-      <DemoDataGrid />
+      {/* <DemoDataGrid /> */}
     </div>
   );
 };
