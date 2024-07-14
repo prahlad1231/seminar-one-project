@@ -78,6 +78,12 @@ public class AuthenticationController extends BaseController {
                 new JwtResponse(token, user.getRolesEntity().getName(), user.getId(), user.getUsername())), HttpStatus.OK);
     }
 
+    @GetMapping("/expired")
+    public boolean validateToken(@RequestParam("jwtToken") String jwtToken) {
+        return jwtTokenIssuer.isExpired(jwtToken);
+    }
+
+
     private boolean authenticate(UserEntity user, String password) {
 
         return BCryptUtils.match(password, user.getPassword());
