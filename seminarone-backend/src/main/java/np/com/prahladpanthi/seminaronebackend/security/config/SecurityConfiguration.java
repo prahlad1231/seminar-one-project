@@ -40,7 +40,8 @@ public class SecurityConfiguration {
 
     private static final String[] AUTH_WHITELIST = {
             "/api/seminarone/v1/authenticate",
-            "/api/seminarone/v1/test"
+            "/api/seminarone/v1/test",
+            "/api/seminarone/v1/expired"
     };
 
     private static final String[] ALLOWED_ORIGINS = {

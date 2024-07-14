@@ -50,3 +50,11 @@ main {
 .link_text {
   font-size: 20px;
 }
+
+.logout_section {
+  width: 100%;
+}
+
+.logout_button {
+  width: 100%;
+}

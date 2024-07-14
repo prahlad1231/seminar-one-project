@@ -55,17 +55,18 @@ function Sidebar({ children }) {
       name: "Settings",
       icon: <Settings />,
     },
-    {
-      path: "/login",
-      name: "Logout",
-      icon: <Logout />,
-    },
   ];
 
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return isAuthenticated ? (
     <div className="container">
       <div style={{ width: isOpen ? "300px" : "60px" }} className="sidebar">
@@ -89,6 +90,12 @@ function Sidebar({ children }) {
             </div>
           </NavLink>
         ))}
+
+        <div className="logout_section">
+          <button className="icon" onClick={handleLogout}>
+            <Logout /> Logout
+          </button>
+        </div>
       </div>
       <main>{children}</main>
     </div>

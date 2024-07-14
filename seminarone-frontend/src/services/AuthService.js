@@ -20,6 +20,18 @@ class AuthService {
     localStorage.removeItem("user");
   }
 
+  validateToken(jwtToken) {
+    return axios({
+      method: "get",
+      url: API_URL + `/expired?jwtToken=` + jwtToken,
+    }).then((response) => {
+      if (response.data) {
+        return response.data;
+      }
+      return false;
+    });
+  }
+
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
   }
