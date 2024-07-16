@@ -15,45 +15,50 @@ import {
 } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
 
-const initialRows = [
-  {
-    id: 1,
-    name: "Demo Name",
-    age: 25,
-    joinDate: new Date(),
-    role: "Demo",
-  },
-  {
-    id: 2,
-    name: "Demo Name 2",
-    age: 30,
-    joinDate: new Date(),
-    role: "Demo2",
-  },
-];
+// const initialRows = [
+//   {
+//     id: 1,
+//     name: "Demo Name",
+//     age: 25,
+//     joinDate: new Date(),
+//     role: "Demo",
+//   },
+//   {
+//     id: 2,
+//     name: "Demo Name 2",
+//     age: 30,
+//     joinDate: new Date(),
+//     role: "Demo2",
+//   },
+// ];
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, name: "", age: "", isNew: true }]);
+    // setRows((oldRows) => [...oldRows, { id, name: "", age: "", isNew: true }]);
+    setRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: "id" },
     }));
   };
 
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add record (Custom Data Grid)
+        {props.header}
       </Button>
     </GridToolbarContainer>
   );
 }
 
-export default function CustomDataGrid() {
+export default function CustomDataGrid({
+  initialRows,
+  initialColumns,
+  header,
+}) {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
@@ -98,31 +103,32 @@ export default function CustomDataGrid() {
   };
 
   const columns = [
-    { field: "name", headerName: "Name", width: 180, editable: true },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      width: 80,
-      align: "left",
-      headerAlign: "left",
-      editable: true,
-    },
-    {
-      field: "joinDate",
-      headerName: "Join date",
-      type: "date",
-      width: 180,
-      editable: true,
-    },
-    {
-      field: "role",
-      headerName: "Department",
-      width: 220,
-      editable: true,
-      // type: "singleSelect",
-      // valueOptions: ["Market", "Finance", "Development"],
-    },
+    // { field: "name", headerName: "Name", width: 180, editable: true },
+    // {
+    //   field: "age",
+    //   headerName: "Age",
+    //   type: "number",
+    //   width: 80,
+    //   align: "left",
+    //   headerAlign: "left",
+    //   editable: true,
+    // },
+    // {
+    //   field: "joinDate",
+    //   headerName: "Join date",
+    //   type: "date",
+    //   width: 180,
+    //   editable: true,
+    // },
+    // {
+    //   field: "role",
+    //   headerName: "Department",
+    //   width: 220,
+    //   editable: true,
+    //   // type: "singleSelect",
+    //   // valueOptions: ["Market", "Finance", "Development"],
+    // },
+    ...initialColumns,
     {
       field: "actions",
       type: "actions",
@@ -196,7 +202,7 @@ export default function CustomDataGrid() {
           toolbar: EditToolbar,
         }}
         slotProps={{
-          toolbar: { setRows, setRowModesModel },
+          toolbar: { setRows, setRowModesModel, header },
         }}
       />
     </Box>

@@ -2,6 +2,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { LocationService } from "../services/SeminarService";
 import { useEffect, useState } from "react";
 import NoPermissionPage from "./NoPermissionPage";
+import CustomDataGrid from "./shared/CustomDataGrid";
 
 const LocationList = () => {
   const locationService = new LocationService();
@@ -52,7 +53,7 @@ const LocationList = () => {
   return hasPermission ? (
     <div style={{ minHeight: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Venues</h2>
-      <DataGrid
+      {/* <DataGrid
         rows={locationList}
         columns={columns}
         initialState={{
@@ -62,6 +63,12 @@ const LocationList = () => {
         }}
         pageSizeOptions={[5, 10]}
         checkboxSelection
+      /> */}
+
+      <CustomDataGrid
+        initialRows={locationList}
+        initialColumns={columns}
+        header="Add Venue"
       />
     </div>
   ) : (
