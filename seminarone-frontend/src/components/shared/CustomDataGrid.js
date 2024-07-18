@@ -41,7 +41,10 @@ function EditToolbar(props) {
     setRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "id" },
+      [id]: {
+        mode: GridRowModes.Edit,
+        // fieldToFocus: props.columnFields,
+      },
     }));
   };
 
@@ -57,6 +60,7 @@ function EditToolbar(props) {
 export default function CustomDataGrid({
   initialRows,
   initialColumns,
+  columnFields,
   header,
 }) {
   const [rows, setRows] = React.useState(initialRows);
@@ -202,7 +206,7 @@ export default function CustomDataGrid({
           toolbar: EditToolbar,
         }}
         slotProps={{
-          toolbar: { setRows, setRowModesModel, header },
+          toolbar: { setRows, setRowModesModel, header, columnFields },
         }}
       />
     </Box>

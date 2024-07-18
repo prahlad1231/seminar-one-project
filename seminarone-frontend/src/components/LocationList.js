@@ -44,12 +44,29 @@ const LocationList = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "venueName", headerName: "Venue Name", width: 150 },
-    { field: "streetName", headerName: "Street Name", width: 150 },
-    { field: "streetNumber", headerName: "Street Number", width: 130 },
-    { field: "state", headerName: "State", width: 130 },
-    { field: "website", headerName: "Website", width: 180 },
+    {
+      field: "venueName",
+      headerName: "Venue Name",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "streetName",
+      headerName: "Street Name",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "streetNumber",
+      headerName: "Street Number",
+      width: 130,
+      editable: true,
+    },
+    { field: "state", headerName: "State", width: 130, editable: true },
+    { field: "website", headerName: "Website", width: 180, editable: true },
   ];
+
+  const columnFields = ["id", "venueName", "streetName", "state", "website"];
   return hasPermission ? (
     <div style={{ minHeight: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Venues</h2>
@@ -68,6 +85,7 @@ const LocationList = () => {
       <CustomDataGrid
         initialRows={locationList}
         initialColumns={columns}
+        columnFields={columnFields}
         header="Add Venue"
       />
     </div>
