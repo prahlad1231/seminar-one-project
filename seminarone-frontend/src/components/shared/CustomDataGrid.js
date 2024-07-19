@@ -14,23 +14,13 @@ import {
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
-
-// const initialRows = [
-//   {
-//     id: 1,
-//     name: "Demo Name",
-//     age: 25,
-//     joinDate: new Date(),
-//     role: "Demo",
-//   },
-//   {
-//     id: 2,
-//     name: "Demo Name 2",
-//     age: 30,
-//     joinDate: new Date(),
-//     role: "Demo2",
-//   },
-// ];
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -62,9 +52,24 @@ export default function CustomDataGrid({
   initialColumns,
   columnFields,
   header,
+  updateVenue,
 }) {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
+
+  const [open, setOpen] = React.useState(false);
+  const [dialogType, setDialogType] = React.useState("");
+  const [currentRow, setCurrentRow] = React.useState(null);
+
+  const handleDialogOpen = (type, row) => {
+    setDialogType(type);
+    setCurrentRow(row);
+    setOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpen(false);
+  };
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -77,11 +82,51 @@ export default function CustomDataGrid({
   };
 
   const handleSaveClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    const row = rows.find((row) => row.id === id);
+    handleDialogOpen("save", row);
+    // setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
   const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
+    const row = rows.find((row) => row.id === id);
+    handleDialogOpen("delete", row);
+    // setRows(rows.filter((row) => row.id !== id));
+  };
+
+  const handleDialogConfirm = () => {
+    switch (dialogType) {
+      case "save":
+        setRowModesModel({
+          ...rowModesModel,
+          [currentRow.id]: { mode: GridRowModes.View },
+        });
+        const updatedRow = { ...currentRow, isNew: false };
+        setRows(
+          rows.map((row) => (row.id === currentRow.id ? updatedRow : row))
+        );
+        updateVenue(updatedRow);
+        break;
+
+      case "delete":
+        setRows(rows.filter((row) => row.id !== currentRow.id));
+        break;
+
+      default:
+        break;
+    }
+    handleDialogClose();
+  };
+
+  const handleDialogCancel = (id) => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
+
+    const editedRow = rows.find((row) => row.id === id);
+    if (editedRow.isNew) {
+      setRows(rows.filter((row) => row.id !== id));
+    }
   };
 
   const handleCancelClick = (id) => () => {
@@ -99,6 +144,9 @@ export default function CustomDataGrid({
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    // console.log(updatedRow);
+    // todo: send updated row to backend
+    // updateVenue(updatedRow);
     return updatedRow;
   };
 
@@ -107,31 +155,6 @@ export default function CustomDataGrid({
   };
 
   const columns = [
-    // { field: "name", headerName: "Name", width: 180, editable: true },
-    // {
-    //   field: "age",
-    //   headerName: "Age",
-    //   type: "number",
-    //   width: 80,
-    //   align: "left",
-    //   headerAlign: "left",
-    //   editable: true,
-    // },
-    // {
-    //   field: "joinDate",
-    //   headerName: "Join date",
-    //   type: "date",
-    //   width: 180,
-    //   editable: true,
-    // },
-    // {
-    //   field: "role",
-    //   headerName: "Department",
-    //   width: 220,
-    //   editable: true,
-    //   // type: "singleSelect",
-    //   // valueOptions: ["Market", "Finance", "Development"],
-    // },
     ...initialColumns,
     {
       field: "actions",
@@ -209,6 +232,27 @@ export default function CustomDataGrid({
           toolbar: { setRows, setRowModesModel, header, columnFields },
         }}
       />
+
+      <Dialog open={open} onClose={handleDialogClose}>
+        <DialogTitle>
+          {dialogType === "save" ? "Save Changes" : "Delete Row"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {dialogType === "save"
+              ? "Do you want to save the changes?"
+              : "Do you want to delete this row?"}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDialogConfirm} color="primary">
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

@@ -67,6 +67,11 @@ const LocationList = () => {
   ];
 
   const columnFields = ["id", "venueName", "streetName", "state", "website"];
+
+  const updateVenue = (updatedData) => {
+    console.log(`LocationList.js: ${JSON.stringify(updatedData)}`);
+  };
+
   return hasPermission ? (
     <div style={{ minHeight: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Venues</h2>
@@ -87,6 +92,7 @@ const LocationList = () => {
         initialColumns={columns}
         columnFields={columnFields}
         header="Add Venue"
+        updateVenue={updateVenue}
       />
     </div>
   ) : (
