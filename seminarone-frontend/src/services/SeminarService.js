@@ -102,6 +102,23 @@ class TopicService {
       headers: authService.getAuthHeader(),
     });
   }
+
+  update(updatedTopic) {
+    return axios({
+      method: "PUT",
+      url: API_URL + "/topic/update",
+      data: updatedTopic,
+      headers: authService.getAuthHeader(),
+    });
+  }
+
+  delete(id) {
+    return axios({
+      method: "DELETE",
+      url: API_URL + "/topic/delete/" + id,
+      headers: authService.getAuthHeader(),
+    });
+  }
 }
 
 export { SeminarService, LocationService, TopicService };

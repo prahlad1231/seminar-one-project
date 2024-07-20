@@ -37,16 +37,57 @@ const TopicList = () => {
   }, []);
 
   const updateData = (updatedData, isNew) => {
-    alert("Update coming soon");
+    isNew
+      ? topicService
+          .save(updatedData)
+          .then((response) => {
+            if (response && response.data) {
+              alert(response.data.message);
+            }
+          })
+          .catch((err) => {
+            if (err.response && err.response.data) {
+              alert(err.response.data.message);
+            } else {
+              alert("Error saving new topic!");
+            }
+          })
+      : topicService
+          .update(updatedData)
+          .then((response) => {
+            if (response && response.data) {
+              alert(response.data.message);
+            }
+          })
+          .catch((err) => {
+            if (err.response && err.response.data) {
+              alert(err.response.data.message);
+            } else {
+              alert("Error updating topic!");
+            }
+          });
   };
 
   const deleteData = (id) => {
-    alert("Delete coming soon");
+    topicService
+      .delete(id)
+      .then((response) => {
+        if (response && response.data) {
+          alert(response.data.message);
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          alert(err.response.data.message);
+        } else {
+          alert("Error deleting topic!");
+        }
+      });
   };
 
   const columns = [
     // { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Topic Name", width: 130, editable: true },
+    { field: "name", headerName: "Topic Name", width: 250, editable: true },
   ];
 
   const columnFields = ["id", "name"];
