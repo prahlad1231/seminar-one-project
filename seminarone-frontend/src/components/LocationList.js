@@ -75,17 +75,6 @@ const LocationList = () => {
   return hasPermission ? (
     <div style={{ minHeight: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Venues</h2>
-      {/* <DataGrid
-        rows={locationList}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-      /> */}
 
       <CustomDataGrid
         initialRows={locationList}
