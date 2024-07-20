@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { TopicService } from "../services/SeminarService";
 import { DataGrid } from "@mui/x-data-grid";
 import NoPermissionPage from "./NoPermissionPage";
+import CustomDataGrid from "./shared/CustomDataGrid";
 
 const TopicList = () => {
   const topicService = new TopicService();
@@ -35,24 +36,31 @@ const TopicList = () => {
       });
   }, []);
 
+  const updateData = (updatedData, isNew) => {
+    alert("Update coming soon");
+  };
+
+  const deleteData = (id) => {
+    alert("Delete coming soon");
+  };
+
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Topic Name", width: 130 },
+    // { field: "id", headerName: "ID", width: 70 },
+    { field: "name", headerName: "Topic Name", width: 130, editable: true },
   ];
+
+  const columnFields = ["id", "name"];
 
   return hasPermission ? (
     <div style={{ minHeight: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Topics</h2>
-      <DataGrid
-        rows={topicList}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10, 15, 20]}
-        checkboxSelection
+      <CustomDataGrid
+        initialRows={topicList}
+        initialColumns={columns}
+        columnFields={columnFields}
+        header="Add Topic"
+        updateData={updateData}
+        deleteData={deleteData}
       />
     </div>
   ) : (
