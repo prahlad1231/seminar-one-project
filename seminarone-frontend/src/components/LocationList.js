@@ -70,6 +70,25 @@ const LocationList = () => {
 
   const updateVenue = (updatedData) => {
     console.log(`LocationList.js: ${JSON.stringify(updatedData)}`);
+    locationService
+      .update(updatedData)
+      .then((response) => {
+        if (response && response.data) {
+          alert(response.data.message);
+          console.log(response.data.object);
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          alert(err.response.data.message);
+        } else if (err.message === "Network Error") {
+          alert(
+            "Network error. Please check your internet connection or try again later."
+          );
+        } else {
+          alert("Error updating venues!");
+        }
+      });
   };
 
   return hasPermission ? (

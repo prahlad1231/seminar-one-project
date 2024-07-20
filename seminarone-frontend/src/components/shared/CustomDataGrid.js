@@ -104,7 +104,7 @@ export default function CustomDataGrid({
         setRows(
           rows.map((row) => (row.id === currentRow.id ? updatedRow : row))
         );
-        updateVenue(updatedRow);
+
         break;
 
       case "delete":
@@ -144,9 +144,10 @@ export default function CustomDataGrid({
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    // console.log(updatedRow);
+    console.log(`processRowUpdate: ${JSON.stringify(updatedRow)}`);
     // todo: send updated row to backend
-    // updateVenue(updatedRow);
+    updateVenue(updatedRow);
+
     return updatedRow;
   };
 

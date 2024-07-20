@@ -57,6 +57,16 @@ class LocationService {
       headers: authService.getAuthHeader(),
     });
   }
+
+  update(locationDetails) {
+    console.log(`LocationService: ${JSON.stringify(locationDetails)}`);
+    return axios({
+      method: "PUT",
+      url: API_URL + "/location/update",
+      data: locationDetails,
+      headers: authService.getAuthHeader(),
+    });
+  }
 }
 
 class TopicService {
