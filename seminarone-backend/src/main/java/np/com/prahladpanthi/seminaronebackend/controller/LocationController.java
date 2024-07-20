@@ -4,6 +4,7 @@ import np.com.prahladpanthi.seminaronebackend.dto.LocationDto;
 import np.com.prahladpanthi.seminaronebackend.dto.ResponseDto;
 import np.com.prahladpanthi.seminaronebackend.entity.LocationEntity;
 import np.com.prahladpanthi.seminaronebackend.exception.AlreadyExistsException;
+import np.com.prahladpanthi.seminaronebackend.exception.CannotDeleteDataException;
 import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataException;
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.mapper.LocationMapper;
@@ -11,6 +12,7 @@ import np.com.prahladpanthi.seminaronebackend.service.ILocationService;
 import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.APIConstants;
 import np.com.prahladpanthi.seminaronebackend.util.BeanCopyUtils;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,7 +87,15 @@ public class LocationController extends BaseController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping(APIConstants.DELETE_BY_ID)
     public ResponseEntity<ResponseDto> deleteById(@PathVariable("id") Long id) {
-        locationService.deleteById(id);
+        try {
+            locationService.deleteById(id);
+        } catch (Exception ex) {
+            if (ex.getCause() instanceof ConstraintViolationException) {
+                throw new CannotDeleteDataException("Cannot delete venue! It is used in an existing seminar.", ex);
+            } else {
+                throw new CannotDeleteDataException("Error deleting venue!", ex);
+            }
+        }
         return new ResponseEntity<>(new ResponseDto("Successfully deleted!"), HttpStatus.OK);
     }
 }

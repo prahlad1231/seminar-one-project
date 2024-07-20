@@ -28,4 +28,9 @@ public class ExceptionHelper {
     public ResponseEntity<ResponseDto> handleIncorrectPasswordException(IncorrectPasswordException ipe) {
         return new ResponseEntity<>(new ResponseDto(ipe.getMessage()), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = CannotDeleteDataException.class)
+    public ResponseEntity<ResponseDto> handleCannotDeleteDataException(CannotDeleteDataException cdde) {
+        return new ResponseEntity<>(new ResponseDto(cdde.getMessage()), HttpStatus.CONFLICT);
+    }
 }

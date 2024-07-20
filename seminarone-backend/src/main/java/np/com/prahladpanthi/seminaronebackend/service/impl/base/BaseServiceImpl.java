@@ -1,10 +1,12 @@
 package np.com.prahladpanthi.seminaronebackend.service.impl.base;
 
 import np.com.prahladpanthi.seminaronebackend.entity.BaseEntity;
+import np.com.prahladpanthi.seminaronebackend.exception.CannotDeleteDataException;
 import np.com.prahladpanthi.seminaronebackend.exception.NotFoundException;
 import np.com.prahladpanthi.seminaronebackend.service.base.IBaseService;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
