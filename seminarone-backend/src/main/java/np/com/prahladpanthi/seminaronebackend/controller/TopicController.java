@@ -10,6 +10,7 @@ import np.com.prahladpanthi.seminaronebackend.mapper.TopicMapper;
 import np.com.prahladpanthi.seminaronebackend.service.ITopicService;
 import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.APIConstants;
+import np.com.prahladpanthi.seminaronebackend.util.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +64,21 @@ public class TopicController extends BaseController {
         TopicEntity topicEntity = topicService.save(te);
         return new ResponseEntity<>(new ResponseDto("Successfully saved!", topicMapper.mapToDto(topicEntity)), HttpStatus.CREATED);
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping(APIConstants.UPDATE)
+    public ResponseEntity<ResponseDto> update(@RequestBody TopicDto topicDto) {
+        if (topicDto.getId() == null || topicDto.getName() == null) throw new InsufficientDataException("Please provide all details!");
+        TopicEntity topicEntity = topicService.findById(topicDto.getId());
+        TopicDto updatedTopic = topicMapper.mapToDto(topicEntity);
+
+        BeanCopyUtils.copyNonNullProperties(topicDto, updatedTopic);
+
+        topicService.update(topicMapper.mapToEntity(updatedTopic));
+
+        return new ResponseEntity<>(new ResponseDto("Successfully updated!", updatedTopic), HttpStatus.OK);
+    }
+
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
