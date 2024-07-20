@@ -10,6 +10,8 @@ import np.com.prahladpanthi.seminaronebackend.mapper.LocationMapper;
 import np.com.prahladpanthi.seminaronebackend.service.ILocationService;
 import np.com.prahladpanthi.seminaronebackend.service.IUserService;
 import np.com.prahladpanthi.seminaronebackend.util.APIConstants;
+import np.com.prahladpanthi.seminaronebackend.util.BeanCopyUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +64,23 @@ public class LocationController extends BaseController {
         if (locationService.existsByVenueName(locationDto.getVenueName())) throw new AlreadyExistsException("Venue name " + locationDto.getVenueName() + " already exists!");
         LocationEntity locationEntity = locationService.save(locationMapper.mapToEntity(locationDto));
         return new ResponseEntity<>(new ResponseDto("Successfully saved!", locationMapper.mapToDto(locationEntity)), HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping(APIConstants.UPDATE)
+    public ResponseEntity<ResponseDto> update(@RequestBody LocationDto locationDto) {
+        if (locationDto.getId() == null) {
+            throw new InsufficientDataException("Please provide all the details!");
+        }
+        LocationEntity locationEntity = locationService.findById(locationDto.getId());
+
+        LocationDto updatedLocation = locationMapper.mapToDto(locationEntity);
+        BeanCopyUtils.copyNonNullProperties(locationDto, updatedLocation);
+
+//        System.out.println("LocationDto: " + locationDto + "\nLocationEntity: " + locationEntity.toString() + "\nUpdatedLocation: " + updatedLocation);
+        locationService.update(locationMapper.mapToEntity(updatedLocation));
+
+        return new ResponseEntity<>(new ResponseDto("Successfully updated!", updatedLocation), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
