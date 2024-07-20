@@ -23,17 +23,17 @@ import {
 } from "@mui/material";
 
 function EditToolbar(props) {
-  const { setRows, setRowModesModel } = props;
+  const { setRows, setRowModesModel, columnFields } = props;
 
   const handleClick = () => {
-    const id = randomId();
+    const id = 0;
     // setRows((oldRows) => [...oldRows, { id, name: "", age: "", isNew: true }]);
     setRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: {
         mode: GridRowModes.Edit,
-        // fieldToFocus: props.columnFields,
+        fieldToFocus: columnFields[1],
       },
     }));
   };
@@ -148,7 +148,7 @@ export default function CustomDataGrid({
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     console.log(`processRowUpdate: ${JSON.stringify(updatedRow)}`);
     // todo: send updated row to backend
-    updateData(updatedRow);
+    updateData(updatedRow, currentRow.isNew);
 
     return updatedRow;
   };

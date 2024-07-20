@@ -43,7 +43,7 @@ const LocationList = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
+    // { field: "id", headerName: "ID", width: 70 },
     {
       field: "venueName",
       headerName: "Venue Name",
@@ -68,27 +68,44 @@ const LocationList = () => {
 
   const columnFields = ["id", "venueName", "streetName", "state", "website"];
 
-  const updateData = (updatedData) => {
-    console.log(`LocationList.js: ${JSON.stringify(updatedData)}`);
-    locationService
-      .update(updatedData)
-      .then((response) => {
-        if (response && response.data) {
-          alert(response.data.message);
-          console.log(response.data.object);
-        }
-      })
-      .catch((err) => {
-        if (err.response && err.response.data) {
-          alert(err.response.data.message);
-        } else if (err.message === "Network Error") {
-          alert(
-            "Network error. Please check your internet connection or try again later."
-          );
-        } else {
-          alert("Error updating venue!");
-        }
-      });
+  const updateData = (updatedData, isNew) => {
+    console.log(
+      `LocationList.js: ${JSON.stringify(updatedData)}, isNew: ${isNew}`
+    );
+    isNew
+      ? locationService
+          .save(updatedData)
+          .then((response) => {
+            if (response && response.data) {
+              alert(response.data.message);
+            }
+          })
+          .catch((err) => {
+            if (err.response && err.response.data) {
+              alert(err.response.data.message);
+            } else {
+              alert("Error saving new venue!");
+            }
+          })
+      : locationService
+          .update(updatedData)
+          .then((response) => {
+            if (response && response.data) {
+              alert(response.data.message);
+              console.log(response.data.object);
+            }
+          })
+          .catch((err) => {
+            if (err.response && err.response.data) {
+              alert(err.response.data.message);
+            } else if (err.message === "Network Error") {
+              alert(
+                "Network error. Please check your internet connection or try again later."
+              );
+            } else {
+              alert("Error updating venue!");
+            }
+          });
   };
 
   const deleteData = (id) => {
