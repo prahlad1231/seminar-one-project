@@ -68,7 +68,7 @@ const LocationList = () => {
 
   const columnFields = ["id", "venueName", "streetName", "state", "website"];
 
-  const updateVenue = (updatedData) => {
+  const updateData = (updatedData) => {
     console.log(`LocationList.js: ${JSON.stringify(updatedData)}`);
     locationService
       .update(updatedData)
@@ -86,7 +86,25 @@ const LocationList = () => {
             "Network error. Please check your internet connection or try again later."
           );
         } else {
-          alert("Error updating venues!");
+          alert("Error updating venue!");
+        }
+      });
+  };
+
+  const deleteData = (id) => {
+    console.log("Deleting: " + id);
+    locationService
+      .delete(id)
+      .then((response) => {
+        if (response && response.data) {
+          alert(response.data.message);
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          alert(err.response.data.message);
+        } else {
+          alert("Error deleting venue!");
         }
       });
   };
@@ -100,7 +118,8 @@ const LocationList = () => {
         initialColumns={columns}
         columnFields={columnFields}
         header="Add Venue"
-        updateVenue={updateVenue}
+        updateData={updateData}
+        deleteData={deleteData}
       />
     </div>
   ) : (

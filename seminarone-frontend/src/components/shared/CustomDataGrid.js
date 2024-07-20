@@ -52,7 +52,8 @@ export default function CustomDataGrid({
   initialColumns,
   columnFields,
   header,
-  updateVenue,
+  updateData,
+  deleteData,
 }) {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
@@ -109,6 +110,7 @@ export default function CustomDataGrid({
 
       case "delete":
         setRows(rows.filter((row) => row.id !== currentRow.id));
+        deleteData(currentRow.id);
         break;
 
       default:
@@ -146,7 +148,7 @@ export default function CustomDataGrid({
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     console.log(`processRowUpdate: ${JSON.stringify(updatedRow)}`);
     // todo: send updated row to backend
-    updateVenue(updatedRow);
+    updateData(updatedRow);
 
     return updatedRow;
   };

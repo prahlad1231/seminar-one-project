@@ -67,6 +67,14 @@ class LocationService {
       headers: authService.getAuthHeader(),
     });
   }
+
+  delete(id) {
+    return axios({
+      method: "DELETE",
+      url: API_URL + "/location/delete/" + id,
+      headers: authService.getAuthHeader(),
+    });
+  }
 }
 
 class TopicService {
