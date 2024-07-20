@@ -94,7 +94,7 @@ export default function CustomDataGrid({
     // setRows(rows.filter((row) => row.id !== id));
   };
 
-  const handleDialogConfirm = () => {
+  const handleDialogConfirm = async () => {
     switch (dialogType) {
       case "save":
         setRowModesModel({
@@ -109,8 +109,17 @@ export default function CustomDataGrid({
         break;
 
       case "delete":
+        console.log("handleDialogConfirm: delete");
         setRows(rows.filter((row) => row.id !== currentRow.id));
         deleteData(currentRow.id);
+        // try {
+        //   await deleteData(currentRow.id);
+        //   setRows(rows.filter((row) => row.id !== currentRow.id));
+        // } catch (error) {
+        //   alert("Error");
+        //   console.log(error);
+        // }
+
         break;
 
       default:
@@ -152,6 +161,18 @@ export default function CustomDataGrid({
 
     return updatedRow;
   };
+
+  // const processRowUpdate = async (newRow) => {
+  //   const updatedRow = { ...newRow, isNew: false };
+  //   try {
+  //     await updateData(updatedRow, currentRow.isNew);
+  //     setRows(rows.map((row) => (row.id === newRow.id ? updateData : row)));
+  //     return updatedRow;
+  //   } catch (error) {
+  //     console.log(error);
+  //     alert("error");
+  //   }
+  // };
 
   const handleRowModesModelChange = (newRowModesModel) => {
     setRowModesModel(newRowModesModel);
