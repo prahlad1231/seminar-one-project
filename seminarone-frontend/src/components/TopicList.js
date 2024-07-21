@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
 import { TopicService } from "../services/SeminarService";
-import { DataGrid } from "@mui/x-data-grid";
 import NoPermissionPage from "./NoPermissionPage";
 import CustomDataGrid from "./shared/CustomDataGrid";
 
 const TopicList = () => {
   const topicService = new TopicService();
   const [topicList, setTopicList] = useState([{ id: "", name: "" }]);
+  const [refetchTopic, setRefetchTopic] = useState(false);
   const [hasPermission, setHasPermission] = useState(false);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const TopicList = () => {
           alert("Error loading topics!");
         }
       });
-  }, []);
+  }, [refetchTopic]);
 
   const updateData = (updatedData, isNew) => {
     isNew
@@ -42,6 +42,7 @@ const TopicList = () => {
           .save(updatedData)
           .then((response) => {
             if (response && response.data) {
+              setRefetchTopic(!refetchTopic);
               alert(response.data.message);
             }
           })
@@ -56,6 +57,7 @@ const TopicList = () => {
           .update(updatedData)
           .then((response) => {
             if (response && response.data) {
+              setRefetchTopic(!refetchTopic);
               alert(response.data.message);
             }
           })
@@ -73,7 +75,10 @@ const TopicList = () => {
       .delete(id)
       .then((response) => {
         if (response && response.data) {
+          setRefetchTopic(!refetchTopic);
           alert(response.data.message);
+          const updatedList = topicList.filter((topic) => topic.id !== id);
+          setTopicList(updatedList);
         }
       })
       .catch((err) => {
@@ -97,6 +102,7 @@ const TopicList = () => {
       <h2 style={{ marginBottom: "1.5rem" }}>List of Topics</h2>
       <CustomDataGrid
         initialRows={topicList}
+        setInitialRows={setTopicList}
         initialColumns={columns}
         columnFields={columnFields}
         header="Add Topic"

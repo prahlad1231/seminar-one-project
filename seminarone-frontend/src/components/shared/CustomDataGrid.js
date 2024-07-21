@@ -50,17 +50,24 @@ function EditToolbar(props) {
 export default function CustomDataGrid({
   initialRows,
   initialColumns,
+  setInitialRows,
   columnFields,
   header,
   updateData,
   deleteData,
 }) {
-  const [rows, setRows] = React.useState(initialRows);
+  // const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
   const [open, setOpen] = React.useState(false);
   const [dialogType, setDialogType] = React.useState("");
   const [currentRow, setCurrentRow] = React.useState(null);
+
+  // React.useEffect(() => {
+  //   if (initialRows?.length) {
+  //     setInitialRows(initialRows);
+  //   }
+  // }, [initialRows]);
 
   const handleDialogOpen = (type, row) => {
     setDialogType(type);
@@ -83,13 +90,13 @@ export default function CustomDataGrid({
   };
 
   const handleSaveClick = (id) => () => {
-    const row = rows.find((row) => row.id === id);
+    const row = initialRows.find((row) => row.id === id);
     handleDialogOpen("save", row);
     // setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
   const handleDeleteClick = (id) => () => {
-    const row = rows.find((row) => row.id === id);
+    const row = initialRows.find((row) => row.id === id);
     handleDialogOpen("delete", row);
     // setRows(rows.filter((row) => row.id !== id));
   };
@@ -101,16 +108,18 @@ export default function CustomDataGrid({
           ...rowModesModel,
           [currentRow.id]: { mode: GridRowModes.View },
         });
-        const updatedRow = { ...currentRow, isNew: false };
-        setRows(
-          rows.map((row) => (row.id === currentRow.id ? updatedRow : row))
-        );
+        // const updatedRow = { ...currentRow, isNew: false };
+        // setInitialRows(
+        //   initialRows.map((row) =>
+        //     row.id === currentRow.id ? updatedRow : row
+        //   )
+        // );
 
         break;
 
       case "delete":
         console.log("handleDialogConfirm: delete");
-        setRows(rows.filter((row) => row.id !== currentRow.id));
+        // setRows(rows.filter((row) => row.id !== currentRow.id));
         deleteData(currentRow.id);
         // try {
         //   await deleteData(currentRow.id);
@@ -134,9 +143,9 @@ export default function CustomDataGrid({
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
 
-    const editedRow = rows.find((row) => row.id === id);
+    const editedRow = initialRows.find((row) => row.id === id);
     if (editedRow.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
+      setInitialRows(initialRows.filter((row) => row.id !== id));
     }
   };
 
@@ -146,15 +155,17 @@ export default function CustomDataGrid({
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
 
-    const editedRow = rows.find((row) => row.id === id);
+    const editedRow = initialRows.find((row) => row.id === id);
     if (editedRow.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
+      setInitialRows(initialRows.filter((row) => row.id !== id));
     }
   };
 
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    setInitialRows(
+      initialRows.map((row) => (row.id === newRow.id ? updatedRow : row))
+    );
     console.log(`processRowUpdate: ${JSON.stringify(updatedRow)}`);
     // todo: send updated row to backend
     updateData(updatedRow, currentRow.isNew);
@@ -166,7 +177,7 @@ export default function CustomDataGrid({
   //   const updatedRow = { ...newRow, isNew: false };
   //   try {
   //     await updateData(updatedRow, currentRow.isNew);
-  //     setRows(rows.map((row) => (row.id === newRow.id ? updateData : row)));
+  //     setInitialRows(rows.map((row) => (row.id === newRow.id ? updateData : row)));
   //     return updatedRow;
   //   } catch (error) {
   //     console.log(error);
@@ -242,7 +253,7 @@ export default function CustomDataGrid({
       }}
     >
       <DataGrid
-        rows={rows}
+        rows={initialRows}
         columns={columns}
         editMode="row"
         rowModesModel={rowModesModel}
@@ -253,7 +264,7 @@ export default function CustomDataGrid({
           toolbar: EditToolbar,
         }}
         slotProps={{
-          toolbar: { setRows, setRowModesModel, header, columnFields },
+          toolbar: { setInitialRows, setRowModesModel, header, columnFields },
         }}
       />
 
