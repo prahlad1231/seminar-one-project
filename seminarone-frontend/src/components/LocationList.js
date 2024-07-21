@@ -9,6 +9,8 @@ const LocationList = () => {
 
   const [hasPermission, setHasPermission] = useState(false);
 
+  const [refetchLocationService, setRefetchLocationService] = useState(false);
+
   const [locationList, setLocationList] = useState([
     {
       id: "",
@@ -40,7 +42,7 @@ const LocationList = () => {
           alert("Error loading venues!");
         }
       });
-  }, []);
+  }, [refetchLocationService]);
 
   const columns = [
     // { field: "id", headerName: "ID", width: 70 },
@@ -77,6 +79,7 @@ const LocationList = () => {
           .save(updatedData)
           .then((response) => {
             if (response && response.data) {
+              setRefetchLocationService(!refetchLocationService);
               alert(response.data.message);
             }
           })
@@ -91,6 +94,7 @@ const LocationList = () => {
           .update(updatedData)
           .then((response) => {
             if (response && response.data) {
+              setRefetchLocationService(!refetchLocationService);
               alert(response.data.message);
               console.log(response.data.object);
             }
@@ -114,6 +118,7 @@ const LocationList = () => {
       .delete(id)
       .then((response) => {
         if (response && response.data) {
+          setRefetchLocationService(!refetchLocationService);
           alert(response.data.message);
         }
       })
@@ -133,6 +138,7 @@ const LocationList = () => {
       <CustomDataGrid
         initialRows={locationList}
         initialColumns={columns}
+        setInitialRows={setLocationList}
         columnFields={columnFields}
         header="Add Venue"
         updateData={updateData}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { SeminarService } from "../services/SeminarService";
 import { DataGrid } from "@mui/x-data-grid";
 import NoPermissionPage from "./NoPermissionPage";
+import CustomDataGrid from "./shared/CustomDataGrid";
 
 const SeminarList = () => {
   const seminarService = new SeminarService();
@@ -49,13 +50,27 @@ const SeminarList = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "title", headerName: "Title", width: 150 },
-    { field: "startDate", headerName: "Start Date", width: 150 },
-    { field: "endDate", headerName: "End Date", width: 150 },
-    { field: "price", headerName: "Price", width: 150 },
-    { field: "topicName", headerName: "Topic", width: 150 },
-    { field: "venueName", headerName: "Venue", width: 150 },
+    // { field: "id", headerName: "ID", width: 70 },
+    { field: "title", headerName: "Title", width: 150, editable: true },
+    {
+      field: "startDate",
+      headerName: "Start Date",
+      width: 150,
+      editable: true,
+    },
+    { field: "endDate", headerName: "End Date", width: 150, editable: true },
+    { field: "price", headerName: "Price", width: 150, editable: true },
+    { field: "topicName", headerName: "Topic", width: 150, editable: true },
+    { field: "venueName", headerName: "Venue", width: 150, editable: true },
+  ];
+
+  const columnFields = [
+    "title",
+    "startDate",
+    "endDate",
+    "price",
+    "topicName",
+    "venueName",
   ];
 
   const formatDate = (dateString) => {
@@ -66,19 +81,22 @@ const SeminarList = () => {
     return `${year}-${month}-${day}`;
   };
 
+  const updateData = (updatedData) => {};
+
+  const deleteData = (id) => {};
+
   return hasPermission ? (
     <div style={{ height: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Seminars</h2>
-      <DataGrid
-        rows={seminarList}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
+
+      <CustomDataGrid
+        initialRows={seminarList}
+        initialColumns={columns}
+        setInitialRows={setSeminarList}
+        columnFields={columnFields}
+        header="Add Seminar"
+        updateData={updateData}
+        deleteData={deleteData}
       />
     </div>
   ) : (
