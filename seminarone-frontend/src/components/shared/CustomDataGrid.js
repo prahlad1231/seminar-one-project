@@ -23,12 +23,12 @@ import {
 } from "@mui/material";
 
 function EditToolbar(props) {
-  const { setRows, setRowModesModel, columnFields } = props;
+  const { setInitialRows, setRowModesModel, columnFields } = props;
 
   const handleClick = () => {
     const id = 0;
     // setRows((oldRows) => [...oldRows, { id, name: "", age: "", isNew: true }]);
-    setRows((oldRows) => [...oldRows, { id, isNew: true }]);
+    setInitialRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: {
