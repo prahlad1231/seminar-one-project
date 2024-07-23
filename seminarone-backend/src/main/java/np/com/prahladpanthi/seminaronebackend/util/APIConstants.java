@@ -42,6 +42,12 @@ public interface APIConstants {
     String USER = BASE_API + "/user";
     String CHANGE_PASSWORD = "/changePassword";
 
+    /**************** BOOKING *****************/
+
+    String BOOKING = BASE_API + "/booking";
+
+    String BOOK_SEMINAR = "/book";
+
 
 
 
