@@ -101,6 +101,10 @@ export default function CustomDataGrid({
     // setRows(rows.filter((row) => row.id !== id));
   };
 
+  const handleBookOnlineClick = (id) => {
+    alert("Booking: " + id);
+  };
+
   const handleDialogConfirm = async () => {
     switch (dialogType) {
       case "save":

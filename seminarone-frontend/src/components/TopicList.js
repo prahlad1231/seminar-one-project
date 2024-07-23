@@ -6,6 +6,7 @@ import CustomDataGrid from "./shared/CustomDataGrid";
 
 const TopicList = () => {
   const topicService = new TopicService();
+
   const [topicList, setTopicList] = useState([{ id: "", name: "" }]);
   const [refetchTopic, setRefetchTopic] = useState(false);
   const [hasPermission, setHasPermission] = useState(false);

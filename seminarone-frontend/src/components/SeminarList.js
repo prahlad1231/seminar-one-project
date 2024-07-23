@@ -3,9 +3,12 @@ import { SeminarService } from "../services/SeminarService";
 import { DataGrid } from "@mui/x-data-grid";
 import NoPermissionPage from "./NoPermissionPage";
 import CustomDataGrid from "./shared/CustomDataGrid";
+import { AuthService } from "../services/AuthService";
+import { Button } from "@mui/material";
 
 const SeminarList = () => {
   const seminarService = new SeminarService();
+  const authService = new AuthService();
 
   const [hasPermission, setHasPermission] = useState(false);
 
@@ -73,6 +76,41 @@ const SeminarList = () => {
     "venueName",
   ];
 
+  const handleBookButton = (params) => {
+    console.log(params);
+    const name = params.row.title;
+    const id = params.row.id;
+    alert(`Booking, ID: ${id}, NAME: ${name}`);
+  };
+
+  const renderBookingButton = (params) => {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 10 }}
+          onClick={() => handleBookButton(params)}
+        >
+          Book Now
+        </Button>
+      </strong>
+    );
+  };
+
+  const userRole = authService.getCurrentUserRole();
+  if (userRole === "USER") {
+    columnFields.push("Booking");
+    columns.push({
+      field: "booking",
+      headerName: "Booking",
+      width: 150,
+      editable: false,
+      renderCell: renderBookingButton,
+    });
+  }
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -81,9 +119,13 @@ const SeminarList = () => {
     return `${year}-${month}-${day}`;
   };
 
-  const updateData = (updatedData) => {};
+  const updateData = (updatedData) => {
+    alert("Feature coming soon!");
+  };
 
-  const deleteData = (id) => {};
+  const deleteData = (id) => {
+    alert("Feature coming soon!");
+  };
 
   return hasPermission ? (
     <div style={{ height: 400, width: "100%" }}>
