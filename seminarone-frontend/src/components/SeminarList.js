@@ -4,7 +4,15 @@ import { DataGrid } from "@mui/x-data-grid";
 import NoPermissionPage from "./NoPermissionPage";
 import CustomDataGrid from "./shared/CustomDataGrid";
 import { AuthService } from "../services/AuthService";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
 
 const SeminarList = () => {
   const seminarService = new SeminarService();
@@ -23,6 +31,10 @@ const SeminarList = () => {
       venueName: "",
     },
   ]);
+
+  const [open, setOpen] = useState(false);
+  const [bookingNotes, setBookingNotes] = useState("");
+  const [selectedSeminar, setSelectedSeminar] = useState(null);
 
   useEffect(() => {
     seminarService
@@ -77,10 +89,12 @@ const SeminarList = () => {
   ];
 
   const handleBookButton = (params) => {
-    console.log(params);
+    // console.log(params);
     const name = params.row.title;
     const id = params.row.id;
-    alert(`Booking, ID: ${id}, NAME: ${name}`);
+    setSelectedSeminar(params.row);
+    // alert(`Booking, ID: ${id}, NAME: ${name}`);
+    setOpen(true);
   };
 
   const renderBookingButton = (params) => {
@@ -127,6 +141,18 @@ const SeminarList = () => {
     alert("Feature coming soon!");
   };
 
+  const handleDialogClose = () => {
+    setOpen(false);
+    setBookingNotes("");
+  };
+
+  const handleBookingSubmit = () => {
+    alert(
+      `Booking for seminar : ${selectedSeminar?.title}, Notes: ${bookingNotes}`
+    );
+    handleDialogClose();
+  };
+
   return hasPermission ? (
     <div style={{ height: 400, width: "100%" }}>
       <h2 style={{ marginBottom: "1.5rem" }}>List of Seminars</h2>
@@ -140,6 +166,34 @@ const SeminarList = () => {
         updateData={updateData}
         deleteData={deleteData}
       />
+
+      <Dialog open={open} onClose={handleDialogClose}>
+        <DialogTitle>Book Seminar</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please enter your booking notes for the seminar:{" "}
+            {selectedSeminar?.title}
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="bookingNotes"
+            label="Booking Notes"
+            type="text"
+            fullWidth
+            value={bookingNotes}
+            onChange={(e) => setBookingNotes(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleBookingSubmit} color="primary">
+            Book
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   ) : (
     <NoPermissionPage />
