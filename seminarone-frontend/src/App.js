@@ -11,6 +11,7 @@ import LocationList from "./components/LocationList";
 import LoginPage from "./components/LoginPage";
 import { AuthProvider } from "./components/context/AuthContext";
 import RequireAuth from "./services/RequireAuth";
+import Bookings from "./components/Bookings";
 
 // const RequireAuth = ({ children }) => {
 //   const navigate = useNavigate();
@@ -47,6 +48,7 @@ function App() {
                     <Route path="/addSeminar" element={<AddSeminar />} />
                     <Route path="/topicList" element={<TopicList />} />
                     <Route path="/locationList" element={<LocationList />} />
+                    <Route path="/bookings" element={<Bookings />} />
                   </Routes>
                 </Sidebar>
               </RequireAuth>

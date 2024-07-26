@@ -1,4 +1,5 @@
 import {
+  Beenhere,
   Dashboard,
   LibraryAdd,
   ListAlt,
@@ -14,10 +15,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/sidebar.css";
 import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
+import { AuthService } from "../services/AuthService";
 
 function Sidebar({ children }) {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+
+  const authService = new AuthService();
+  const userRole = authService.getCurrentUserRole();
 
   const menuItems = [
     {
@@ -25,11 +30,11 @@ function Sidebar({ children }) {
       name: "Dashboard",
       icon: <Dashboard />,
     },
-    {
-      path: "/addSeminar",
-      name: "Add Seminar",
-      icon: <LibraryAdd />,
-    },
+    // {
+    //   path: "/addSeminar",
+    //   name: "Add Seminar",
+    //   icon: <LibraryAdd />,
+    // },
     {
       path: "/topicList",
       name: "Topic List",
@@ -45,17 +50,39 @@ function Sidebar({ children }) {
       name: "Seminar List",
       icon: <ListAlt />,
     },
-    {
-      path: "/userlist",
-      name: "User List",
-      icon: <RecentActors />,
-    },
+    // {
+    //   path: "/userlist",
+    //   name: "User List",
+    //   icon: <RecentActors />,
+    // },
     {
       path: "/settings",
       name: "Settings",
       icon: <Settings />,
     },
   ];
+
+  if (userRole === "USER") {
+    menuItems.push({
+      path: "/bookings",
+      name: "Bookings",
+      icon: <Beenhere />,
+    });
+  } else {
+    // console.log(userRole);
+    menuItems.push(
+      {
+        path: "/addSeminar",
+        name: "Add Seminar",
+        icon: <LibraryAdd />,
+      },
+      {
+        path: "/userlist",
+        name: "User List",
+        icon: <RecentActors />,
+      }
+    );
+  }
 
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => {
