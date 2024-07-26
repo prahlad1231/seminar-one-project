@@ -8,4 +8,6 @@ import np.com.prahladpanthi.seminaronebackend.service.base.IBaseService;
 public interface IBookingService extends IBaseService<BookingEntity, Long> {
 
     BookingDto bookSeminar(BookingDto bookingDto, final UserEntity user);
+
+    boolean hasBooked(Long seminarEntityId, Long userEntityId);
 }

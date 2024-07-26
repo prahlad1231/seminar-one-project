@@ -3,6 +3,7 @@ package np.com.prahladpanthi.seminaronebackend.service.impl;
 import np.com.prahladpanthi.seminaronebackend.dto.BookingDto;
 import np.com.prahladpanthi.seminaronebackend.entity.BookingEntity;
 import np.com.prahladpanthi.seminaronebackend.entity.UserEntity;
+import np.com.prahladpanthi.seminaronebackend.exception.AlreadyExistsException;
 import np.com.prahladpanthi.seminaronebackend.exception.InsufficientDataException;
 import np.com.prahladpanthi.seminaronebackend.mapper.BookingMapper;
 import np.com.prahladpanthi.seminaronebackend.repository.BookingRepository;
@@ -39,9 +40,16 @@ public class BookSeminarServiceImpl extends BaseServiceImpl<BookingEntity, Long>
         }
 
         if (bookingDto.getUserEntityId() == null) bookingDto.setUserEntityId(user.getId());
-
+        if (hasBooked(bookingDto.getSeminarEntityId(), bookingDto.getUserEntityId())) {
+            throw new AlreadyExistsException("You have already booked this seminar!");
+        }
         BookingEntity bookingEntity = bookingRepository.save(bookingMapper.mapToEntity(bookingDto));
 
         return bookingMapper.mapToDto(bookingEntity);
+    }
+
+    @Override
+    public boolean hasBooked(Long seminarEntityId, Long userEntityId) {
+        return bookingRepository.existsBySeminarEntityIdAndUserEntityId(seminarEntityId, userEntityId);
     }
 }
