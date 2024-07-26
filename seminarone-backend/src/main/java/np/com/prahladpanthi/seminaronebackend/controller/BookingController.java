@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping(APIConstants.BOOKING)
 public class BookingController extends BaseController {
 
     private final IUserService userService;

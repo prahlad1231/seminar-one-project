@@ -121,4 +121,15 @@ class TopicService {
   }
 }
 
-export { SeminarService, LocationService, TopicService };
+class BookingService {
+  save(bookingDetails) {
+    return axios({
+      method: "POST",
+      url: API_URL + "/booking/book",
+      headers: authService.getAuthHeader(),
+      data: bookingDetails,
+    });
+  }
+}
+
+export { SeminarService, LocationService, TopicService, BookingService };

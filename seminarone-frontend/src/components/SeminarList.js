@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SeminarService } from "../services/SeminarService";
+import { BookingService, SeminarService } from "../services/SeminarService";
 import { DataGrid } from "@mui/x-data-grid";
 import NoPermissionPage from "./NoPermissionPage";
 import CustomDataGrid from "./shared/CustomDataGrid";
@@ -17,6 +17,7 @@ import {
 const SeminarList = () => {
   const seminarService = new SeminarService();
   const authService = new AuthService();
+  const bookingService = new BookingService();
 
   const [hasPermission, setHasPermission] = useState(false);
 
@@ -147,9 +148,30 @@ const SeminarList = () => {
   };
 
   const handleBookingSubmit = () => {
-    alert(
-      `Booking for seminar : ${selectedSeminar?.title}, Notes: ${bookingNotes}`
-    );
+    // alert(
+    //   `Booking for seminar : ${selectedSeminar?.title}, Notes: ${bookingNotes}`
+    // );
+    const bookingDetails = {
+      seminarEntityId: selectedSeminar.id,
+      bookingNotes: bookingNotes,
+    };
+    console.log(bookingDetails);
+
+    bookingService
+      .save(bookingDetails)
+      .then((response) => {
+        if (response && response.data) {
+          alert(response.data.message);
+        }
+      })
+      .catch((err) => {
+        if (err && err.data) {
+          alert("Error: " + err.data.message);
+        } else {
+          alert("Error Booking Seminar!");
+        }
+      });
+
     handleDialogClose();
   };
 
