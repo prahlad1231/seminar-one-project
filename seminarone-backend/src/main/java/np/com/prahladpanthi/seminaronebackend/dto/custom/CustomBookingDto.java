@@ -9,7 +9,7 @@ import java.util.Date;
 @ToString
 public class CustomBookingDto {
 
-    private Long bookingId;
+    private Long id;
 
     private String seminarName;
 
@@ -27,7 +27,7 @@ public class CustomBookingDto {
 
     public CustomBookingDto(Long bookingId, String seminarName, Date startDate, Date endDate,
                             Double price, String topicName, String venueName, String bookingNotes) {
-        this.bookingId = bookingId;
+        this.id = bookingId;
         this.seminarName = seminarName;
         this.startDate = startDate;
         this.endDate = endDate;

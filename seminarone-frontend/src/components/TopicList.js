@@ -78,8 +78,8 @@ const TopicList = () => {
         if (response && response.data) {
           setRefetchTopic(!refetchTopic);
           alert(response.data.message);
-          const updatedList = topicList.filter((topic) => topic.id !== id);
-          setTopicList(updatedList);
+          // const updatedList = topicList.filter((topic) => topic.id !== id);
+          // setTopicList(updatedList);
         }
       })
       .catch((err) => {

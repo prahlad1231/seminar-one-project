@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { BookingService, SeminarService } from "../services/SeminarService";
-import { DataGrid } from "@mui/x-data-grid";
 import NoPermissionPage from "./NoPermissionPage";
 import CustomDataGrid from "./shared/CustomDataGrid";
 import { AuthService } from "../services/AuthService";

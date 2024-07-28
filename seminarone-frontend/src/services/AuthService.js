@@ -40,6 +40,10 @@ class AuthService {
     return this.getCurrentUser()["role"];
   }
 
+  getCurrentUserId() {
+    return this.getCurrentUser()["id"];
+  }
+
   getAuthHeader() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.jwtToken) {

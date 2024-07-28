@@ -122,12 +122,28 @@ class TopicService {
 }
 
 class BookingService {
+  delete(id) {
+    return axios({
+      method: "DELETE",
+      url: API_URL + "/booking/delete/" + id,
+      headers: authService.getAuthHeader(),
+    });
+  }
+
   save(bookingDetails) {
     return axios({
       method: "POST",
       url: API_URL + "/booking/book",
       headers: authService.getAuthHeader(),
       data: bookingDetails,
+    });
+  }
+
+  getAllBookings(userId) {
+    return axios({
+      method: "GET",
+      url: API_URL + "/booking/findAll",
+      headers: authService.getAuthHeader(),
     });
   }
 }

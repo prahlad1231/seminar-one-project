@@ -11,7 +11,7 @@ import LocationList from "./components/LocationList";
 import LoginPage from "./components/LoginPage";
 import { AuthProvider } from "./components/context/AuthContext";
 import RequireAuth from "./services/RequireAuth";
-import Bookings from "./components/Bookings";
+import BookingList from "./components/BookingList";
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
                     <Route path="/addSeminar" element={<AddSeminar />} />
                     <Route path="/topicList" element={<TopicList />} />
                     <Route path="/locationList" element={<LocationList />} />
-                    <Route path="/bookings" element={<Bookings />} />
+                    <Route path="/bookings" element={<BookingList />} />
                   </Routes>
                 </Sidebar>
               </RequireAuth>
