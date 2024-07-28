@@ -13,21 +13,6 @@ import { AuthProvider } from "./components/context/AuthContext";
 import RequireAuth from "./services/RequireAuth";
 import Bookings from "./components/Bookings";
 
-// const RequireAuth = ({ children }) => {
-//   const navigate = useNavigate();
-//   const { isAuthenticated } = useAuth();
-
-//   useEffect(() => {
-//     if (!isAuthenticated) {
-//       navigate("/login");
-//     } else {
-//       navigate("/");
-//     }
-//   }, [isAuthenticated, navigate]);
-
-//   return isAuthenticated ? children : null;
-// };
-
 function App() {
   return (
     <AuthProvider>
