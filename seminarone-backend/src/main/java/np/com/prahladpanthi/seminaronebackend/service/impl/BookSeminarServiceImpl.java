@@ -1,6 +1,7 @@
 package np.com.prahladpanthi.seminaronebackend.service.impl;
 
 import np.com.prahladpanthi.seminaronebackend.dto.BookingDto;
+import np.com.prahladpanthi.seminaronebackend.dto.custom.CustomBookingDto;
 import np.com.prahladpanthi.seminaronebackend.entity.BookingEntity;
 import np.com.prahladpanthi.seminaronebackend.entity.UserEntity;
 import np.com.prahladpanthi.seminaronebackend.exception.AlreadyExistsException;
@@ -11,6 +12,8 @@ import np.com.prahladpanthi.seminaronebackend.service.IBookingService;
 import np.com.prahladpanthi.seminaronebackend.service.impl.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BookSeminarServiceImpl extends BaseServiceImpl<BookingEntity, Long> implements IBookingService {
@@ -51,5 +54,10 @@ public class BookSeminarServiceImpl extends BaseServiceImpl<BookingEntity, Long>
     @Override
     public boolean hasBooked(Long seminarEntityId, Long userEntityId) {
         return bookingRepository.existsBySeminarEntityIdAndUserEntityId(seminarEntityId, userEntityId);
+    }
+
+    @Override
+    public List<CustomBookingDto> getAllBookedSeminar(Long userId) {
+        return bookingRepository.findAllBookingByUserEntityId(userId);
     }
 }

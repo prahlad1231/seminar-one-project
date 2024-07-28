@@ -41,6 +41,14 @@ public class BookingController extends BaseController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @GetMapping(APIConstants.FIND_ALL)
+    public ResponseEntity<ResponseDto> getAllBookedSeminar(Authentication auth) {
+        final Long userId = getLoggedInUser(auth).getId();
+        return new ResponseEntity<>(new ResponseDto("Successfully fetched!",
+                bookingService.getAllBookedSeminar(userId)), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping(APIConstants.DELETE_BY_ID)
     public ResponseEntity<ResponseDto> deleteBookingById(@PathVariable Long id) {
         if (!bookingService.existsById(id)) throw new NotFoundException("Booking details not found!");
