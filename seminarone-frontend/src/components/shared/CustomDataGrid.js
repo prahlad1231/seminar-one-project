@@ -26,6 +26,10 @@ function EditToolbar(props) {
   const { setInitialRows, setRowModesModel, columnFields } = props;
 
   const handleClick = () => {
+    if (!props.canAdd) {
+      alert("Cannot Modify Items!");
+      return;
+    }
     const id = 0;
     // setRows((oldRows) => [...oldRows, { id, name: "", age: "", isNew: true }]);
     setInitialRows((oldRows) => [...oldRows, { id, isNew: true }]);
@@ -55,6 +59,7 @@ export default function CustomDataGrid({
   header,
   updateData,
   deleteData,
+  canAdd,
 }) {
   // const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
@@ -268,7 +273,13 @@ export default function CustomDataGrid({
           toolbar: EditToolbar,
         }}
         slotProps={{
-          toolbar: { setInitialRows, setRowModesModel, header, columnFields },
+          toolbar: {
+            setInitialRows,
+            setRowModesModel,
+            header,
+            columnFields,
+            canAdd,
+          },
         }}
       />
 

@@ -186,6 +186,7 @@ const SeminarList = () => {
         header="Add Seminar"
         updateData={updateData}
         deleteData={deleteData}
+        canAdd={true}
       />
 
       <Dialog open={open} onClose={handleDialogClose}>

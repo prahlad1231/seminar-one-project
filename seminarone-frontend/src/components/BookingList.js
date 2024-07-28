@@ -141,6 +141,7 @@ const BookingList = () => {
         header="Bookings"
         updateData={null}
         deleteData={deleteData}
+        canAdd={false}
       />
     </div>
   ) : (

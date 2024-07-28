@@ -51,6 +51,7 @@ const TopicList = () => {
             if (err.response && err.response.data) {
               alert(err.response.data.message);
             } else {
+              setRefetchTopic(!refetchTopic); // find a way not to trigger API call
               alert("Error saving new topic!");
             }
           })
@@ -109,6 +110,7 @@ const TopicList = () => {
         header="Add Topic"
         updateData={updateData}
         deleteData={deleteData}
+        canAdd={true}
       />
     </div>
   ) : (

@@ -143,6 +143,7 @@ const LocationList = () => {
         header="Add Venue"
         updateData={updateData}
         deleteData={deleteData}
+        canAdd={true}
       />
     </div>
   ) : (
