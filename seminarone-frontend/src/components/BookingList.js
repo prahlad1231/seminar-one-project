@@ -112,14 +112,26 @@ const BookingList = () => {
   ];
 
   const deleteData = (id) => {
-    bookingService.delete(id).then((response) => {
-      if (response && response.data) {
-        setRefetchBooking(!refetchBooking);
-        alert(response.data.message);
-        // const updatedList = bookingList.filter((booking) => booking.id !== id);
-        // setBookingList(updatedList);
-      }
-    });
+    bookingService
+      .delete(id)
+      .then((response) => {
+        if (response && response.data) {
+          setRefetchBooking(!refetchBooking);
+          alert(response.data.message);
+          // const updatedList = bookingList.filter((booking) => booking.id !== id);
+          // setBookingList(updatedList);
+        } else {
+          alert("Error deleting");
+        }
+      })
+      .catch((err) => {
+        if (err && err.data) {
+          alert("Error: " + err.data.message);
+        } else {
+          console.log(err);
+          alert("Error deleting data");
+        }
+      });
   };
 
   const formatDate = (dateString) => {
