@@ -39,7 +39,7 @@ const UserList = () => {
           alert("Error loading users!");
         }
       });
-  }, [userService]);
+  }, []);
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
