@@ -33,7 +33,7 @@ public class UserController extends BaseController {
                 userMapper.mapToDto(userService.findAll())), HttpStatus.OK);
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping(APIConstants.CHANGE_PASSWORD)
     public ResponseEntity<ResponseDto> changePassword(Authentication authentication,
                                                       @RequestBody ChangePasswordDto changePasswordDto) {
