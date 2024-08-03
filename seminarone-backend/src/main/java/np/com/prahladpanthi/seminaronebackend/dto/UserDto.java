@@ -29,5 +29,5 @@ public class UserDto extends BaseDto {
 
     private Date expiryDate;
 
-    private Long roleEntityId;
+    private Long rolesEntityId;
 }

@@ -43,7 +43,6 @@ public class UserController extends BaseController {
         UserEntity userEntity = userService.findById(userDto.getId());
         UserDto updatedUser = userMapper.mapToDto(userEntity);
         BeanCopyUtils.copyNonNullProperties(userDto, updatedUser);
-
         userService.update(userMapper.mapToEntity(updatedUser));
         return new ResponseEntity<>(new ResponseDto("Successfully updated!", updatedUser), HttpStatus.OK);
     }
