@@ -14,12 +14,21 @@ class UserService {
     });
   }
 
+  updateUser(userDto) {
+    return axios({
+      method: "PUT",
+      url: API_URL + "/user/update",
+      headers: authService.getAuthHeader(),
+      data: userDto,
+    });
+  }
+
   changePassword(changePasswordDto) {
     return axios({
       method: "post",
       url: API_URL + "/user/changePassword",
       headers: authService.getAuthHeader(),
-      body: changePasswordDto,
+      data: changePasswordDto,
     });
   }
 }

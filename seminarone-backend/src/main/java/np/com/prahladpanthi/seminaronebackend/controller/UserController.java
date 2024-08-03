@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(APIConstants.USER)
-@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 public class UserController extends BaseController {
 
     private final IUserService userService;

@@ -67,8 +67,24 @@ const UserList = () => {
     "active",
   ];
 
-  const updateData = (updatedData, isNew) => {
-    alert("Coming soon...");
+  const updateData = (updatedData) => {
+    console.log(updatedData);
+    userService
+      .updateUser(updatedData)
+      .then((response) => {
+        if (response && response.data) {
+          setRefetchUserService(!refetchUserService);
+          alert(response.data.message);
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          alert(err.response.data.message);
+        } else {
+          setRefetchUserService(!refetchUserService); // todo: find a way not to trigger API call
+          alert("Error saving user data");
+        }
+      });
   };
 
   const deleteData = (id) => {

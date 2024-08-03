@@ -1,5 +1,6 @@
 package np.com.prahladpanthi.seminaronebackend.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,9 @@ public class UserDto extends BaseDto {
     private String lastName;
 
     private String username;
+
+    @JsonIgnore
+    private String password;
 
     private Boolean active;
 
