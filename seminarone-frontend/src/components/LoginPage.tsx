@@ -17,8 +17,8 @@ const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const authService = new AuthService();
 
@@ -33,7 +33,7 @@ const LoginPage = () => {
         navigate("/dashboard");
       })
       .catch((err) => {
-        if (err.response && err.response.status == "401") {
+        if (err.response && err.response.status === "401") {
           alert("Incorrect Username / Password!");
         } else {
           console.log(err);

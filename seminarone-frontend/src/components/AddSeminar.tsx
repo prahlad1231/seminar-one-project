@@ -19,8 +19,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import LocationForm from "../components/mini/LocationForm";
-import TopicForm from "../components/mini/TopicForm";
+import LocationForm from "./mini/LocationForm";
+import TopicForm from "./mini/TopicForm";
 import {
   LocationService,
   SeminarService,
@@ -29,7 +29,23 @@ import {
 import NoPermissionPage from "./NoPermissionPage";
 import { AuthService } from "../services/AuthService";
 
-const filter = createFilterOptions();
+const filter = createFilterOptions<any>();
+
+interface ITopic {
+  id: number;
+  name: string;
+  inputValue?: string;
+}
+
+interface IVenue {
+  id: number;
+  venueName: string;
+  streetName: string;
+  streetNumber: number;
+  state: string;
+  website: string;
+  inputValue?: string;
+}
 
 const AddSeminar = () => {
   const topicService = useMemo(() => new TopicService(), []);
@@ -37,43 +53,43 @@ const AddSeminar = () => {
   const seminarService = useMemo(() => new SeminarService(), []);
   const authService = useMemo(() => new AuthService(), []);
 
-  const [topicValue, setTopicValue] = useState("");
-  const [venueValue, setVenueValue] = useState("");
-  const [topicList, setTopicList] = useState([{ id: "", name: "" }]);
-  const [venueList, setVenueList] = useState([
+  const [topicValue, setTopicValue] = useState<ITopic | null | "">("");
+  const [venueValue, setVenueValue] = useState<IVenue | null | "">("");
+  const [topicList, setTopicList] = useState<ITopic[]>([{ id: -1, name: "" }]);
+  const [venueList, setVenueList] = useState<IVenue[]>([
     {
-      id: "",
+      id: -1,
       venueName: "",
       streetName: "",
-      streetNumber: "",
+      streetNumber: -1,
       state: "",
       website: "",
     },
   ]);
-  const [open, toggleOpen] = useState(false);
-  const [dialogType, setDialogType] = useState("");
+  const [open, toggleOpen] = useState<boolean>(false);
+  const [dialogType, setDialogType] = useState<"topic" | "venue" | "">("");
 
-  const [topicDialogValue, setTopicDialogValue] = useState({
+  const [topicDialogValue, setTopicDialogValue] = useState<{ name: string }>({
     name: "",
   });
 
-  const [venueDialogValue, setVenueDialogValue] = useState({
-    id: 0,
+  const [venueDialogValue, setVenueDialogValue] = useState<IVenue>({
+    id: -1,
     venueName: "",
-    streetNumber: 0,
+    streetNumber: -1,
     streetName: "",
     state: "",
     website: "",
   });
 
-  const titleRef = useRef();
-  const startDateRef = useRef();
-  const endDateRef = useRef();
-  const priceRef = useRef();
-  const topicRef = useRef();
-  const venueRef = useRef();
+  const titleRef = useRef<HTMLInputElement>(null);
+  const startDateRef = useRef<HTMLInputElement>(null);
+  const endDateRef = useRef<HTMLInputElement>(null);
+  const priceRef = useRef<HTMLInputElement>(null);
+  const topicRef = useRef<HTMLInputElement>(null);
+  const venueRef = useRef<HTMLInputElement>(null);
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   useEffect(() => {
     const user = authService.getCurrentUser();
@@ -135,6 +151,7 @@ const AddSeminar = () => {
       });
     } else if (dialogType === "venue") {
       setVenueDialogValue({
+        id: -1,
         venueName: "",
         streetNumber: 0,
         streetName: "",
@@ -154,31 +171,31 @@ const AddSeminar = () => {
   // };
 
   const clearForm = () => {
-    titleRef.current.value = "";
-    startDateRef.current.value = "";
-    endDateRef.current.value = "";
-    priceRef.current.value = "";
-    setTopicValue("");
-    setVenueValue("");
-    topicRef.current.value = "";
-    venueRef.current.value = "";
+    if (titleRef.current) titleRef.current.value = "";
+    if (startDateRef.current) startDateRef.current.value = "";
+    if (endDateRef.current) endDateRef.current.value = "";
+    if (priceRef.current) priceRef.current.value = "";
+    setTopicValue(null);
+    setVenueValue(null);
+    if (topicRef.current) topicRef.current.value = "";
+    if (venueRef.current) venueRef.current.value = "";
   };
 
-  const addTopic = (topic) => {
+  const addTopic = (topic: ITopic) => {
     setTopicList((topicList) => [...topicList, topic]);
   };
 
-  const addVenue = (venue) => {
+  const addVenue = (venue: IVenue) => {
     setVenueList((venueList) => [...venueList, venue]);
   };
 
   const addSeminar = () => {
-    const title = titleRef.current.value;
-    var startDate = startDateRef.current.value;
-    startDate = new Date(startDate).toLocaleDateString("fr-CA");
-    var endDate = endDateRef.current.value;
-    endDate = new Date(endDate).toLocaleDateString("fr-CA");
-    const price = priceRef.current.value;
+    const title = titleRef.current?.value;
+    var startDate = startDateRef.current?.value;
+    startDate = new Date(startDate!).toLocaleDateString("fr-CA");
+    var endDate = endDateRef.current?.value;
+    endDate = new Date(endDate!).toLocaleDateString("fr-CA");
+    const price = priceRef.current?.value;
 
     if (
       title === "" ||
@@ -196,8 +213,8 @@ const AddSeminar = () => {
       `title: ${title}, start date: ${startDate}, end date: ${endDate}, price: ${price}, topic: ${JSON.stringify(
         topicValue
       )}, venue: ${JSON.stringify(venueValue)}, topicId: ${
-        topicValue.id
-      }, venueId: ${venueValue.id}`
+        topicValue?.id
+      }, venueId: ${venueValue?.id}`
     );
 
     const seminarDetails = {
@@ -205,8 +222,8 @@ const AddSeminar = () => {
       startDate: startDate,
       endDate: endDate,
       price: price,
-      topicEntityId: topicValue.id,
-      locationEntityId: venueValue.id,
+      topicEntityId: topicValue?.id,
+      locationEntityId: venueValue?.id,
     };
     console.log(`Seminar Details: ${JSON.stringify(seminarDetails)}`);
 
@@ -265,6 +282,7 @@ const AddSeminar = () => {
                         inputRef={startDateRef}
                         required
                       />
+
                       <DatePicker id="endDate" inputRef={endDateRef} required />
                       <TextField
                         id="price"
