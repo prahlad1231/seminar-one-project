@@ -13,11 +13,15 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 
 import "../styles/sidebar.css";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import { AuthService } from "../services/AuthService";
 
-function Sidebar({ children }) {
+interface SidebarProps {
+  children?: ReactNode;
+}
+
+const Sidebar = ({ children }: SidebarProps) => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -129,6 +133,6 @@ function Sidebar({ children }) {
   ) : (
     navigate("/login")
   );
-}
+};
 
 export default Sidebar;
