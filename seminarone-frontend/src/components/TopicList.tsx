@@ -4,12 +4,17 @@ import { TopicService } from "../services/SeminarService";
 import NoPermissionPage from "./NoPermissionPage";
 import CustomDataGrid from "./shared/CustomDataGrid";
 
+interface ITopic {
+  id: number;
+  name: string;
+}
+
 const TopicList = () => {
   const topicService = new TopicService();
 
-  const [topicList, setTopicList] = useState([{ id: "", name: "" }]);
-  const [refetchTopic, setRefetchTopic] = useState(false);
-  const [hasPermission, setHasPermission] = useState(false);
+  const [topicList, setTopicList] = useState<ITopic[]>([{ id: -1, name: "" }]);
+  const [refetchTopic, setRefetchTopic] = useState<boolean>(false);
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
 
   useEffect(() => {
     topicService
@@ -37,7 +42,7 @@ const TopicList = () => {
       });
   }, [refetchTopic]);
 
-  const updateData = (updatedData, isNew) => {
+  const updateData = (updatedData: ITopic, isNew: boolean) => {
     isNew
       ? topicService
           .save(updatedData)
@@ -72,7 +77,7 @@ const TopicList = () => {
           });
   };
 
-  const deleteData = (id) => {
+  const deleteData = (id: number) => {
     topicService
       .delete(id)
       .then((response) => {
