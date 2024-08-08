@@ -32,18 +32,18 @@ import { AuthService } from "../services/AuthService";
 const filter = createFilterOptions<any>();
 
 interface ITopic {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
   inputValue?: string;
 }
 
 interface IVenue {
-  id: number;
-  venueName: string;
-  streetName: string;
-  streetNumber: number;
-  state: string;
-  website: string;
+  id?: number;
+  venueName?: string;
+  streetName?: string;
+  streetNumber?: number;
+  state?: string;
+  website?: string;
   inputValue?: string;
 }
 
@@ -278,12 +278,16 @@ const AddSeminar = () => {
                     <div className="form-input">
                       <TextField id="title" inputRef={titleRef} required />
                       <DatePicker
-                        id="startDate"
+                        // id="startDate"
                         inputRef={startDateRef}
-                        required
+                        // required
                       />
 
-                      <DatePicker id="endDate" inputRef={endDateRef} required />
+                      <DatePicker
+                        // id="endDate"
+                        inputRef={endDateRef}
+                        // required
+                      />
                       <TextField
                         id="price"
                         inputRef={priceRef}
@@ -337,7 +341,7 @@ const AddSeminar = () => {
                           if (option.inputValue) {
                             return option.inputValue;
                           }
-                          return option.name;
+                          return option.name || "";
                         }}
                         selectOnFocus
                         clearOnBlur
@@ -398,7 +402,7 @@ const AddSeminar = () => {
                           if (option.inputValue) {
                             return option.inputValue;
                           }
-                          return option.venueName;
+                          return option.venueName || "";
                         }}
                         selectOnFocus
                         clearOnBlur
