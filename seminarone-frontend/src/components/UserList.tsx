@@ -1,24 +1,32 @@
-import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import NoPermissionPage from "./NoPermissionPage";
 import { UserService } from "../services/UserService";
 import CustomDataGrid from "./shared/CustomDataGrid";
 
+interface IUser {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  active: boolean | null;
+}
+
 const UserList = () => {
   const userService = new UserService();
 
-  const [hasPermission, setHasPermission] = useState(false);
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
 
-  const [refetchUserService, setRefetchUserService] = useState(false);
+  const [refetchUserService, setRefetchUserService] = useState<boolean>(false);
 
-  const [userList, setUserList] = useState([
+  const [userList, setUserList] = useState<IUser[]>([
     {
-      id: "",
+      id: -1,
       email: "",
       firstName: "",
       lastName: "",
       username: "",
-      active: "",
+      active: null,
     },
   ]);
 
@@ -67,7 +75,7 @@ const UserList = () => {
     "active",
   ];
 
-  const updateData = (updatedData) => {
+  const updateData = (updatedData: IUser) => {
     console.log(updatedData);
     userService
       .updateUser(updatedData)
@@ -87,7 +95,7 @@ const UserList = () => {
       });
   };
 
-  const deleteData = (id) => {
+  const deleteData = (id: number) => {
     alert("Coming soon...");
   };
 
