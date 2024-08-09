@@ -13,28 +13,38 @@ import {
   TextField,
 } from "@mui/material";
 
+interface ISeminar {
+  id: number;
+  title: string;
+  startDate: string;
+  endDate: string;
+  price: number;
+  topicName: string;
+  venueName: string;
+}
+
 const SeminarList = () => {
   const seminarService = new SeminarService();
   const authService = new AuthService();
   const bookingService = new BookingService();
 
-  const [hasPermission, setHasPermission] = useState(false);
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
 
-  const [seminarList, setSeminarList] = useState([
+  const [seminarList, setSeminarList] = useState<ISeminar[]>([
     {
-      id: "",
+      id: -1,
       title: "",
       startDate: "",
       endDate: "",
-      price: "",
+      price: -1,
       topicName: "",
       venueName: "",
     },
   ]);
 
-  const [open, setOpen] = useState(false);
-  const [bookingNotes, setBookingNotes] = useState("");
-  const [selectedSeminar, setSelectedSeminar] = useState(null);
+  const [open, setOpen] = useState<boolean>(false);
+  const [bookingNotes, setBookingNotes] = useState<string>("");
+  const [selectedSeminar, setSelectedSeminar] = useState<ISeminar | null>(null);
 
   useEffect(() => {
     seminarService
@@ -42,11 +52,13 @@ const SeminarList = () => {
       .then((result) => {
         if (result && result.data) {
           setHasPermission(true);
-          const formattedSeminarList = result.data.object.map((seminar) => ({
-            ...seminar,
-            startDate: formatDate(seminar.startDate),
-            endDate: formatDate(seminar.endDate),
-          }));
+          const formattedSeminarList = result.data.object.map(
+            (seminar: ISeminar) => ({
+              ...seminar,
+              startDate: formatDate(seminar.startDate),
+              endDate: formatDate(seminar.endDate),
+            })
+          );
           setSeminarList(formattedSeminarList);
           console.log(JSON.stringify(formattedSeminarList));
         }
@@ -64,7 +76,15 @@ const SeminarList = () => {
       });
   }, []);
 
-  const columns = [
+  interface ICustomColumn {
+    field: string;
+    headerName: string;
+    width: number;
+    editable: boolean;
+    renderCell?: (params: any) => JSX.Element;
+  }
+
+  const columns: ICustomColumn[] = [
     // { field: "id", headerName: "ID", width: 70 },
     { field: "title", headerName: "Title", width: 150, editable: true },
     {
@@ -88,7 +108,7 @@ const SeminarList = () => {
     "venueName",
   ];
 
-  const handleBookButton = (params) => {
+  const handleBookButton = (params: any) => {
     // console.log(params);
     const name = params.row.title;
     const id = params.row.id;
@@ -97,7 +117,7 @@ const SeminarList = () => {
     setOpen(true);
   };
 
-  const renderBookingButton = (params) => {
+  const renderBookingButton = (params: any) => {
     return (
       <strong>
         <Button
@@ -125,7 +145,7 @@ const SeminarList = () => {
     });
   }
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -133,11 +153,11 @@ const SeminarList = () => {
     return `${year}-${month}-${day}`;
   };
 
-  const updateData = (updatedData) => {
+  const updateData = (updatedData: ISeminar | null) => {
     alert("Feature coming soon!");
   };
 
-  const deleteData = (id) => {
+  const deleteData = (id: number) => {
     alert("Feature coming soon!");
   };
 
@@ -151,7 +171,7 @@ const SeminarList = () => {
     //   `Booking for seminar : ${selectedSeminar?.title}, Notes: ${bookingNotes}`
     // );
     const bookingDetails = {
-      seminarEntityId: selectedSeminar.id,
+      seminarEntityId: selectedSeminar!.id,
       bookingNotes: bookingNotes,
     };
     console.log(bookingDetails);
