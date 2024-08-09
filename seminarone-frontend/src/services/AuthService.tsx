@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_SEMINAR_ONE_BASE_API;
 
 class AuthService {
-  login(loginDetails) {
+  login(loginDetails: any) {
     return axios({
       method: "post",
       data: loginDetails,
@@ -20,7 +20,7 @@ class AuthService {
     localStorage.removeItem("user");
   }
 
-  validateToken(jwtToken) {
+  validateToken(jwtToken: any) {
     return axios({
       method: "get",
       url: API_URL + `/expired?jwtToken=` + jwtToken,
@@ -33,7 +33,7 @@ class AuthService {
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem("user"));
+    return JSON.parse(localStorage.getItem("user") || "null");
   }
 
   getCurrentUserRole() {
@@ -45,7 +45,7 @@ class AuthService {
   }
 
   getAuthHeader() {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user") || "null");
     if (user && user.jwtToken) {
       return {
         Authorization: `Bearer ${user.jwtToken}`,
@@ -56,7 +56,7 @@ class AuthService {
   }
 
   getJwtToken() {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user") || "null");
     if (user && user.jwtToken) {
       return user.jwtToken;
     } else {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AuthService } from "./AuthService";
+import { IUser } from "../components/UserList";
 
 const API_URL = process.env.REACT_APP_SEMINAR_ONE_BASE_API;
 
@@ -14,7 +15,7 @@ class UserService {
     });
   }
 
-  updateUser(userDto) {
+  updateUser(userDto: IUser) {
     return axios({
       method: "PUT",
       url: API_URL + "/user/update",
@@ -23,7 +24,7 @@ class UserService {
     });
   }
 
-  changePassword(changePasswordDto) {
+  changePassword(changePasswordDto: any) {
     return axios({
       method: "post",
       url: API_URL + "/user/changePassword",

@@ -3,7 +3,7 @@ import NoPermissionPage from "./NoPermissionPage";
 import { UserService } from "../services/UserService";
 import CustomDataGrid from "./shared/CustomDataGrid";
 
-interface IUser {
+export interface IUser {
   id: number;
   email: string;
   firstName: string;
