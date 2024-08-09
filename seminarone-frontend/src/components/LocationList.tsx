@@ -4,6 +4,15 @@ import { useEffect, useState } from "react";
 import NoPermissionPage from "./NoPermissionPage";
 import CustomDataGrid from "./shared/CustomDataGrid";
 
+interface ILocation {
+  id: number;
+  venueName: string;
+  streetName: string;
+  streetNumber: number | null;
+  state: string;
+  website: string | null;
+}
+
 const LocationList = () => {
   const locationService = new LocationService();
 
@@ -11,14 +20,14 @@ const LocationList = () => {
 
   const [refetchLocationService, setRefetchLocationService] = useState(false);
 
-  const [locationList, setLocationList] = useState([
+  const [locationList, setLocationList] = useState<ILocation[]>([
     {
-      id: "",
+      id: -1,
       venueName: "",
       streetName: "",
-      streetNumber: "",
+      streetNumber: null,
       state: "",
-      website: "",
+      website: null,
     },
   ]);
 
@@ -70,7 +79,7 @@ const LocationList = () => {
 
   const columnFields = ["id", "venueName", "streetName", "state", "website"];
 
-  const updateData = (updatedData, isNew) => {
+  const updateData = (updatedData: ILocation, isNew: boolean) => {
     console.log(
       `LocationList.js: ${JSON.stringify(updatedData)}, isNew: ${isNew}`
     );
@@ -112,7 +121,7 @@ const LocationList = () => {
           });
   };
 
-  const deleteData = (id) => {
+  const deleteData = (id: number) => {
     console.log("Deleting: " + id);
     locationService
       .delete(id)

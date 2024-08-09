@@ -14,7 +14,7 @@ class SeminarService {
     });
   }
 
-  getSeminarById(seminarId) {
+  getSeminarById(seminarId: number) {
     return axios({
       method: "get",
       url: API_URL + `/seminar/find/${seminarId}`,
@@ -22,7 +22,7 @@ class SeminarService {
     });
   }
 
-  save(seminarDetails) {
+  save(seminarDetails: any) {
     return axios({
       method: "post",
       data: seminarDetails,
@@ -41,7 +41,7 @@ class LocationService {
     });
   }
 
-  getVenueById(venueId) {
+  getVenueById(venueId: number) {
     return axios({
       method: "get",
       url: API_URL + `/location/find/${venueId}`,
@@ -49,7 +49,7 @@ class LocationService {
     });
   }
 
-  save(locationDetails) {
+  save(locationDetails: any) {
     return axios({
       method: "POST",
       url: API_URL + "/location/save",
@@ -58,7 +58,7 @@ class LocationService {
     });
   }
 
-  update(locationDetails) {
+  update(locationDetails: any) {
     console.log(`LocationService: ${JSON.stringify(locationDetails)}`);
     return axios({
       method: "PUT",
@@ -68,7 +68,7 @@ class LocationService {
     });
   }
 
-  delete(id) {
+  delete(id: number) {
     return axios({
       method: "DELETE",
       url: API_URL + "/location/delete/" + id,
@@ -86,7 +86,7 @@ class TopicService {
     });
   }
 
-  getTopicById(topicId) {
+  getTopicById(topicId: number) {
     return axios({
       method: "get",
       url: API_URL + `/topic/find/${topicId}`,
@@ -94,7 +94,7 @@ class TopicService {
     });
   }
 
-  save(topicDetails) {
+  save(topicDetails: any) {
     return axios({
       method: "POST",
       url: API_URL + "/topic/save",
@@ -103,7 +103,7 @@ class TopicService {
     });
   }
 
-  update(updatedTopic) {
+  update(updatedTopic: any) {
     return axios({
       method: "PUT",
       url: API_URL + "/topic/update",
@@ -112,7 +112,7 @@ class TopicService {
     });
   }
 
-  delete(id) {
+  delete(id: number) {
     return axios({
       method: "DELETE",
       url: API_URL + "/topic/delete/" + id,
@@ -122,7 +122,7 @@ class TopicService {
 }
 
 class BookingService {
-  delete(id) {
+  delete(id: number) {
     return axios({
       method: "DELETE",
       url: API_URL + "/booking/delete/" + id,
@@ -130,7 +130,7 @@ class BookingService {
     });
   }
 
-  save(bookingDetails) {
+  save(bookingDetails: any) {
     return axios({
       method: "POST",
       url: API_URL + "/booking/book",
@@ -139,7 +139,7 @@ class BookingService {
     });
   }
 
-  getAllBookings(userId) {
+  getAllBookings(userId: number) {
     return axios({
       method: "GET",
       url: API_URL + "/booking/findAll",

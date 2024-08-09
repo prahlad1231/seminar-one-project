@@ -12,6 +12,7 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
   GridRowEditStopReasons,
+  GridRowModesModel,
 } from "@mui/x-data-grid";
 
 import {
@@ -22,11 +23,20 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-function EditToolbar(props) {
-  const { setInitialRows, setRowModesModel, columnFields } = props;
+interface EditToolbarProps {
+  setInitialRows: React.Dispatch<React.SetStateAction<any[]>>;
+  setRowModesModel: React.Dispatch<React.SetStateAction<GridRowModesModel>>;
+  columnFields: string[];
+  header: string;
+  canAdd: boolean;
+}
+
+function EditToolbar(props: EditToolbarProps) {
+  const { setInitialRows, setRowModesModel, columnFields, header, canAdd } =
+    props;
 
   const handleClick = () => {
-    if (!props.canAdd) {
+    if (!canAdd) {
       alert("Cannot Modify Items!");
       return;
     }
@@ -45,10 +55,21 @@ function EditToolbar(props) {
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        {props.header}
+        {header}
       </Button>
     </GridToolbarContainer>
   );
+}
+
+interface CustomDataGridProps {
+  initialRows: any[];
+  initialColumns: any[];
+  setInitialRows: React.Dispatch<React.SetStateAction<any[]>>;
+  columnFields: string[];
+  header: string;
+  updateData: (updatedRow: any, isNew: boolean) => void;
+  deleteData: (id: number) => void;
+  canAdd: boolean;
 }
 
 export default function CustomDataGrid({
@@ -60,13 +81,17 @@ export default function CustomDataGrid({
   updateData,
   deleteData,
   canAdd,
-}) {
+}: CustomDataGridProps) {
   // const [rows, setRows] = React.useState(initialRows);
-  const [rowModesModel, setRowModesModel] = React.useState({});
+  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
+    {}
+  );
 
-  const [open, setOpen] = React.useState(false);
-  const [dialogType, setDialogType] = React.useState("");
-  const [currentRow, setCurrentRow] = React.useState(null);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [dialogType, setDialogType] = React.useState<"save" | "delete" | "">(
+    ""
+  );
+  const [currentRow, setCurrentRow] = React.useState<any | null>(null);
 
   // React.useEffect(() => {
   //   if (initialRows?.length) {
@@ -74,7 +99,7 @@ export default function CustomDataGrid({
   //   }
   // }, [initialRows]);
 
-  const handleDialogOpen = (type, row) => {
+  const handleDialogOpen = (type: "save" | "delete", row: any) => {
     setDialogType(type);
     setCurrentRow(row);
     setOpen(true);
@@ -84,29 +109,29 @@ export default function CustomDataGrid({
     setOpen(false);
   };
 
-  const handleRowEditStop = (params, event) => {
+  const handleRowEditStop = (params: any, event: any) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
     }
   };
 
-  const handleEditClick = (id) => () => {
+  const handleEditClick = (id: number) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
-  const handleSaveClick = (id) => () => {
+  const handleSaveClick = (id: number) => () => {
     const row = initialRows.find((row) => row.id === id);
     handleDialogOpen("save", row);
     // setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleDeleteClick = (id) => () => {
+  const handleDeleteClick = (id: number) => () => {
     const row = initialRows.find((row) => row.id === id);
     handleDialogOpen("delete", row);
     // setRows(rows.filter((row) => row.id !== id));
   };
 
-  const handleBookOnlineClick = (id) => {
+  const handleBookOnlineClick = (id: number) => {
     alert("Booking: " + id);
   };
 
@@ -146,7 +171,7 @@ export default function CustomDataGrid({
     handleDialogClose();
   };
 
-  const handleDialogCancel = (id) => {
+  const handleDialogCancel = (id: number) => {
     setRowModesModel({
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
@@ -158,7 +183,7 @@ export default function CustomDataGrid({
     }
   };
 
-  const handleCancelClick = (id) => () => {
+  const handleCancelClick = (id: number) => () => {
     setRowModesModel({
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
@@ -170,7 +195,7 @@ export default function CustomDataGrid({
     }
   };
 
-  const processRowUpdate = (newRow) => {
+  const processRowUpdate = (newRow: any) => {
     const updatedRow = { ...newRow, isNew: false };
     setInitialRows(
       initialRows.map((row) => (row.id === newRow.id ? updatedRow : row))
@@ -194,7 +219,7 @@ export default function CustomDataGrid({
   //   }
   // };
 
-  const handleRowModesModelChange = (newRowModesModel) => {
+  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
     setRowModesModel(newRowModesModel);
   };
 
@@ -206,7 +231,7 @@ export default function CustomDataGrid({
       headerName: "Actions",
       width: 100,
       cellClassName: "actions",
-      getActions: ({ id }) => {
+      getActions: ({ id }: { id: number }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
         if (isInEditMode) {
