@@ -1,15 +1,32 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { AuthService } from "../../services/AuthService";
 
-const AuthContext = createContext();
+interface IAuthContextType {
+  isAuthenticated: boolean | null;
+  login: () => void;
+  logout: () => void;
+  setIsAuthenticated: (value: boolean) => void;
+}
+
+const AuthContext = createContext<IAuthContextType | undefined>(undefined);
 
 const authService = new AuthService();
 
-export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user") || "null");
     // console.log(user);
     if (user && user.jwtToken) {
       console.log(user.jwtToken);
@@ -47,4 +64,10 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider!");
+  }
+  return context;
+};

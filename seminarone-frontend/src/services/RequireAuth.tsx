@@ -1,8 +1,12 @@
-import { useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../components/context/AuthContext";
 
-const RequireAuth = ({ children }: any) => {
+interface RequireAuthProps {
+  children: ReactElement;
+}
+
+const RequireAuth = ({ children }: RequireAuthProps): ReactElement | null => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
