@@ -31,13 +31,13 @@ import { AuthService } from "../services/AuthService";
 
 const filter = createFilterOptions<any>();
 
-interface ITopic {
+export interface ITopic {
   id?: number;
   name?: string;
   inputValue?: string;
 }
 
-interface IVenue {
+export interface IVenue {
   id?: number;
   venueName?: string;
   streetName?: string;
@@ -440,7 +440,7 @@ const AddSeminar = () => {
                             />
                           ) : (
                             <LocationForm
-                              venueName={venueDialogValue.venueName}
+                              venueName={venueDialogValue.venueName || ""} // fallback value if venueName is undefined
                               onAdd={addVenue}
                               cancel={handleClose}
                             />

@@ -8,15 +8,22 @@ import {
 import "../../styles/mini/popup-form.css";
 import { useState } from "react";
 import { TopicService } from "../../services/SeminarService";
+import { ITopic } from "../AddSeminar";
 
-const TopicForm = ({ name, cancel, onAdd }) => {
+interface ITopicForm {
+  name: string;
+  cancel: () => void;
+  onAdd: (params: ITopic) => void;
+}
+
+const TopicForm = ({ name, cancel, onAdd }: ITopicForm) => {
   const topicService = new TopicService();
 
   const [topicDetails, setTopicDetails] = useState({
     name: name,
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setTopicDetails({
       ...topicDetails,
       name: event.target.value,

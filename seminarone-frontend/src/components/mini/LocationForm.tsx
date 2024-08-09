@@ -8,22 +8,29 @@ import {
 import "../../styles/mini/popup-form.css";
 import { useRef } from "react";
 import { LocationService } from "../../services/SeminarService";
+import { IVenue } from "../AddSeminar";
 
-const LocationForm = ({ venueName, cancel, onAdd }) => {
+interface ILocationForm {
+  venueName?: string;
+  cancel: () => void;
+  onAdd: (params: IVenue) => void;
+}
+
+const LocationForm = ({ venueName, cancel, onAdd }: ILocationForm) => {
   const locationService = new LocationService();
 
-  const venueNameRef = useRef("");
-  const streetNumberRef = useRef("");
-  const streetNameRef = useRef("");
-  const stateRef = useRef("");
-  const websiteRef = useRef("");
+  const venueNameRef = useRef<HTMLInputElement | null>(null);
+  const streetNumberRef = useRef<HTMLInputElement | null>(null);
+  const streetNameRef = useRef<HTMLInputElement | null>(null);
+  const stateRef = useRef<HTMLInputElement | null>(null);
+  const websiteRef = useRef<HTMLInputElement | null>(null);
 
   const addVenue = () => {
-    const venueName = venueNameRef.current.value;
-    const streetNumber = streetNumberRef.current.value;
-    const streetName = streetNameRef.current.value;
-    const state = stateRef.current.value;
-    const website = websiteRef.current.value;
+    const venueName = venueNameRef.current?.value || "";
+    const streetNumber = streetNumberRef.current?.value || "";
+    const streetName = streetNameRef.current?.value || "";
+    const state = stateRef.current?.value || "";
+    const website = websiteRef.current?.value || "";
 
     const location = {
       venueName: venueName,
