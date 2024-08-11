@@ -1,5 +1,5 @@
 
-# Fullstack development with React and Spring Boot
+# Fullstack development with React, Spring Boot, and Flutter
 
 In this project, I create a fullstack application using React and Spring Boot. This project aim to create a Seminar Management System, where admin can add new Seminars, Topics, Venues, and users can book any seminar to attend it. 
 
