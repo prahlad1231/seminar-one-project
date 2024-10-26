@@ -84,6 +84,7 @@ public class BranchRepositoryTests {
         BranchEntity branchEntity = branchRepository.findByBranchNumber(branch.getBranchNumber());
 
         Assertions.assertThat(branchEntity).isNotNull();
+        Assertions.assertThat(branchEntity.getBranchNumber()).isEqualTo(branch.getBranchNumber());
     }
 
     @Test
