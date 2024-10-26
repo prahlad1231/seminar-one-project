@@ -19,7 +19,7 @@ public class BranchRepositoryTests {
     private BranchRepository branchRepository;
 
     @Test
-    public void save_shouldSaveBranch() {
+    public void BranchRepository_Save_ReturnsMoreThanZeroBranch() {
         BranchEntity branchEntity = BranchEntity.builder()
                 .branchNumber(1)
                 .address("21 Beissel Street, Belconnen")
@@ -33,7 +33,7 @@ public class BranchRepositoryTests {
     }
 
     @Test
-    public void findAll_shouldReturnAllSavedBranches() {
+    public void BranchRepository_SaveAll_ReturnAllSavedBranches() {
         BranchEntity branch1 = BranchEntity.builder()
                 .branchNumber(1)
                 .address("Belconnen")
@@ -55,7 +55,7 @@ public class BranchRepositoryTests {
     }
 
     @Test
-    public void findById_shouldReturnBranchById() {
+    public void BranchRepository_FindById_ReturnBranchById() {
         BranchEntity branch = BranchEntity.builder()
                 .branchNumber(1)
                 .address("Belconnen")
@@ -72,7 +72,7 @@ public class BranchRepositoryTests {
     }
 
     @Test
-    public void findByBranchNumber_shouldReturnBranchWithMatchingBranchNumber() {
+    public void BranchRepository_FindByBranchNumber_ReturnBranchWithMatchingBranchNumber() {
         BranchEntity branch = BranchEntity.builder()
                 .branchNumber(1)
                 .address("Bruce")
@@ -88,7 +88,7 @@ public class BranchRepositoryTests {
     }
 
     @Test
-    public void update_shouldUpdateBranch() {
+    public void BranchRepository_Update_ReturnUpdatedBranch() {
         BranchEntity branch = BranchEntity.builder()
                 .branchNumber(1)
                 .address("Bruce")
@@ -114,7 +114,7 @@ public class BranchRepositoryTests {
     }
 
     @Test
-    public void deleteById_shouldDeleteBranchById() {
+    public void BranchRepository_DeleteById_DeleteBranchById() {
         BranchEntity branch = BranchEntity.builder()
                 .branchNumber(1)
                 .address("Bruce")
