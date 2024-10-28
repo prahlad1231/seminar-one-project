@@ -4,7 +4,7 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 <template>
   <main>
-    <h1>This is a home page.</h1>
+    <h1 class="">This is a home page.</h1>
     <HelloWorld msg="Hello World Component!" />
   </main>
 </template>
