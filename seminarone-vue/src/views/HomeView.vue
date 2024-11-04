@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import HelloWorld from "@/components/HelloWorld.vue";
+import Dashboard from "@/components/Content.vue";
+import Sidebar from "@/components/Sidebar.vue";
 </script>
 
 <template>
   <main>
-    <h1 class="">This is a home page.</h1>
-    <HelloWorld msg="Hello World Component!" />
+    <h1 class="">Dashboard</h1>
+    <Content msg="Content Component!" />
   </main>
 </template>
