@@ -1,7 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main>
-    <h1 class="">Dashboard</h1>
-  </main>
+  <div><h1>Topic List</h1></div>
 </template>
