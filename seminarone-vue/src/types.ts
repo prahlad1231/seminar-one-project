@@ -3,3 +3,9 @@ export interface MenuItem {
   url: string;
   icon?: string;
 }
+
+export interface UserDetails {
+  username: string;
+  password: string;
+  email?: string;
+}

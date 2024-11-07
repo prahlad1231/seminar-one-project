@@ -4,10 +4,16 @@ import Settings from "@/views/Settings.vue";
 import TopicList from "@/views/TopicList.vue";
 import LocationList from "@/views/LocationList.vue";
 import SeminarList from "@/views/SeminarList.vue";
+import Login from "@/views/Login.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/login",
+      name: "login",
+      component: Login,
+    },
     {
       path: "/",
       name: "home",
