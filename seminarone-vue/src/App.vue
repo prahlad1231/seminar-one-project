@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from "vue-router";
 import Sidebar from "./components/Sidebar.vue";
 import Login from "./views/Login.vue";
 
-const authenticated = false;
+const authenticated = true;
 </script>
 
 <template>
